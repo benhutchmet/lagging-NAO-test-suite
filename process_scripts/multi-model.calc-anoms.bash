@@ -32,7 +32,8 @@ base_dir="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_
 # Function for processing files
 process_files() {
     init_scheme=$1
-    files_path="$base_dir/mean-years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r*${init_scheme}*.nc"
+    # don't specify the time mean in this case
+    files_path="$base_dir/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r*${init_scheme}*.nc"
 
     # Echo the files to be processed
     echo "Model mean state calculated and anomalies calculated for: $files_path"
@@ -58,7 +59,8 @@ process_files() {
     # Calculate the anomalies
     for file in $files_path; do
         filename=$(basename ${file})
-        cdo sub ${file} ${temp_model_mean_state} "$base_dir/anoms/${filename%.nc}-anoms.nc"
+        # take the fldmeans in this case for calculating NAO anomalies
+        cdo sub -fldmean ${file} -fldmean ${temp_model_mean_state} "$base_dir/anoms/${filename%.nc}-anoms.nc"
     done
 }
 

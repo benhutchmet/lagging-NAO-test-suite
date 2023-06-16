@@ -200,12 +200,14 @@ for INPUT_FILE in $files; do
     cdo select,startdate="$start_date",enddate="$end_date" "$TEMP_FILE" "$OUTPUT_FILE"
 
     # Take the time mean of the output file
-    cdo timmean "$OUTPUT_FILE" "$MEAN_FILE"
+    # Not neccessary when we are using the updated lagging technique
+    # cdo timmean "$OUTPUT_FILE" "$MEAN_FILE"
 
     # Remove the temporary, regridded, and original output files
     rm "$TEMP_FILE"
     rm "$REGRIDDED_FILE"
-    rm "$OUTPUT_FILE"
+    # We want to keep the output file in this case
+    # rm "$OUTPUT_FILE"
 
     echo "[INFO] Finished processing: $INPUT_FILE"
 done
