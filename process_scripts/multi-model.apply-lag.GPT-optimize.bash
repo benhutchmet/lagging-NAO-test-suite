@@ -67,8 +67,23 @@ for file in "${files[@]}"; do
         temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-anoms.init-minus-$i.nc/")
         temp_file="${TEMP_DIR}/${temp_fname}"
 
-        target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$(basename "$file" | sed -E 's/.*_s([0-9]{4})-.*/\1/')-$i" | head -n 1)
+        # assign basename output to variable
+        base=$(basename "$file" | sed -E 's/.*_s([0-9]{4})-.*/\1/')
 
+        # print out pattern being used to search for target file
+        echo "Searching for pattern: $base-$i"
+
+        # search for target file
+        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$base-$i" | head -n 1 2> /tmp/grep_error); then
+            grep_error=$(cat /tmp/grep_error)
+            echo "[ERROR] Failed to search for target file: $grep_error"
+            exit 1
+        fi
+
+        # print out target file
+        echo "Target file: $target_file"
+
+        # check if target file exists
         if [ ! -f "$target_file" ]; then
             echo "[ERROR] Target file not found for year: $year"
             exit 1
