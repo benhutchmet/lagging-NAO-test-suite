@@ -88,13 +88,42 @@ for file in "${files[@]}"; do
         fi
 
         process_file "$start_date" "$end_date" "$target_file" "$temp_file"
-        
-        cdo mergetime "${temp_file}" "${target_file}" "${OUTPUT_DIR}/$(basename "${target_file}")"
-        
-        # Clean up temporary file
-        rm -f "${temp_file}"
     done
 done
+
+# Move the merge steps to outside the loop
+# Set up the files to be merged
+files_same_init_to_merge=($TEMP_DIR/*-anoms.init-minus-0.nc)
+files_init_minus_1_to_merge=($TEMP_DIR/*-anoms.init-minus-1.nc)
+files_init_minus_2_to_merge=($TEMP_DIR/*-anoms.init-minus-2.nc)
+files_init_minus_3_to_merge=($TEMP_DIR/*-anoms.init-minus-3.nc)
+
+# if any of these files are missing, exit with an error
+if [ ! -f "${files_same_init_to_merge[0]}" ] || \
+    [ ! -f "${files_init_minus_1_to_merge[0]}" ] || \
+    [ ! -f "${files_init_minus_2_to_merge[0]}" ] || \
+    [ ! -f "${files_init_minus_3_to_merge[0]}" ]; then
+     echo "[ERROR] One or more files are missing."
+     exit 1
+    fi
+
+# Create the output file names
+output_fname_same_init="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_same_init}-e${last_year_same_init}_anoms.init-same.nc"
+output_fname_init_minus_1="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_init_minus_1}-e${last_year_init_minus_1}_anoms.init-minus-1.nc"
+output_fname_init_minus_2="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_init_minus_2}-e${last_year_init_minus_2}_anoms.init-minus-2.nc"
+output_fname_init_minus_3="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_init_minus_3}-e${last_year_init_minus_3}_anoms.init-minus-3.nc"
+
+# Set up the output file paths
+output_file_same_init="${OUTPUT_DIR}/${output_fname_same_init}"
+
+# merge the files
+cdo mergetime "${files_same_init_to_merge[@]}" "$output_file_same_init"
+cdo mergetime "${files_init_minus_1_to_merge[@]}" "$output_file_init_minus_1"
+cdo mergetime "${files_init_minus_2_to_merge[@]}" "$output_file_init_minus_2"
+cdo mergetime "${files_init_minus_3_to_merge[@]}" "$output_file_init_minus_3"
+
+# Remove the temporary files
+rm -f "${files_same_init_to_merge[@]}" "${files_init_minus_1_to_merge[@]}" "${files_init_minus_2_to_merge[@]}" "${files_init_minus_3_to_merge[@]}"
 
 echo "[INFO] Script completed successfully."
 
