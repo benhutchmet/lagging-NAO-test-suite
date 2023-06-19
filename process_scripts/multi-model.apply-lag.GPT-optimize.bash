@@ -51,6 +51,8 @@ if [ ! -f "${files[0]}" ]; then
     exit 1
 fi
 
+# ... previous part of the script
+
 for file in "${files[@]}"; do
     year=$(extract_year "$file")
 
@@ -70,26 +72,19 @@ for file in "${files[@]}"; do
         # assign basename output to variable
         base=$(basename "$file" | sed -E 's/.*_s([0-9]{4})-.*/\1/')
 
+        # Modify this part to search for year - 1
+        pattern_year=$((base - 1))
+
         # print out pattern being used to search for target file
-        echo "Searching for pattern: $base-$i"
+        echo "Searching for pattern: $pattern_year-$i"
 
         # search for target file
-        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$base-$i" | head -n 1 2> /tmp/grep_error); then
+        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$pattern_year-$i" | head -n 1 2> /tmp/grep_error); then
             grep_error=$(cat /tmp/grep_error)
             echo "[ERROR] Failed to search for target file: $grep_error"
             exit 1
         fi
 
-        # print out target file
-        echo "Target file: $target_file"
-
-        # check if target file exists
-        if [ ! -f "$target_file" ]; then
-            echo "[ERROR] Target file not found for year: $year"
-            exit 1
-        else
-            echo "[INFO] Target file: $target_file"
-        fi
 
         process_file "$start_date" "$end_date" "$target_file" "$temp_file"
         
