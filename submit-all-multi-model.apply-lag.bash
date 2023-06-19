@@ -39,9 +39,10 @@ season=$5
 lag=$6
 
 # set the extractor script
-EXTRACTOR=$PWD/process_scripts/multi-model.apply-lag.bash
+# this one doesn't appear to work
+#EXTRACTOR=$PWD/process_scripts/multi-model.apply-lag.bash
 # Additional options for the extractor script
-# EXTRACTOR=$PWD/process_scripts/multi-model.apply-lag.GPT-optimize.bash
+EXTRACTOR=$PWD/process_scripts/multi-model.apply-lag.GPT-optimize.bash
 
 # make sure that cdo is loaded
 module load jaspy

@@ -2,7 +2,7 @@
 #
 # submit-all-multi-model.sel-region-forecast-range-season.bash
 #
-# For example: submit-all-multi-model.sel-region-forecast-range-season.bash CMCC-CM2-SR5 1960 1 psl north-atlantic 2-5 DJFM
+# For example: submit-all-multi-model.sel-region-forecast-range-season.bash CMCC-CM2-SR5 1960 1970 psl north-atlantic 2-5 DJFM
 #
 
 

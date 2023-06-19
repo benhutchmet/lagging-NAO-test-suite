@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# set debug mode
+set -x
+
 USAGE_MESSAGE="Usage: multi-model.apply-lag.bash <model> <variable> <region> <forecast-range> <season> <lag> <run> <init>"
 
 # Function to extract the year from the file name
