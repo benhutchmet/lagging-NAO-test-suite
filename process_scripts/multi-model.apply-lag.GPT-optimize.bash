@@ -69,17 +69,14 @@ for file in "${files[@]}"; do
         temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-anoms.init-minus-$i.nc/")
         temp_file="${TEMP_DIR}/${temp_fname}"
 
-        # assign basename output to variable
-        base=$(basename "$file" | sed -E 's/.*_s([0-9]{4})-.*/\1/')
-
         # Modify this part to search for year - 1
-        pattern_year=$((base - 1))
+        pattern_year=$((year - 1))
 
         # print out pattern being used to search for target file
-        echo "Searching for pattern: $pattern_year-$i"
+        echo "Searching for pattern: $pattern_year"
 
         # search for target file
-        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$pattern_year-$i" | head -n 1 2> /tmp/grep_error); then
+        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$pattern_year" | head -n 1 2> /tmp/grep_error); then
             grep_error=$(cat /tmp/grep_error)
             echo "[ERROR] Failed to search for target file: $grep_error"
             exit 1
