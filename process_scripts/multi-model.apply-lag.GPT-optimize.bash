@@ -63,7 +63,7 @@ for file in "${files[@]}"; do
 
     start_date=$((year + 1))-12-01
     for ((i = 0; i <= 3; i++)); do
-        end_date=$((year + 9 - i))-$((03-31))
+        end_date=$((year + 9 - i))-03-31
         echo "[INFO] init year - $i start date: $start_date, end date: $end_date"
 
         temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-anoms.init-minus-$i.nc/")

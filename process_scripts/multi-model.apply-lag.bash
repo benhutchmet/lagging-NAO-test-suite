@@ -27,6 +27,8 @@ region=$3
 forecast_range=$4
 season=$5
 lag=$6
+run=$7
+init=$8
 
 # load cdo
 module load jaspy
