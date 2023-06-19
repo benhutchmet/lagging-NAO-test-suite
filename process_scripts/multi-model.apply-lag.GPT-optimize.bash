@@ -63,14 +63,19 @@ for file in "${files[@]}"; do
 
     start_date=$((year + 1))-12-01
     for ((i = 0; i <= 3; i++)); do
-        end_date=$((year + 9 - i))-$(if [ $i -eq 0 ]; then echo 03-31; else echo 12-31; fi)
+        end_date=$((year + 9 - i))-$((03-31))
         echo "[INFO] init year - $i start date: $start_date, end date: $end_date"
 
         temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-anoms.init-minus-$i.nc/")
         temp_file="${TEMP_DIR}/${temp_fname}"
 
+        # Echo the file path
+        echo "[INFO] File path: $file"
+
         # Modify this part to search for year - 1
-        pattern_year=$((year - 1))
+        echo "[INFO] File year: $year"
+        # pattern year = year - i
+        pattern_year=$((year - i))
 
         # print out pattern being used to search for target file
         echo "Searching for pattern: $pattern_year"
@@ -81,7 +86,6 @@ for file in "${files[@]}"; do
             echo "[ERROR] Failed to search for target file: $grep_error"
             exit 1
         fi
-
 
         process_file "$start_date" "$end_date" "$target_file" "$temp_file"
         
