@@ -39,3 +39,16 @@ INPUT_DIR="$BASE_DIR/lag_${lag}_anoms"
 OUTPUT_DIR="$BASE_DIR/NAO"
 # make the output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
+
+# output from apply lag will look something like this
+# years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s-e_anoms.init-same.nc
+# "years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_anoms.r${run}i${init}.same-init.nc"
+
+
+lag_inits=["init-same", "init-minus-1", "init-minus-2", "init-minus-3"]
+
+
+pattern_same="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_anoms.r${run}i${init}.same-init.nc"
+pattern_minus_1="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast.r${run}i${init}.init-minus-1.nc"
+pattern_minus_2="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast.r${run}i${init}.init-minus-2.nc"
+pattern_minus_3="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast.r${run}i${init}.init-minus-3.nc"

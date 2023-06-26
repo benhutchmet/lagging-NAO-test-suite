@@ -91,6 +91,8 @@ for file in "${files[@]}"; do
     done
 done
 
+# SOme issue in this bit now
+
 # Move the merge steps to outside the loop
 # Set up the files to be merged
 files_same_init_to_merge=($TEMP_DIR/*-anoms.init-minus-0.nc)
@@ -108,10 +110,10 @@ if [ ! -f "${files_same_init_to_merge[0]}" ] || \
     fi
 
 # Create the output file names
-output_fname_same_init="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_same_init}-e${last_year_same_init}_anoms.init-same.nc"
-output_fname_init_minus_1="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_init_minus_1}-e${last_year_init_minus_1}_anoms.init-minus-1.nc"
-output_fname_init_minus_2="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_init_minus_2}-e${last_year_init_minus_2}_anoms.init-minus-2.nc"
-output_fname_init_minus_3="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s${first_year_init_minus_3}-e${last_year_init_minus_3}_anoms.init-minus-3.nc"
+output_fname_same_init="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_anoms.r${run}i${init}.same-init.nc"
+output_fname_init_minus_1="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_anoms.r${run}i${init}.init-minus-1.nc"
+output_fname_init_minus_2="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_anoms.r${run}i${init}.init-minus-2.nc"
+output_fname_init_minus_3="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_anoms.r${run}i${init}.init-minus-3.nc"
 
 # Set up the output file paths
 output_file_same_init="${OUTPUT_DIR}/${output_fname_same_init}"
