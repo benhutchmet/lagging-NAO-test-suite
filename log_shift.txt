@@ -1,0 +1,4 @@
+process_scripts/multi-model.calc-NAO.bash: line 47: init-minus-1,: command not found
+cdo    shifttime: Processed 4 values from 1 variable over 4 timesteps [0.01s 18MB].
+cdo    shifttime: Processed 3 values from 1 variable over 3 timesteps [0.01s 18MB].
+cdo    shifttime: Processed 2 values from 1 variable over 2 timesteps [0.01s 18MB].

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set debug mode
-set -x
+#set -x
 
 USAGE_MESSAGE="Usage: multi-model.apply-lag.bash <model> <variable> <region> <forecast-range> <season> <lag> <run> <init>"
 
@@ -100,6 +100,12 @@ files_init_minus_1_to_merge=($TEMP_DIR/*-anoms.init-minus-1.nc)
 files_init_minus_2_to_merge=($TEMP_DIR/*-anoms.init-minus-2.nc)
 files_init_minus_3_to_merge=($TEMP_DIR/*-anoms.init-minus-3.nc)
 
+# echo the files we are trying to find
+echo "Files to merge same init: ${files_same_init_to_merge[*]}"
+echo "Files to merge init - 1: ${files_init_minus_1_to_merge[*]}"
+echo "Files to merge init - 2: ${files_init_minus_2_to_merge[*]}"
+echo "Files to merge init - 3: ${files_init_minus_3_to_merge[*]}"
+
 # if any of these files are missing, exit with an error
 if [ ! -f "${files_same_init_to_merge[0]}" ] || \
     [ ! -f "${files_init_minus_1_to_merge[0]}" ] || \
@@ -117,6 +123,9 @@ output_fname_init_minus_3="years-${forecast_range}-${season}-${region}-${variabl
 
 # Set up the output file paths
 output_file_same_init="${OUTPUT_DIR}/${output_fname_same_init}"
+output_file_init_minus_1="${OUTPUT_DIR}/${output_fname_init_minus_1}"
+output_file_init_minus_2="${OUTPUT_DIR}/${output_fname_init_minus_2}"
+output_file_init_minus_3="${OUTPUT_DIR}/${output_fname_init_minus_3}"
 
 # merge the files
 cdo mergetime "${files_same_init_to_merge[@]}" "$output_file_same_init"
@@ -125,7 +134,7 @@ cdo mergetime "${files_init_minus_2_to_merge[@]}" "$output_file_init_minus_2"
 cdo mergetime "${files_init_minus_3_to_merge[@]}" "$output_file_init_minus_3"
 
 # Remove the temporary files
-rm -f "${files_same_init_to_merge[@]}" "${files_init_minus_1_to_merge[@]}" "${files_init_minus_2_to_merge[@]}" "${files_init_minus_3_to_merge[@]}"
+#rm -f "${files_same_init_to_merge[@]}" "${files_init_minus_1_to_merge[@]}" "${files_init_minus_2_to_merge[@]}" "${files_init_minus_3_to_merge[@]}"
 
 echo "[INFO] Script completed successfully."
 
