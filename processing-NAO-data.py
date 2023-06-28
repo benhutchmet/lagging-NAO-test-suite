@@ -14,6 +14,7 @@ import argparse
 import glob
 import os
 import sys
+import re
 
 # Third party imports
 import xarray as xr
@@ -26,10 +27,14 @@ import datetime
 # Import from dictionaries
 import dictionaries as dic
 
-# set up the pattern for the directory where the files are stored
-NAO_dir = "/work/scratch-nopw/benhutch/psl/"
-
 # Set up a function to load the data
+import re
+
+import xarray as xr
+import glob
+import os
+
+
 def load_lagged_ensemble_members(forecast_range, season, models):
     """
     This function loads the individual ensemble members for each model
@@ -44,94 +49,145 @@ def load_lagged_ensemble_members(forecast_range, season, models):
         lagged_ensemble_members (dict): a dictionary of datasets grouped by model
     """
 
+    # set up the pattern for the directory where the files are stored
+    NAO_dir = "/work/scratch-nopw/benhutch/psl/"
+
     # create an empty dictionary
     lagged_ensemble_members = {}
 
     # set up the argpath
     arg_path = f"/NAO/years_{forecast_range}/{season}/outputs"
 
+    # echo the models being used
+    print("models being used: ", models)
+
+    # define initialization schemes
+    init_schemes = ['same-init', 'init-minus-1', 'init-minus-2', 'init-minus-3']
+
     # loop over the models
     for model in models:
+        # # print the model name
+        # print("model name: ", model)
 
         # create the model path
-        model_path = os.path.join(NAO_dir, model, arg_path)
+        model_path = NAO_dir + model + arg_path
 
-        # set the files
-        files = [f for f in os.listdir(model_path) if f.endswith(".nc")]
+        # # print the model path
+        # print("model path: ", model_path)
 
-        # create an empty list
-        datasets = [xr.open_dataset(os.path.join(model_path, file), chunks={"time": 10}) for file in files]
+        # create a nested dictionary for each model
+        lagged_ensemble_members[model] = {init_scheme: [] for init_scheme in init_schemes}
 
-        # concatenate the datasets along the ensemble dimension
-        lagged_ensemble_members[model] = xr.concat(datasets, dim="ensemble member")
+        # find all the netCDF files for this model
+        files = glob.glob(model_path + "/*.nc")
+
+        # loop over the files
+        for file in files:
+            # extract the initialization scheme from the filename
+            init_scheme = os.path.basename(file).split('__')[-1].split('.')[1]
+
+            # print("searching in list",os.path.basename(file).split('_'))
+            #
+            # # echo the filename
+            # print("filename: ", file)
+            #
+            # # echo the initialization scheme
+            # print("init scheme: ", init_scheme)
+
+            # open the file and append the dataset to the appropriate list
+            ds = xr.open_dataset(file)
+            lagged_ensemble_members[model][init_scheme].append(ds)
+
+        # concatenate the list of datasets for each init scheme into a single dataset
+        for init_scheme in init_schemes:
+            lagged_ensemble_members[model][init_scheme] = xr.concat(lagged_ensemble_members[model][init_scheme],
+                                                                    dim='member')
 
     return lagged_ensemble_members
 
 
-# Define a function to extract the psl and time variables from the .nc files
-def process_ensemble_members(datasets_by_model):
-    """
-    Processes the ensemble members contained in the datasets_by_model dictionary
-    by extracting the desired data, converting units, and setting the time variable's data type.
+# Function to process the model data
+def process_model_datasets_by_init(datasets_by_init):
+    model_times_by_model_by_init = {}
+    model_nao_anoms_by_model_by_init = {}
 
-    Parameters:
-    datasets_by_model (dict): Dictionary of datasets grouped by model
+    for model, init_data in datasets_by_init.items():
+        model_times_by_init = {}
+        model_nao_anoms_by_init = {}
 
-    Returns:
-    model_times_by_model (dict): Dictionary of model times grouped by model
-    model_nao_anoms_by_model (dict): Dictionary of model NAO anomalies grouped by model
-    """
+        for init_scheme, datasets in init_data.items():
+            # Extract the data for 'psl'
+            model_data = datasets['psl']
 
-    def process_model_dataset(dataset):
-        """
-        Processes the dataset by extracting the desired data, converting units,
-        and setting the time variable's data type.
+            print("model data shape", np.shape(model_data))
+            print("model data", model_data)
 
-        Parameters:
-        dataset (xarray.Dataset): The input dataset
+            # Extract the 'time' variable and convert its data type
+            model_time = model_data['time'].values
+            model_time = model_time.astype("datetime64[Y]")
 
-        Returns:
-        numpy.ndarray: The model_time array
-        numpy.ndarray: The model_nao_anom array
-        """
+            print("model time shape", np.shape(model_time))
+            print("model time", model_time)
 
-        # Extract the data for the model
-        # Extract the data based on the dataset type
-        if "psl" in dataset:
-            data_var = "psl"  # For the model dataset
-        elif "var151" in dataset:
-            data_var = "var151"  # For the observations dataset
-        else:
-            raise ValueError("Unknown dataset type. Cannot determine data variable.")
+            # Process the 'psl' data from Pa to hPa
+            model_nao_anom = model_data / 100
 
-        model_data = dataset[data_var]
-        model_time = model_data["time"].values
+            print("model nao anom shape", np.shape(model_nao_anom))
+            print("model nao anom", model_nao_anom)
 
-        # Set the type for the time variable
-        model_time = model_time.astype("datetime64[Y]")
+            model_times_by_init[init_scheme] = model_time
+            model_nao_anoms_by_init[init_scheme] = model_nao_anom
 
-        # Process the model data from Pa to hPa
-        if len(model_data.dims) == 4:
-            model_nao_anom = model_data[:, :, 0, 0] / 100
-        elif len(model_data.dims) == 3:
-            model_nao_anom = model_data[:, 0, 0] / 100
-        else:
-            raise ValueError("Unexpected number of dimensions in the dataset.")
+    model_times_by_model_by_init[model] = model_times_by_init
+    model_nao_anoms_by_model_by_init[model] = model_nao_anoms_by_init
 
-        return model_time, model_nao_anom
+    return model_times_by_model_by_init, model_nao_anoms_by_model_by_init
 
-    # Create dictionaries to store the processed data
-    model_times_by_model = {}
-    model_nao_anoms_by_model = {}
+# Now we need a function which can process this model data further
+# We want to establish the overlapping (year) times for the four different initialization schemes
+# And then combine the data into one array with the same time dimension
+# this array will have dimensions (model, init_scheme, time, member)
+def combine_model_data(model_times_by_model_by_init, model_nao_anoms_by_model_by_init):
+    combined_data_by_model = {}
 
-    # Process each model's dataset
-    for model, dataset in datasets_by_model.items():
-        model_times, model_nao_anoms = process_model_dataset(dataset)
-        model_times_by_model[model] = model_times
-        model_nao_anoms_by_model[model] = model_nao_anoms
+    # Iterate over each model's data
+    for model, model_times_by_init in model_times_by_model_by_init.items():
+        model_nao_anoms_by_init = model_nao_anoms_by_model_by_init[model]
 
-    return model_times_by_model, model_nao_anoms_by_model
+        # Use the years from the 'init-minus-3' scheme as the overlapping years
+        overlapping_years = (model_times_by_init['init-minus-3'])
 
+        print("overlapping years", overlapping_years)
+        print("overlapping years shape", np.shape(overlapping_years))
+
+        # Select and combine the data for the overlapping years
+        combined_data = []
+        for init_scheme in ['same-init', 'init-minus-1', 'init-minus-2', 'init-minus-3']:
+
+            print("init scheme", init_scheme)
+
+            # print the data we want to look at
+            print("model times by init", model_times_by_init[init_scheme])
+            # print the shape of the data we want to look at
+            print("model times by init shape", np.shape(model_times_by_init[init_scheme]))
+            # print the type of the data we want to look at
+            print("type of model times by init", type(model_times_by_init[init_scheme]))
+
+            # Select the data for the overlapping years
+            overlap_mask = np.in1d(model_times_by_init[init_scheme], overlapping_years)
+            overlap_mask_xr = xr.DataArray(overlap_mask, dims=['time'])
+            selected_data = model_nao_anoms_by_init[init_scheme].where(overlap_mask_xr, drop=True)
+
+            # Add an 'init_scheme' dimension to the data
+            selected_data = selected_data.expand_dims({'init_scheme': [init_scheme]})
+            combined_data.append(selected_data)
+
+        # Combine the data into one array with the same time dimension
+        combined_data = xr.concat(combined_data, dim='init_scheme')
+
+        combined_data_by_model[model] = combined_data
+
+    return combined_data_by_model
 
 # Function to process the observations
 def process_observations(obs):
@@ -478,13 +534,21 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # Extract the number of ensemble members
     no_ensemble_members = all_ensemble_members_array.shape[0]
 
+    # print
+    print("before acc score is calculated for the lagged ensemble mean")
+    print("shape of obs time", np.shape(obs_time))
+    print("shape of model time", np.shape(model_times_by_model))
+    print("values of model times", list(model_times_by_model.values())[0])
+    print("shape of lagged ensemble mean", np.shape(lagged_ensemble_mean))
+    print("shape of obs nao anom", np.shape(obs_nao_anom))
+
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
     acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, list(model_times_by_model.values())[0],
-                                               obs_time, "1969-01-01", "2010-12-31")
+                                               obs_time, "1966-01-01", "1970-12-31")
     acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, list(model_times_by_model.values())[0],
-                                              obs_time, "1969-01-01", "2019-12-31")
+                                              obs_time, "1966-01-01", "1970-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
     # For the short and long period
@@ -615,6 +679,14 @@ def main():
     and then calls the function to load the data
     """
 
+    # create a usage statement for the script
+    USAGE_STATEMENT = """python processing-NAO-data.py <forecast_range> <season>"""
+
+    # check if the number of arguments is correct
+    if len(sys.argv) != 3:
+        print(USAGE_STATEMENT)
+        sys.exit()
+
     # make the plots directory if it doesn't exist
     if not os.path.exists(dic.plots_dir):
         os.makedirs(dic.plots_dir)
@@ -630,13 +702,42 @@ def main():
     print("season = ", args.season)
 
     # test run with the only model being
-    test_model = "BCC-CSM2-MR"
+    test_model = [ "BCC-CSM2-MR" ]
 
     # call the function to load the data
     lagged_ensemble_members = load_lagged_ensemble_members(args.forecast_range, args.season, test_model)
 
+    # # print statements to check the dimensions of the data
+    # print("lagged ensemble members", len(lagged_ensemble_members))
+    # # print("values in lagged ensemble members", list(lagged_ensemble_members.values())[0])
+    # same_init_data = lagged_ensemble_members['BCC-CSM2-MR']['same-init']
+    # init_minus_1_data = lagged_ensemble_members['BCC-CSM2-MR']['init-minus-1']
+    # init_minus_2_data = lagged_ensemble_members['BCC-CSM2-MR']['init-minus-2']
+    # init_minus_3_data = lagged_ensemble_members['BCC-CSM2-MR']['init-minus-3']
+    # # print("same init data", np.shape(same_init_data))
+    # print("same init data", same_init_data)
+    # print("init minus 1 data", init_minus_1_data)
+    # print("init minus 2 data", init_minus_2_data)
+    # print("init minus 3 data", init_minus_3_data)
+
     # call the function to process the data
-    model_times_by_model, model_nao_anoms_by_model = process_ensemble_members(lagged_ensemble_members)
+    model_times, model_nao_anoms = process_model_datasets_by_init(lagged_ensemble_members)
+
+    # prin statements to check the dimensions of the data
+    # Access the processed data for a specific model and initialization scheme
+    init_minus_1_times = model_times['BCC-CSM2-MR']['init-minus-1']
+    init_minus_1_nao_anoms = model_nao_anoms['BCC-CSM2-MR']['init-minus-1']
+
+    print("init minus 1 times", np.shape(init_minus_1_times))
+    print("init minus 1 nao anoms", np.shape(init_minus_1_nao_anoms))
+    print("init minus 1 times", init_minus_1_times)
+    print("init minus 1 nao anoms", init_minus_1_nao_anoms)
+
+    combined_model_data = combine_model_data(model_times, model_nao_anoms)
+
+    # print statements to check the dimensions of the data
+    print("combined model data", np.shape(combined_model_data))
+    print("combined model data", combined_model_data)
 
     # load the observations
     obs = xr.open_dataset(dic.obs_long, chunks={"time": 10})
@@ -645,4 +746,8 @@ def main():
     obs_nao_anom, obs_time = process_observations(obs)
 
     # call the function to plot the data
-    plot_ensemble_members_and_lagged_adjusted_mean(dic.models, model_times_by_model, model_nao_anoms_by_model, obs_nao_anom, obs_time, args.forecast_range, args.season)
+    plot_ensemble_members_and_lagged_adjusted_mean(test_model, model_times, model_nao_anoms, obs_nao_anom, obs_time, args.forecast_range, args.season)
+
+# if the script is called from the command line, then run the main function
+if __name__ == "__main__":
+    main()
