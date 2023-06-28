@@ -36,7 +36,7 @@ init=$8
 module load jaspy
 
 BASE_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs"
-INPUT_DIR="${BASE_DIR}/anoms"
+INPUT_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs/anoms"
 OUTPUT_DIR="${BASE_DIR}/lag_${lag}_anoms"
 TEMP_DIR="${BASE_DIR}/tmp"
 mkdir -p "$OUTPUT_DIR" "$TEMP_DIR"
@@ -60,6 +60,9 @@ for file in "${files[@]}"; do
         echo "[ERROR] Year $year is invalid."
         exit 1
     fi
+
+    # echo the file we are processing
+    echo "Processing file: $file"
 
     start_date=$((year + 1))-12-01
     for ((i = 0; i <= 3; i++)); do
