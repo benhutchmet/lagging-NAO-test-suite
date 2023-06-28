@@ -176,6 +176,12 @@ def combine_model_data(model_times_by_model_by_init, model_nao_anoms_by_model_by
             # Select the data for the overlapping years
             overlap_mask = np.in1d(model_times_by_init[init_scheme], overlapping_years)
             overlap_mask_xr = xr.DataArray(overlap_mask, dims=['time'])
+
+            print("overlap mask", overlap_mask)
+            print("overlap mask shape", np.shape(overlap_mask))
+            print("overlap mask xr", overlap_mask_xr['time'])
+            print("overlap mask xr shape", np.shape(overlap_mask_xr))
+
             selected_data = model_nao_anoms_by_init[init_scheme].where(overlap_mask_xr, drop=True)
 
             # Add an 'init_scheme' dimension to the data
@@ -737,7 +743,7 @@ def main():
 
     # print statements to check the dimensions of the data
     print("combined model data", np.shape(combined_model_data))
-    print("combined model data", combined_model_data)
+    print("combined model data", combined_model_data['BCC-CSM2-MR']['time'].values)
 
     # load the observations
     obs = xr.open_dataset(dic.obs_long, chunks={"time": 10})
