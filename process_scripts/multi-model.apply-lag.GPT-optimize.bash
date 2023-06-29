@@ -73,22 +73,25 @@ for file in "${files[@]}"; do
         temp_file="${TEMP_DIR}/${temp_fname}"
 
         # Echo the file path
-        echo "[INFO] File path: $file"
+        echo "[INFO] Base initialization file path: $file"
 
         # Modify this part to search for year - 1
-        echo "[INFO] File year: $year"
+        echo "[INFO] Base initialization file year: $year"
         # pattern year = year - i
         pattern_year=$((year - i))
 
         # print out pattern being used to search for target file
-        echo "Searching for pattern: $pattern_year"
+        echo "Searching for initialization year: $pattern_year"
 
         # search for target file
-        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -F "$pattern_year" | head -n 1 2> /tmp/grep_error); then
+        if ! target_file=$(echo "${files[@]}" | tr ' ' '\n' | grep -E "_s${pattern_year}" | head -n 1 2> /tmp/grep_error); then
             grep_error=$(cat /tmp/grep_error)
             echo "[ERROR] Failed to search for target file: $grep_error"
             exit 1
         fi
+
+        # print out target file
+        echo "Target file: $target_file"
 
         process_file "$start_date" "$end_date" "$target_file" "$temp_file"
     done
@@ -129,6 +132,32 @@ output_file_same_init="${OUTPUT_DIR}/${output_fname_same_init}"
 output_file_init_minus_1="${OUTPUT_DIR}/${output_fname_init_minus_1}"
 output_file_init_minus_2="${OUTPUT_DIR}/${output_fname_init_minus_2}"
 output_file_init_minus_3="${OUTPUT_DIR}/${output_fname_init_minus_3}"
+
+# if the output files already exist, echo that this will be overwritten
+# and remove the existing files
+if [ -f "$output_file_same_init" ]; then
+    echo "[WARNING] Output file already exists: $output_file_same_init"
+    rm -f "$output_file_same_init"
+    echo "[INFO] Removed existing file."
+fi
+
+if [ -f "$output_file_init_minus_1" ]; then
+    echo "[WARNING] Output file already exists: $output_file_init_minus_1"
+    rm -f "$output_file_init_minus_1"
+    echo "[INFO] Removed existing file."
+fi
+
+if [ -f "$output_file_init_minus_2" ]; then
+    echo "[WARNING] Output file already exists: $output_file_init_minus_2"
+    rm -f "$output_file_init_minus_2"
+    echo "[INFO] Removed existing file."
+fi
+
+if [ -f "$output_file_init_minus_3" ]; then
+    echo "[WARNING] Output file already exists: $output_file_init_minus_3"
+    rm -f "$output_file_init_minus_3"
+    echo "[INFO] Removed existing file."
+fi
 
 # merge the files
 cdo mergetime "${files_same_init_to_merge[@]}" "$output_file_same_init"

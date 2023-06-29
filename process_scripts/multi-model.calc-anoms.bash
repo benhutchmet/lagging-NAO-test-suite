@@ -81,7 +81,7 @@ case $model in
         ;;
     *)
         # For all other models, use a wildcard for init_scheme
-        process_files "i*"
+        process_files "i1"
         ;;
 esac
 

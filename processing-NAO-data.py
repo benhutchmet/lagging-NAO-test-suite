@@ -23,6 +23,7 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
+import cftime
 
 # Import from dictionaries
 import dictionaries as dic
@@ -543,33 +544,81 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members,
     # extract the time from the combined model data
     model_times = all_ensemble_members['time'].values
 
+    # convert the times
+    # define the desired format
+    desired_calendar = "standard"
+
+    # Convert the model times to the desired calendar type
+    converted_times = []
+    for time in model_times:
+        if isinstance(time, cftime.DatetimeNoLeap):
+            if hasattr(time, 'units'):
+                converted_time = cftime.date2num(time, units=time.units, calendar=desired_calendar)
+            else:
+                converted_time = time
+        elif isinstance(time, pd.Timestamp):
+            converted_time = cftime.date2num(time.to_pydatetime(), units=time.tz, calendar=desired_calendar)
+        else:
+            converted_time = time
+        converted_times.append(converted_time)
+
+    converted_times = np.array(converted_times)
+
     # print the model times
     print("model times", model_times)
-    print("model times shape". np.shape(model_times))
+    print("model times shape", model_times.shape)
 
-    # initialize a list to store the model NAO anomalies
-    model_nao_anoms = []
+    # print the converted times
+    print("converted times", converted_times)
+    print("converted times shape", converted_times.shape)
 
-    # loop through the models
-    for model in models:
-        # extract the model NAO anomalies
-        model_nao_anom = all_ensemble_members.sel(model=model).values
+    # create a new time array
+    # starting from the first year of the model times
+    # and ending at the last year of the model times
+    # in timestamp format
+    # extract the values from model times first
+    model_times_values = model_times
+    print("model times values", model_times_values)
 
-        # append the model NAO anomalies to the list
-        model_nao_anoms.append(model_nao_anom)
+    # extract the first and last years
+    first_year = model_times_values[0].year
+    last_year = model_times_values[-1].year
 
-    # convert the list of model NAO anomalies to a NumPy array
-    model_nao_anoms_array = np.array(model_nao_anoms)
-
-    # check the shape of the model NAO anomalies array
-    print("shape of model nao anoms array", np.shape(model_nao_anoms_array))
-    print("values", model_nao_anoms_array)
-
-    # Convert the list of all ensemble members to a NumPy array
-    all_ensemble_members_array = np.array(all_ensemble_members)
+    # create a new time array
+    new_time_array = pd.date_range(start=f'{first_year}', end=f'{last_year}', freq='YS')
 
     # Calculate the NAO index for the full lagged ensemble
-    lagged_ensemble_mean = np.mean(all_ensemble_members_array, axis=0)
+    model_nao_anoms_mean = all_ensemble_members.mean(dim=['model', 'init_scheme_member', 'lat', 'lon'])
+
+    # check the shape of this
+    print("shape of model nao anoms mean", np.shape(model_nao_anoms_mean))
+    print("values of model nao anoms mean", model_nao_anoms_mean)
+
+    # Extract the necessary data from 'all_ensemble_members'
+    extracted_data = all_ensemble_members
+
+    # Get the number of models, ensemble members, and time steps
+    num_models = len(models)
+    ensemble_members = extracted_data.shape[-1]
+    time_steps = extracted_data.shape[1]
+
+    # Create the new NumPy array
+    all_ensemble_members_array = np.zeros((ensemble_members * num_models, time_steps))
+
+    # Fill the array with the extracted data
+    for model_idx, model in enumerate(models):
+        start_idx = model_idx * ensemble_members
+        end_idx = start_idx + ensemble_members
+        all_ensemble_members_array[start_idx:end_idx] = extracted_data[model_idx, :, 0, 0, :].T
+
+    # Print the resulting array
+    print(all_ensemble_members_array)
+
+    # Print the resulting array
+    print('test ens members array', all_ensemble_members_array)
+    # print the shape of the resulting array
+    print('test ens members array shape', all_ensemble_members_array.shape)
+
 
     # Extract the number of ensemble members
     no_ensemble_members = all_ensemble_members_array.shape[0]
@@ -577,18 +626,17 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members,
     # print
     print("before acc score is calculated for the lagged ensemble mean")
     print("shape of obs time", np.shape(obs_time))
-    print("shape of model time", np.shape(model_times_by_model))
-    print("values of model times", list(model_times_by_model.values())[0])
-    print("shape of lagged ensemble mean", np.shape(lagged_ensemble_mean))
+    print("shape of model time", np.shape(new_time_array))
+    print("values of model times", new_time_array)
+    print("shape of lagged ensemble mean", np.shape(model_nao_anoms_mean))
     print("shape of obs nao anom", np.shape(obs_nao_anom))
-
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
-    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, list(model_times_by_model.values())[0],
-                                               obs_time, "1966-01-01", "1970-12-31")
-    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, list(model_times_by_model.values())[0],
-                                              obs_time, "1966-01-01", "1970-12-31")
+    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, model_nao_anoms_mean, new_time_array,
+                                               obs_time, "1969-01-01", "1970-12-31")
+    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, model_nao_anoms_mean, new_time_array,
+                                              obs_time, "1969-01-01", "1970-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
     # For the short and long period
@@ -810,7 +858,7 @@ def main():
     print("extracted model data array", extracted_model_data_array[0,:,0,0,0])
 
     # # call the function to plot the data
-    # plot_ensemble_members_and_lagged_adjusted_mean(test_model, model_times, model_nao_anoms, obs_nao_anom, obs_time, args.forecast_range, args.season)
+    plot_ensemble_members_and_lagged_adjusted_mean(test_model, extracted_model_data, obs_nao_anom, obs_time, args.forecast_range, args.season)
 
 # if the script is called from the command line, then run the main function
 if __name__ == "__main__":
