@@ -117,22 +117,81 @@ output_shifted_minus_1="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${seaso
 output_shifted_minus_2="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-2.nc"
 output_shifted_minus_3="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.nc"
 
-# shift the files
-#cdo shifttime,6mo $pattern_minus_1_file $output_shifted_minus_1
-#cdo shifttime,12mo $pattern_minus_2_file $output_shifted_minus_2
-#cdo shifttime,18mo $pattern_minus_3_file $output_shifted_minus_3
+# create temp files for shifting all of the iceland files
+# only for init-minus-1 and init-minus-2 and init-minus-3
+iceland_pattern_minus_1_file_temp="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-1.temp.nc"
+iceland_pattern_minus_2_file_temp="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-2.temp.nc"
+iceland_pattern_minus_3_file_temp="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.temp.nc"
+
+# create temp files for shifting all of the azores files
+# only for init-minus-1 and init-minus-2 and init-minus-3
+azores_pattern_minus_1_file_temp="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-1.temp.nc"
+azores_pattern_minus_2_file_temp="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-2.temp.nc"
+azores_pattern_minus_3_file_temp="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.temp.nc"
+
+# create extra temp files for iceland for init-minus-1 and init-minus-3
+iceland_pattern_minus_1_file_temp_2="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-1.temp-2.nc"
+iceland_pattern_minus_3_file_temp_2="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.temp-2.nc"
+
+# and for azores
+azores_pattern_minus_1_file_temp_2="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-1.temp-2.nc"
+azores_pattern_minus_3_file_temp_2="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.temp-2.nc"
+
+
+# shift the files by months
+# for iceland
+cdo shifttime,6mo $iceland_pattern_minus_1_file $iceland_pattern_minus_1_file_temp
+cdo shifttime,12mo $iceland_pattern_minus_2_file $iceland_pattern_minus_2_file_temp
+cdo shifttime,18mo $iceland_pattern_minus_3_file $iceland_pattern_minus_3_file_temp
+
+# for azores
+cdo shifttime,6mo $azores_pattern_minus_1_file $azores_pattern_minus_1_file_temp
+cdo shifttime,12mo $azores_pattern_minus_2_file $azores_pattern_minus_2_file_temp
+cdo shifttime,18mo $azores_pattern_minus_3_file $azores_pattern_minus_3_file_temp
+
+# extra hour shift
+# for init-minus-1 and init-minus-3
+# for both iceland and the azores
+cdo shifttime,18hour $iceland_pattern_minus_1_file_temp $iceland_pattern_minus_1_file_temp_2
+cdo shifttime,18hour $iceland_pattern_minus_3_file_temp $iceland_pattern_minus_3_file_temp_2
+
+# for the azores
+cdo shifttime,18hour $azores_pattern_minus_1_file_temp $azores_pattern_minus_1_file_temp_2
+cdo shifttime,18hour $azores_pattern_minus_3_file_temp $azores_pattern_minus_3_file_temp_2
+
+# echo the times of the files
+echo "times of the files - iceland"
+cdo showdate $iceland_pattern_minus_1_file_temp_2
+cdo showdate $iceland_pattern_minus_2_file_temp
+cdo showdate $iceland_pattern_minus_3_file_temp_2
+
+echo "times of the files - azores"
+cdo showdate $azores_pattern_minus_1_file_temp_2
+cdo showdate $azores_pattern_minus_2_file_temp
+cdo showdate $azores_pattern_minus_3_file_temp_2
 
 # perform multiple operations at once
 # we first want to shift both the azores and iceland files
 # using cdo shifttime
 # then take the year mean - using cdo yearmean
-# then take the difference - using cdo sub
-cdo sub -yearmean -shifttime,6mo $azores_pattern_minus_1_file -yearmean -shifttime,6mo $iceland_pattern_minus_1_file $output_shifted_minus_1
-cdo sub -yearmean -shifttime,12mo $azores_pattern_minus_2_file -yearmean -shifttime,12mo $iceland_pattern_minus_2_file $output_shifted_minus_2
-cdo sub -yearmean -shifttime,18mo $azores_pattern_minus_3_file -yearmean -shifttime,18mo $iceland_pattern_minus_3_file $output_shifted_minus_3
+## then take the difference - using cdo sub
+#cdo sub -yearmean -shifttime,6mo $azores_pattern_minus_1_file -yearmean -shifttime,6mo $iceland_pattern_minus_1_file $output_shifted_minus_1
+#cdo sub -yearmean -shifttime,12mo $azores_pattern_minus_2_file -yearmean -shifttime,12mo $iceland_pattern_minus_2_file $output_shifted_minus_2
+#cdo sub -yearmean -shifttime,18mo $azores_pattern_minus_3_file -yearmean -shifttime,18mo $iceland_pattern_minus_3_file $output_shifted_minus_3
+
+# take the difference between the azores and iceland files
+# for init-minus-1
+cdo sub $azores_pattern_minus_1_file_temp_2 $iceland_pattern_minus_1_file_temp_2 $output_shifted_minus_1
+# for init-minus-2
+cdo sub $azores_pattern_minus_2_file_temp $iceland_pattern_minus_2_file_temp $output_shifted_minus_2
+# for init-minus-3
+cdo sub $azores_pattern_minus_3_file_temp_2 $iceland_pattern_minus_3_file_temp_2 $output_shifted_minus_3
 
 # calculate the NAO for the same init files
-cdo sub -yearmean $azores_pattern_same_file -yearmean $iceland_pattern_same_file $output_same
+cdo sub $azores_pattern_same_file $iceland_pattern_same_file $output_same
+
+# remove the temp files
+rm ${OUTPUT_DIR}/*temp*.nc
 
 # check if the output files exist
 if [ ! -f $output_shifted_minus_1 ]; then

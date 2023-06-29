@@ -115,6 +115,9 @@ def process_model_datasets_by_init(datasets_by_init):
         model_times_by_init = {}
         model_nao_anoms_by_init = {}
 
+        model_data = init_data['same-init']['psl']
+        print("testing model time values", model_data['time'].values)
+
         for init_scheme, datasets in init_data.items():
             # Extract the data for 'psl'
             model_data = datasets['psl']
@@ -194,6 +197,48 @@ def combine_model_data(model_times_by_model_by_init, model_nao_anoms_by_model_by
         combined_data_by_model[model] = combined_data
 
     return combined_data_by_model
+
+# Now we want to write a function that will extract the model data into an array
+# with dimensions (init_scheme*member*model, time)
+# this function takes a list of models as an argument
+# and also takes the combined data by model as an argument
+# and returns the extracted data as an array with dimensions (init_scheme*member*model, time)
+def extract_model_data(models, combined_data_by_model):
+    """
+    Extracts the model data from the combined data by model and returns it as an array.
+
+    Args:
+        models (list): A list of models.
+        combined_data_by_model (dict): A dictionary of combined data by model.
+
+    Returns:
+        extracted_data (xarray.DataArray): The extracted data as an array with dimensions (init_scheme*member*model, time).
+
+    Raises:
+        ValueError: If the model is not found in the combined data.
+
+    """
+    try:
+        extracted_data = []
+
+        for model in models:
+            if model not in combined_data_by_model:
+                raise ValueError(f"Model '{model}' not found in the combined data.")
+
+            model_data = combined_data_by_model[model]
+            model_data = model_data.expand_dims({'model': [model]})
+            extracted_data.append(model_data)
+
+        extracted_data = xr.concat(extracted_data, dim='model')
+        extracted_data = extracted_data.stack(init_scheme_member=('init_scheme', 'member'))
+        extracted_data = extracted_data.transpose('model', 'time', 'lat', 'lon', 'init_scheme_member')
+
+        return extracted_data
+
+    except Exception as e:
+        # Handle any other unexpected exceptions and provide a meaningful error message
+        raise RuntimeError("An error occurred during data extraction.") from e
+
 
 # Function to process the observations
 def process_observations(obs):
@@ -464,7 +509,7 @@ def ensemble_mean(data_array):
     return np.mean(data_array, axis=0)
 
 # Define a plotting function that will plot the variance adjusted lag data
-def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model, model_nao_anoms_by_model, obs_nao_anom,
+def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members, obs_nao_anom,
                                                    obs_time, forecast_range, season, lag=4):
     """
     Plot the ensemble mean of all members from all models and each of the ensemble members, with lagged and adjusted variance applied to the grand ensemble mean.
@@ -473,10 +518,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     ----------
     models : dict
         A dictionary containing a list of models.
-    model_times_by_model : dict
-        A dictionary containing model times for each model.
-    model_nao_anoms_by_model : dict
-        A dictionary containing model NAO anomalies for each model.
+    all_ensemble_members : list
+        A list containing all ensemble members.
     obs_nao_anom : numpy.ndarray
         The observed NAO anomalies time series.
     obs_time : numpy.ndarray
@@ -497,39 +540,30 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # Create a figure
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Initialize an empty list to store all ensemble members
-    all_ensemble_members = []
+    # extract the time from the combined model data
+    model_times = all_ensemble_members['time'].values
 
-    # Plot the ensemble members and calculate the ensemble mean for each model
-    ensemble_means = []
+    # print the model times
+    print("model times", model_times)
+    print("model times shape". np.shape(model_times))
 
-    # Initialize a dictionary to store the count of ensemble members for each model
-    ensemble_member_counts = {}
+    # initialize a list to store the model NAO anomalies
+    model_nao_anoms = []
 
-    # Iterate over the models
-    for model_name in models:
-        model_time = model_times_by_model[model_name]
-        model_nao_anom = model_nao_anoms_by_model[model_name]
+    # loop through the models
+    for model in models:
+        # extract the model NAO anomalies
+        model_nao_anom = all_ensemble_members.sel(model=model).values
 
-        # If the model_name is not in the dictionary, initialize its count to 0
-        if model_name not in ensemble_member_counts:
-            ensemble_member_counts[model_name] = 0
+        # append the model NAO anomalies to the list
+        model_nao_anoms.append(model_nao_anom)
 
-        # Plot ensemble members
-        for member in model_nao_anom:
-            # ax.plot(model_time, member, color="grey", alpha=0.1, linewidth=0.5)
+    # convert the list of model NAO anomalies to a NumPy array
+    model_nao_anoms_array = np.array(model_nao_anoms)
 
-            # Add each member to the list of all ensemble members
-            all_ensemble_members.append(member)
-
-            # Increment the count of ensemble members for the current model
-            ensemble_member_counts[model_name] += 1
-
-        # Calculate and store ensemble mean
-        ensemble_means.append(ensemble_mean(model_nao_anom))
-
-    # Convert the ensemble_member_counts dictionary to a list of tuples
-    ensemble_member_counts_list = [(model, count) for model, count in ensemble_member_counts.items()]
+    # check the shape of the model NAO anomalies array
+    print("shape of model nao anoms array", np.shape(model_nao_anoms_array))
+    print("values", model_nao_anoms_array)
 
     # Convert the list of all ensemble members to a NumPy array
     all_ensemble_members_array = np.array(all_ensemble_members)
@@ -744,6 +778,8 @@ def main():
     # print statements to check the dimensions of the data
     print("combined model data", np.shape(combined_model_data))
     print("combined model data", combined_model_data['BCC-CSM2-MR']['time'].values)
+    print("combined model data", combined_model_data['BCC-CSM2-MR'].values)
+    print("combined model data shape", combined_model_data['BCC-CSM2-MR'].shape)
 
     # load the observations
     obs = xr.open_dataset(dic.obs_long, chunks={"time": 10})
@@ -751,8 +787,30 @@ def main():
     # call the function to process the observations
     obs_nao_anom, obs_time = process_observations(obs)
 
-    # call the function to plot the data
-    plot_ensemble_members_and_lagged_adjusted_mean(test_model, model_times, model_nao_anoms, obs_nao_anom, obs_time, args.forecast_range, args.season)
+    # extract the model data from the combined model data
+    extracted_model_data = extract_model_data(test_model, combined_model_data)
+
+    # print statements to check the dimensions of the data
+    print("extracted model data", np.shape(extracted_model_data))
+    print("extracted model data", extracted_model_data)
+    print("extracted model data model", extracted_model_data.sel(model='BCC-CSM2-MR').values)
+
+    extracted_model_data_mean = extracted_model_data.mean(dim=['model', 'init_scheme_member', 'lat', 'lon'])
+    print("extracted model data mean shape", np.shape(extracted_model_data_mean))
+    print("extracted model data mean", extracted_model_data_mean)
+
+    # extract the time coordinates from the model data
+    model_times = extracted_model_data_mean['time'].values
+    print("model times shape", np.shape(model_times))
+    print("model times", model_times)
+
+    # create an array of the lag values
+    extracted_model_data_array = np.array(extracted_model_data)
+    print("extracted model data array", np.shape(extracted_model_data_array))
+    print("extracted model data array", extracted_model_data_array[0,:,0,0,0])
+
+    # # call the function to plot the data
+    # plot_ensemble_members_and_lagged_adjusted_mean(test_model, model_times, model_nao_anoms, obs_nao_anom, obs_time, args.forecast_range, args.season)
 
 # if the script is called from the command line, then run the main function
 if __name__ == "__main__":
