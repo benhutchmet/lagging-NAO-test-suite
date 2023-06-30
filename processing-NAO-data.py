@@ -793,7 +793,7 @@ def main():
     test_model = [ "BCC-CSM2-MR" ]
 
     # call the function to load the data
-    lagged_ensemble_members = load_lagged_ensemble_members(args.forecast_range, args.season, test_model)
+    lagged_ensemble_members = load_lagged_ensemble_members(args.forecast_range, args.season, dic.models)
 
     # # print statements to check the dimensions of the data
     # print("lagged ensemble members", len(lagged_ensemble_members))
@@ -836,7 +836,7 @@ def main():
     obs_nao_anom, obs_time = process_observations(obs)
 
     # extract the model data from the combined model data
-    extracted_model_data = extract_model_data(test_model, combined_model_data)
+    extracted_model_data = extract_model_data(dic.models, combined_model_data)
 
     # print statements to check the dimensions of the data
     print("extracted model data", np.shape(extracted_model_data))
@@ -858,7 +858,7 @@ def main():
     print("extracted model data array", extracted_model_data_array[0,:,0,0,0])
 
     # # call the function to plot the data
-    plot_ensemble_members_and_lagged_adjusted_mean(test_model, extracted_model_data, obs_nao_anom, obs_time, args.forecast_range, args.season)
+    plot_ensemble_members_and_lagged_adjusted_mean(dic.models, extracted_model_data, obs_nao_anom, obs_time, args.forecast_range, args.season)
 
 # if the script is called from the command line, then run the main function
 if __name__ == "__main__":
