@@ -34,7 +34,7 @@
     [[calc_nao<model><variable><forecast_range><season><lag>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        bash submit-all-multi-model.calc-nao.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_lag}"""
+        bash submit-all-multi-model.calc-NAO.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_lag}"""
     [[process_plot_nao<forecast_range><season>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
