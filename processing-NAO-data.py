@@ -68,13 +68,13 @@ def load_lagged_ensemble_members(forecast_range, season, models):
     # loop over the models
     for model in models:
         # # print the model name
-        # print("model name: ", model)
+        print("model name: ", model)
 
         # create the model path
         model_path = NAO_dir + model + arg_path
 
         # # print the model path
-        # print("model path: ", model_path)
+        print("model path: ", model_path)
 
         # create a nested dictionary for each model
         lagged_ensemble_members[model] = {init_scheme: [] for init_scheme in init_schemes}
@@ -95,9 +95,22 @@ def load_lagged_ensemble_members(forecast_range, season, models):
             # # echo the initialization scheme
             # print("init scheme: ", init_scheme)
 
+            # if file does not exist
+            # print "File does not exist"
+            # and exit the program with an error message
+            if not os.path.exists(file):
+                print("File does not exist")
+                sys.exit(1)
+
             # open the file and append the dataset to the appropriate list
             ds = xr.open_dataset(file)
             lagged_ensemble_members[model][init_scheme].append(ds)
+
+        # print the init schemes
+        print("init schemes: ", init_schemes)
+
+        # print the model
+        print("model: ", model)
 
         # concatenate the list of datasets for each init scheme into a single dataset
         for init_scheme in init_schemes:

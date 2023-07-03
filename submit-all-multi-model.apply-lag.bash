@@ -146,11 +146,11 @@ echo "[INFO] Extracting data for all models: $models"
                 done
             else
                 
-                    # echo the output directory
-                    echo "[INFO] Output directory: $OUTPUTS_DIR"
-        
-                    # submit the job to LOTUS
-                    sbatch --partition=short-serial -t 5 -o $OUTPUTS_DIR/${model}_${variable}_${region}_${forecast_range}_${season}_${lag}_${run}_${init_methods}.out -e $OUTPUTS_DIR/${model}_${variable}_${region}_${forecast_range}_${season}_${lag}_${run}_${init_methods}.err $EXTRACTOR $model $variable $region $forecast_range $season $lag $run $init_methods
+                # echo the output directory
+                echo "[INFO] Output directory: $OUTPUTS_DIR"
+    
+                # submit the job to LOTUS
+                sbatch --partition=short-serial -t 5 -o $OUTPUTS_DIR/${model}_${variable}_${region}_${forecast_range}_${season}_${lag}_${run}_${init_methods}.out -e $OUTPUTS_DIR/${model}_${variable}_${region}_${forecast_range}_${season}_${lag}_${run}_${init_methods}.err $EXTRACTOR $model $variable $region $forecast_range $season $lag $run $init_methods
         
             fi
         done

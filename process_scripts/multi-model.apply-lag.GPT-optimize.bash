@@ -69,7 +69,7 @@ for file in "${files[@]}"; do
         end_date=$((year + 9 - i))-03-31
         echo "[INFO] init year - $i start date: $start_date, end date: $end_date"
 
-        temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-anoms.init-minus-$i.nc/")
+        temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-r${run}-i${init}-anoms.init-minus-$i.nc/")
         temp_file="${TEMP_DIR}/${temp_fname}"
 
         # Echo the file path
