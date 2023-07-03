@@ -14,7 +14,6 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        calc_anoms<model><variable><azores_region><iceland_region><forecast_range><season> => apply_lag<model><variable><azores_region><iceland_region><forecast_range><season><lag>
         apply_lag<model><variable><azores_region><iceland_region><forecast_range><season><lag> => calc_nao<model><variable><forecast_range><season><lag>
         calc_nao<model><variable><forecast_range><season><lag> => process_plot_nao<forecast_range><season>"""
 
@@ -27,11 +26,6 @@
             execution time limit = PT10M
         [[[directives]]]
             --partition = short-serial
-    [[calc_anoms<model><variable><azores_region><iceland_region><forecast_range><season>]]
-        script = """module load jaspy
-        cd ${CYLC_SUITE_RUN_DIR}/
-        bash submit-all-multi-model.calc-anoms.GPT.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_azores_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}
-        bash submit-all-multi-model.calc-anoms.GPT.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_iceland_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
     [[apply_lag<model><variable><azores_region><iceland_region><forecast_range><season><lag>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
