@@ -1,2 +1,4 @@
 *.drawio
 plots/*.png
+plots/.ipynb_checkpoints
+plots/*.ipynb
