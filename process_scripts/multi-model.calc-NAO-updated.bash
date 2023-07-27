@@ -182,3 +182,7 @@ if [ ! -f $output_same ]; then
     exit 1
 fi
 
+# script finished
+echo "Script finished successfully"
+exit 0
+
