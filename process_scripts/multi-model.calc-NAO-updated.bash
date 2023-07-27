@@ -147,20 +147,11 @@ cdo showdate $azores_pattern_minus_1_file_temp_2
 cdo showdate $azores_pattern_minus_2_file
 cdo showdate $azores_pattern_minus_3_file_temp_2
 
-# perform multiple operations at once
-# we first want to shift both the azores and iceland files
-# using cdo shifttime
-# then take the year mean - using cdo yearmean
-## then take the difference - using cdo sub
-#cdo sub -yearmean -shifttime,6mo $azores_pattern_minus_1_file -yearmean -shifttime,6mo $iceland_pattern_minus_1_file $output_shifted_minus_1
-#cdo sub -yearmean -shifttime,12mo $azores_pattern_minus_2_file -yearmean -shifttime,12mo $iceland_pattern_minus_2_file $output_shifted_minus_2
-#cdo sub -yearmean -shifttime,18mo $azores_pattern_minus_3_file -yearmean -shifttime,18mo $iceland_pattern_minus_3_file $output_shifted_minus_3
-
 # take the difference between the azores and iceland files
 # for init-minus-1
 cdo sub $azores_pattern_minus_1_file_temp_2 $iceland_pattern_minus_1_file_temp_2 $output_shifted_minus_1
 # for init-minus-2
-cdo sub $azores_pattern_minus_2_file_temp $iceland_pattern_minus_2_file_temp $output_shifted_minus_2
+cdo sub $azores_pattern_minus_2_file $iceland_pattern_minus_2_file $output_shifted_minus_2
 # for init-minus-3
 cdo sub $azores_pattern_minus_3_file_temp_2 $iceland_pattern_minus_3_file_temp_2 $output_shifted_minus_3
 
