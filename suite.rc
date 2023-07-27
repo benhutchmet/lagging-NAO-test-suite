@@ -29,18 +29,15 @@
     [[sel_region<model><initial_year><final_year><variable><region><forecast_range><season>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        bash submit-all-multi-model.sel-region-forecast-range-season.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_initial_year} ${CYLC_TASK_PARAM_final_year} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_azores_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}
-        bash submit-all-multi-model.sel-region-forecast-range-season.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_initial_year} ${CYLC_TASK_PARAM_final_year} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_iceland_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
+        bash submit-all-multi-model.sel-region-forecast-range-season.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_initial_year} ${CYLC_TASK_PARAM_final_year} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
     [[calc_anoms<model><variable><region><forecast_range><season>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        bash submit-all-multi-model.calc-anoms.GPT.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_azores_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}
-        bash submit-all-multi-model.calc-anoms.GPT.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_iceland_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
+        bash submit-all-multi-model.calc-anoms.GPT.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
     [[apply_lag<model><variable><region><forecast_range><season><lag>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        bash submit-all-multi-model.apply-lag.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_azores_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_lag}
-        bash submit-all-multi-model.apply-lag.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_iceland_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_lag}"""
+        bash submit-all-multi-model.apply-lag.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_lag}"""
     [[calc_nao<model><variable><forecast_range><season><lag>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
