@@ -66,7 +66,28 @@ for file in "${files[@]}"; do
 
     start_date=$((year + 1))-12-01
     for ((i = 0; i <= 3; i++)); do
-        end_date=$((year + 9 - i))-03-31
+
+        # The end date is dependent on which init - i we are processing
+        # First echo the init - i we are processing
+        echo "[INFO] Currently processing file: init - $i"
+
+        # For init - 0 we shift the end date back by 3 years
+        # For init - 1 we shift the end date back by 2 years
+        # For init - 2 we shift the end date back by 1 year
+        # For init - 3 we do not shift the end date
+        # Format this using an if statement
+        if [ "$i" -eq 0 ]; then
+            end_date=$((year + 9 - i - 3))-03-31
+        elif [ "$i" -eq 1 ]; then
+            end_date=$((year + 9 - i - 2))-03-31
+        elif [ "$i" -eq 2 ]; then
+            end_date=$((year + 9 - i - 1))-03-31
+        elif [ "$i" -eq 3 ]; then
+            end_date=$((year + 9 - i))-03-31
+        fi
+    
+        # Echo the init - i case and the end date
+        echo "[INFO] init - $i case, end date: $end_date for start date: $start_date"
         echo "[INFO] init year - $i start date: $start_date, end date: $end_date"
 
         temp_fname=$(basename "$file" | sed "s/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-${start_date}-${end_date}-r${run}-i${init}-anoms.init-minus-$i.nc/")
