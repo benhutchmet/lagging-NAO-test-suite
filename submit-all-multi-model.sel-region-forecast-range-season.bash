@@ -49,7 +49,6 @@ if [[ $model =~ ^[0-9]+$ ]]; then
     echo "[INFO] Extracting data for model: $model"
 fi
    
-
 # set the extractor script
 EXTRACTOR=$PWD/process_scripts/multi-model.sel-region-forecast-range-season.bash
 
