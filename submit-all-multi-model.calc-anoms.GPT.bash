@@ -12,6 +12,9 @@ submit_job() {
     local season=$5
     local output_dir="/work/scratch-nopw/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/lotus-outputs"
 
+    # Echo the region name
+    echo "[INFO] Selecting data for region $region"
+
     mkdir -p "$output_dir"
     echo "[INFO] Output directory: $output_dir"
     echo "[INFO] Submitting job for model: $model, variable: $variable, region: $region, forecast range: $forecast_range, season: $season"
@@ -40,6 +43,34 @@ main() {
     local region=$3
     local forecast_range=$4
     local season=$5
+
+    # If model is a number
+    # Between 1-12
+    # Then model is equal to the ith element of the models array $models
+    if [[ $model =~ ^[0-9]+$ ]]; then
+        # echo the model number
+        echo "[INFO] Model number: $model"
+
+        # Convert the models string to an array
+        models_array=($models)
+        # Echo the models array
+        echo "[INFO] models array: ${models_array[*]}"
+
+        # Extract the numbered element of the models array
+        model=${models_array[$model-1]}
+
+        # echo the model name
+        echo "[INFO] Model name: $model"
+        echo "[INFO] Extracting data for model: $model"
+    fi
+    
+    # If the region is the number 1, then region = azores
+    # If the region is the number 2, then region = iceland
+    if [[ $region -eq 1 ]]; then
+        region=azores
+    elif [[ $region -eq 2 ]]; then
+        region=iceland
+    fi
 
     # Set the extractor script
     EXTRACTOR="$PWD/process_scripts/multi-model.calc-anoms.bash"
