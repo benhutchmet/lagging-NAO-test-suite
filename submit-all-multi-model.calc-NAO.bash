@@ -36,6 +36,26 @@ forecast_range=$3
 season=$4
 lag=$5
 
+# If model is a number
+# Between 1-12
+# Then model is equal to the ith element of the models array $models
+if [[ $model =~ ^[0-9]+$ ]]; then
+    # echo the model number
+    echo "[INFO] Model number: $model"
+
+    # Convert the models string to an array
+    models_array=($models)
+    # Echo the models array
+    echo "[INFO] models array: ${models_array[*]}"
+
+    # Extract the numbered element of the models array
+    model=${models_array[$model-1]}
+
+    # echo the model name
+    echo "[INFO] Model name: $model"
+    echo "[INFO] Extracting data for model: $model"
+fi
+    
 # Set up the extractor script to be used
 EXTRACTOR=$PWD/process_scripts/multi-model.calc-NAO.bash
 
