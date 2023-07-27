@@ -32,11 +32,11 @@ init=$7
 module load jaspy
 
 # set the input and output directories
-AZORES_BASE_DIR="/work/scratch-nopw/benhutch/$variable/$model/azores/years_${forecast_range}/$season/outputs"
-ICELAND_BASE_DIR="/work/scratch-nopw/benhutch/$variable/$model/iceland/years_${forecast_range}/$season/outputs"
+AZORES_BASE_DIR="/work/scratch-nopw2/benhutch/$variable/$model/azores/years_${forecast_range}/$season/outputs"
+ICELAND_BASE_DIR="/work/scratch-nopw2/benhutch/$variable/$model/iceland/years_${forecast_range}/$season/outputs"
 AZORES_INPUT_DIR="$AZORES_BASE_DIR/lag_${lag}_anoms"
 ICELAND_INPUT_DIR="$ICELAND_BASE_DIR/lag_${lag}_anoms"
-OUTPUT_DIR="/work/scratch-nopw/benhutch/$variable/$model/NAO/years_${forecast_range}/$season/outputs"
+OUTPUT_DIR="/work/scratch-nopw2/benhutch/$variable/$model/NAO/years_${forecast_range}/$season/outputs"
 # make the output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
 

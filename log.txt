@@ -317,19 +317,19 @@ Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
 Shell debugging restarted
 + unset __lmod_sh_dbg
 + return 0
-+ BASE_DIR=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs
-+ INPUT_DIR=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms
-+ OUTPUT_DIR=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms
-+ TEMP_DIR=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp
-+ mkdir -p /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp
++ BASE_DIR=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs
++ INPUT_DIR=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms
++ OUTPUT_DIR=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms
++ TEMP_DIR=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp
++ mkdir -p /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp
 + pattern='years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s????-r1i1*anoms.nc'
 + files=($INPUT_DIR/$pattern)
-+ echo 'Files being processed: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
-Files being processed: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
-+ '[' '!' -f /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc ']'
++ echo 'Files being processed: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
+Files being processed: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ '[' '!' -f /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc ']'
 + for file in '"${files[@]}"'
-++ extract_year /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
+++ extract_year /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 ++ sed 's/.*_s\([0-9]\{4\}\)-.*/\1/'
 + year=1961
 + [[ ! 1961 =~ ^[0-9]{4}$ ]]
@@ -341,28 +341,28 @@ Files being processed: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_
 + end_date=1970-03-31
 + echo '[INFO] init year - 0 start date: 1962-12-01, end date: 1970-03-31'
 [INFO] init year - 0 start date: 1962-12-01, end date: 1970-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1962-12-01-1970-03-31-anoms.init-minus-0.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 + echo '[INFO] File year: 1961'
 [INFO] File year: 1961
 + pattern_year=1961
 + echo 'Searching for pattern: 1961'
 Searching for pattern: 1961
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1961
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ process_file 1962-12-01 1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ process_file 1962-12-01 1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
 + local start_date=1962-12-01
 + local end_date=1970-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
-+ cdo timmean -select,startdate=1962-12-01,enddate=1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
++ cdo timmean -select,startdate=1962-12-01,enddate=1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 32 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19MB].
@@ -372,27 +372,27 @@ cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19M
 + echo '[INFO] init year - 1 start date: 1962-12-01, end date: 1969-03-31'
 [INFO] init year - 1 start date: 1962-12-01, end date: 1969-03-31
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1962-12-01-1969-03-31-anoms.init-minus-1.nc/'
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 + echo '[INFO] File year: 1961'
 [INFO] File year: 1961
 + pattern_year=1960
 + echo 'Searching for pattern: 1960'
 Searching for pattern: 1960
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1960
 ++ head -n 1
 + target_file=
-+ process_file 1962-12-01 1969-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
++ process_file 1962-12-01 1969-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
 + local start_date=1962-12-01
 + local end_date=1969-03-31
 + local infile=
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
-+ cdo timmean -select,startdate=1962-12-01,enddate=1969-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
++ cdo timmean -select,startdate=1962-12-01,enddate=1969-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1969-03-31-anoms.init-minus-1.nc
 cdo(1) select: Open failed on ><
                No such file or directory
 cdo(1) select: Process started
@@ -401,28 +401,28 @@ cdo(1) select: Process started
 + end_date=1968-03-31
 + echo '[INFO] init year - 2 start date: 1962-12-01, end date: 1968-03-31'
 [INFO] init year - 2 start date: 1962-12-01, end date: 1968-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1962-12-01-1968-03-31-anoms.init-minus-2.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 + echo '[INFO] File year: 1961'
 [INFO] File year: 1961
 + pattern_year=1959
 + echo 'Searching for pattern: 1959'
 Searching for pattern: 1959
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1959
 ++ head -n 1
 + target_file=
-+ process_file 1962-12-01 1968-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
++ process_file 1962-12-01 1968-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
 + local start_date=1962-12-01
 + local end_date=1968-03-31
 + local infile=
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
-+ cdo timmean -select,startdate=1962-12-01,enddate=1968-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
++ cdo timmean -select,startdate=1962-12-01,enddate=1968-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1968-03-31-anoms.init-minus-2.nc
 cdo(1) select: Open failed on ><
                No such file or directory
 cdo(1) select: Process started
@@ -431,36 +431,36 @@ cdo(1) select: Process started
 + end_date=1967-03-31
 + echo '[INFO] init year - 3 start date: 1962-12-01, end date: 1967-03-31'
 [INFO] init year - 3 start date: 1962-12-01, end date: 1967-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1962-12-01-1967-03-31-anoms.init-minus-3.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
 + echo '[INFO] File year: 1961'
 [INFO] File year: 1961
 + pattern_year=1958
 + echo 'Searching for pattern: 1958'
 Searching for pattern: 1958
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1958
 ++ head -n 1
 + target_file=
-+ process_file 1962-12-01 1967-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
++ process_file 1962-12-01 1967-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
 + local start_date=1962-12-01
 + local end_date=1967-03-31
 + local infile=
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
-+ cdo timmean -select,startdate=1962-12-01,enddate=1967-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
++ cdo timmean -select,startdate=1962-12-01,enddate=1967-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1967-03-31-anoms.init-minus-3.nc
 cdo(1) select: Open failed on ><
                No such file or directory
 cdo(1) select: Process started
 + (( i++ ))
 + (( i <= 3 ))
 + for file in '"${files[@]}"'
-++ extract_year /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
+++ extract_year /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 ++ sed 's/.*_s\([0-9]\{4\}\)-.*/\1/'
 + year=1962
 + [[ ! 1962 =~ ^[0-9]{4}$ ]]
@@ -472,28 +472,28 @@ cdo(1) select: Process started
 + end_date=1971-03-31
 + echo '[INFO] init year - 0 start date: 1963-12-01, end date: 1971-03-31'
 [INFO] init year - 0 start date: 1963-12-01, end date: 1971-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1963-12-01-1971-03-31-anoms.init-minus-0.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 + echo '[INFO] File year: 1962'
 [INFO] File year: 1962
 + pattern_year=1962
 + echo 'Searching for pattern: 1962'
 Searching for pattern: 1962
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1962
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ process_file 1963-12-01 1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ process_file 1963-12-01 1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
 + local start_date=1963-12-01
 + local end_date=1971-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
-+ cdo timmean -select,startdate=1963-12-01,enddate=1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
++ cdo timmean -select,startdate=1963-12-01,enddate=1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 32 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19MB].
@@ -502,28 +502,28 @@ cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19M
 + end_date=1970-03-31
 + echo '[INFO] init year - 1 start date: 1963-12-01, end date: 1970-03-31'
 [INFO] init year - 1 start date: 1963-12-01, end date: 1970-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1963-12-01-1970-03-31-anoms.init-minus-1.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 + echo '[INFO] File year: 1962'
 [INFO] File year: 1962
 + pattern_year=1961
 + echo 'Searching for pattern: 1961'
 Searching for pattern: 1961
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1961
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ process_file 1963-12-01 1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ process_file 1963-12-01 1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
 + local start_date=1963-12-01
 + local end_date=1970-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
-+ cdo timmean -select,startdate=1963-12-01,enddate=1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
++ cdo timmean -select,startdate=1963-12-01,enddate=1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 28 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19MB].
@@ -532,28 +532,28 @@ cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19M
 + end_date=1969-03-31
 + echo '[INFO] init year - 2 start date: 1963-12-01, end date: 1969-03-31'
 [INFO] init year - 2 start date: 1963-12-01, end date: 1969-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1963-12-01-1969-03-31-anoms.init-minus-2.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 + echo '[INFO] File year: 1962'
 [INFO] File year: 1962
 + pattern_year=1960
 + echo 'Searching for pattern: 1960'
 Searching for pattern: 1960
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1960
 ++ head -n 1
 + target_file=
-+ process_file 1963-12-01 1969-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
++ process_file 1963-12-01 1969-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
 + local start_date=1963-12-01
 + local end_date=1969-03-31
 + local infile=
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
-+ cdo timmean -select,startdate=1963-12-01,enddate=1969-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
++ cdo timmean -select,startdate=1963-12-01,enddate=1969-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1969-03-31-anoms.init-minus-2.nc
 cdo(1) select: Open failed on ><
                No such file or directory
 cdo(1) select: Process started
@@ -562,36 +562,36 @@ cdo(1) select: Process started
 + end_date=1968-03-31
 + echo '[INFO] init year - 3 start date: 1963-12-01, end date: 1968-03-31'
 [INFO] init year - 3 start date: 1963-12-01, end date: 1968-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1963-12-01-1968-03-31-anoms.init-minus-3.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
 + echo '[INFO] File year: 1962'
 [INFO] File year: 1962
 + pattern_year=1959
 + echo 'Searching for pattern: 1959'
 Searching for pattern: 1959
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1959
 ++ head -n 1
 + target_file=
-+ process_file 1963-12-01 1968-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
++ process_file 1963-12-01 1968-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
 + local start_date=1963-12-01
 + local end_date=1968-03-31
 + local infile=
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
-+ cdo timmean -select,startdate=1963-12-01,enddate=1968-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
++ cdo timmean -select,startdate=1963-12-01,enddate=1968-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1968-03-31-anoms.init-minus-3.nc
 cdo(1) select: Open failed on ><
                No such file or directory
 cdo(1) select: Process started
 + (( i++ ))
 + (( i <= 3 ))
 + for file in '"${files[@]}"'
-++ extract_year /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
+++ extract_year /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 ++ sed 's/.*_s\([0-9]\{4\}\)-.*/\1/'
 + year=1963
 + [[ ! 1963 =~ ^[0-9]{4}$ ]]
@@ -603,28 +603,28 @@ cdo(1) select: Process started
 + end_date=1972-03-31
 + echo '[INFO] init year - 0 start date: 1964-12-01, end date: 1972-03-31'
 [INFO] init year - 0 start date: 1964-12-01, end date: 1972-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1964-12-01-1972-03-31-anoms.init-minus-0.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 + echo '[INFO] File year: 1963'
 [INFO] File year: 1963
 + pattern_year=1963
 + echo 'Searching for pattern: 1963'
 Searching for pattern: 1963
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1963
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-+ process_file 1964-12-01 1972-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ process_file 1964-12-01 1972-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
 + local start_date=1964-12-01
 + local end_date=1972-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
-+ cdo timmean -select,startdate=1964-12-01,enddate=1972-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
++ cdo timmean -select,startdate=1964-12-01,enddate=1972-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 32 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19MB].
@@ -633,28 +633,28 @@ cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19M
 + end_date=1971-03-31
 + echo '[INFO] init year - 1 start date: 1964-12-01, end date: 1971-03-31'
 [INFO] init year - 1 start date: 1964-12-01, end date: 1971-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1964-12-01-1971-03-31-anoms.init-minus-1.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 + echo '[INFO] File year: 1963'
 [INFO] File year: 1963
 + pattern_year=1962
 + echo 'Searching for pattern: 1962'
 Searching for pattern: 1962
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1962
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ process_file 1964-12-01 1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ process_file 1964-12-01 1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
 + local start_date=1964-12-01
 + local end_date=1971-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
-+ cdo timmean -select,startdate=1964-12-01,enddate=1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
++ cdo timmean -select,startdate=1964-12-01,enddate=1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 28 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19MB].
@@ -663,28 +663,28 @@ cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19M
 + end_date=1970-03-31
 + echo '[INFO] init year - 2 start date: 1964-12-01, end date: 1970-03-31'
 [INFO] init year - 2 start date: 1964-12-01, end date: 1970-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1964-12-01-1970-03-31-anoms.init-minus-2.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 + echo '[INFO] File year: 1963'
 [INFO] File year: 1963
 + pattern_year=1961
 + echo 'Searching for pattern: 1961'
 Searching for pattern: 1961
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1961
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ process_file 1964-12-01 1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ process_file 1964-12-01 1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
 + local start_date=1964-12-01
 + local end_date=1970-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
-+ cdo timmean -select,startdate=1964-12-01,enddate=1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
++ cdo timmean -select,startdate=1964-12-01,enddate=1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 24 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 24 values from 1 variable over 24 timesteps [0.01s 19MB].
@@ -693,36 +693,36 @@ cdo    timmean: Processed 24 values from 1 variable over 24 timesteps [0.01s 19M
 + end_date=1969-03-31
 + echo '[INFO] init year - 3 start date: 1964-12-01, end date: 1969-03-31'
 [INFO] init year - 3 start date: 1964-12-01, end date: 1969-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1964-12-01-1969-03-31-anoms.init-minus-3.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
 + echo '[INFO] File year: 1963'
 [INFO] File year: 1963
 + pattern_year=1960
 + echo 'Searching for pattern: 1960'
 Searching for pattern: 1960
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1960
 ++ head -n 1
 + target_file=
-+ process_file 1964-12-01 1969-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
++ process_file 1964-12-01 1969-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
 + local start_date=1964-12-01
 + local end_date=1969-03-31
 + local infile=
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
-+ cdo timmean -select,startdate=1964-12-01,enddate=1969-03-31 '' /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
++ cdo timmean -select,startdate=1964-12-01,enddate=1969-03-31 '' /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1969-03-31-anoms.init-minus-3.nc
 cdo(1) select: Open failed on ><
                No such file or directory
 cdo(1) select: Process started
 + (( i++ ))
 + (( i <= 3 ))
 + for file in '"${files[@]}"'
-++ extract_year /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
+++ extract_year /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 ++ sed 's/.*_s\([0-9]\{4\}\)-.*/\1/'
 + year=1964
 + [[ ! 1964 =~ ^[0-9]{4}$ ]]
@@ -734,28 +734,28 @@ cdo(1) select: Process started
 + end_date=1973-03-31
 + echo '[INFO] init year - 0 start date: 1965-12-01, end date: 1973-03-31'
 [INFO] init year - 0 start date: 1965-12-01, end date: 1973-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1965-12-01-1973-03-31-anoms.init-minus-0.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 + echo '[INFO] File year: 1964'
 [INFO] File year: 1964
 + pattern_year=1964
 + echo 'Searching for pattern: 1964'
 Searching for pattern: 1964
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1964
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
-+ process_file 1965-12-01 1973-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ process_file 1965-12-01 1973-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
 + local start_date=1965-12-01
 + local end_date=1973-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
-+ cdo timmean -select,startdate=1965-12-01,enddate=1973-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
++ cdo timmean -select,startdate=1965-12-01,enddate=1973-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 32 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19MB].
@@ -764,28 +764,28 @@ cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19M
 + end_date=1972-03-31
 + echo '[INFO] init year - 1 start date: 1965-12-01, end date: 1972-03-31'
 [INFO] init year - 1 start date: 1965-12-01, end date: 1972-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1965-12-01-1972-03-31-anoms.init-minus-1.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 + echo '[INFO] File year: 1964'
 [INFO] File year: 1964
 + pattern_year=1963
 + echo 'Searching for pattern: 1963'
 Searching for pattern: 1963
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1963
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-+ process_file 1965-12-01 1972-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ process_file 1965-12-01 1972-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
 + local start_date=1965-12-01
 + local end_date=1972-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
-+ cdo timmean -select,startdate=1965-12-01,enddate=1972-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
++ cdo timmean -select,startdate=1965-12-01,enddate=1972-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 28 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19MB].
@@ -794,28 +794,28 @@ cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19M
 + end_date=1971-03-31
 + echo '[INFO] init year - 2 start date: 1965-12-01, end date: 1971-03-31'
 [INFO] init year - 2 start date: 1965-12-01, end date: 1971-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1965-12-01-1971-03-31-anoms.init-minus-2.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 + echo '[INFO] File year: 1964'
 [INFO] File year: 1964
 + pattern_year=1962
 + echo 'Searching for pattern: 1962'
 Searching for pattern: 1962
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1962
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ process_file 1965-12-01 1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ process_file 1965-12-01 1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
 + local start_date=1965-12-01
 + local end_date=1971-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
-+ cdo timmean -select,startdate=1965-12-01,enddate=1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
++ cdo timmean -select,startdate=1965-12-01,enddate=1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 24 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 24 values from 1 variable over 24 timesteps [0.01s 19MB].
@@ -824,36 +824,36 @@ cdo    timmean: Processed 24 values from 1 variable over 24 timesteps [0.01s 19M
 + end_date=1970-03-31
 + echo '[INFO] init year - 3 start date: 1965-12-01, end date: 1970-03-31'
 [INFO] init year - 3 start date: 1965-12-01, end date: 1970-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1965-12-01-1970-03-31-anoms.init-minus-3.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
 + echo '[INFO] File year: 1964'
 [INFO] File year: 1964
 + pattern_year=1961
 + echo 'Searching for pattern: 1961'
 Searching for pattern: 1961
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1961
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ process_file 1965-12-01 1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ process_file 1965-12-01 1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
 + local start_date=1965-12-01
 + local end_date=1970-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
-+ cdo timmean -select,startdate=1965-12-01,enddate=1970-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
++ cdo timmean -select,startdate=1965-12-01,enddate=1970-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 20 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 20 values from 1 variable over 20 timesteps [0.01s 19MB].
 + (( i++ ))
 + (( i <= 3 ))
 + for file in '"${files[@]}"'
-++ extract_year /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ extract_year /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ sed 's/.*_s\([0-9]\{4\}\)-.*/\1/'
 + year=1965
 + [[ ! 1965 =~ ^[0-9]{4}$ ]]
@@ -865,28 +865,28 @@ cdo    timmean: Processed 20 values from 1 variable over 20 timesteps [0.01s 19M
 + end_date=1974-03-31
 + echo '[INFO] init year - 0 start date: 1966-12-01, end date: 1974-03-31'
 [INFO] init year - 0 start date: 1966-12-01, end date: 1974-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1966-12-01-1974-03-31-anoms.init-minus-0.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 + echo '[INFO] File year: 1965'
 [INFO] File year: 1965
 + pattern_year=1965
 + echo 'Searching for pattern: 1965'
 Searching for pattern: 1965
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1965
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
-+ process_file 1966-12-01 1974-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ process_file 1966-12-01 1974-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
 + local start_date=1966-12-01
 + local end_date=1974-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
-+ cdo timmean -select,startdate=1966-12-01,enddate=1974-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
++ cdo timmean -select,startdate=1966-12-01,enddate=1974-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 32 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19MB].
@@ -895,28 +895,28 @@ cdo    timmean: Processed 32 values from 1 variable over 32 timesteps [0.01s 19M
 + end_date=1973-03-31
 + echo '[INFO] init year - 1 start date: 1966-12-01, end date: 1973-03-31'
 [INFO] init year - 1 start date: 1966-12-01, end date: 1973-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1966-12-01-1973-03-31-anoms.init-minus-1.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 + echo '[INFO] File year: 1965'
 [INFO] File year: 1965
 + pattern_year=1964
 + echo 'Searching for pattern: 1964'
 Searching for pattern: 1964
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1964
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
-+ process_file 1966-12-01 1973-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ process_file 1966-12-01 1973-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
 + local start_date=1966-12-01
 + local end_date=1973-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
-+ cdo timmean -select,startdate=1966-12-01,enddate=1973-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
++ cdo timmean -select,startdate=1966-12-01,enddate=1973-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 28 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19MB].
@@ -925,28 +925,28 @@ cdo    timmean: Processed 28 values from 1 variable over 28 timesteps [0.01s 19M
 + end_date=1972-03-31
 + echo '[INFO] init year - 2 start date: 1966-12-01, end date: 1972-03-31'
 [INFO] init year - 2 start date: 1966-12-01, end date: 1972-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1966-12-01-1972-03-31-anoms.init-minus-2.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 + echo '[INFO] File year: 1965'
 [INFO] File year: 1965
 + pattern_year=1963
 + echo 'Searching for pattern: 1963'
 Searching for pattern: 1963
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1963
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-+ process_file 1966-12-01 1972-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ process_file 1966-12-01 1972-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
 + local start_date=1966-12-01
 + local end_date=1972-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
-+ cdo timmean -select,startdate=1966-12-01,enddate=1972-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
++ cdo timmean -select,startdate=1966-12-01,enddate=1972-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 24 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 24 values from 1 variable over 24 timesteps [0.01s 19MB].
@@ -955,28 +955,28 @@ cdo    timmean: Processed 24 values from 1 variable over 24 timesteps [0.01s 19M
 + end_date=1971-03-31
 + echo '[INFO] init year - 3 start date: 1966-12-01, end date: 1971-03-31'
 [INFO] init year - 3 start date: 1966-12-01, end date: 1971-03-31
-++ basename /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ basename /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ sed 's/\(.*\)_s\([0-9]\{4\}\)-.*/\1_s\2-1966-12-01-1971-03-31-anoms.init-minus-3.nc/'
 + temp_fname=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
-+ temp_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
-+ echo '[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
-[INFO] File path: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
++ temp_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
++ echo '[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc'
+[INFO] File path: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 + echo '[INFO] File year: 1965'
 [INFO] File year: 1965
 + pattern_year=1962
 + echo 'Searching for pattern: 1962'
 Searching for pattern: 1962
 ++ tr ' ' '\n'
-++ echo /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
+++ echo /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-r1i1p1f1_gn_196301-197212-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-r1i1p1f1_gn_196401-197312-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-r1i1p1f1_gn_196501-197412-anoms.nc
 ++ grep -F 1962
 ++ head -n 1
-+ target_file=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ process_file 1966-12-01 1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
++ target_file=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ process_file 1966-12-01 1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
 + local start_date=1966-12-01
 + local end_date=1971-03-31
-+ local infile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
-+ local outfile=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
-+ cdo timmean -select,startdate=1966-12-01,enddate=1971-03-31 /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
++ local infile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc
++ local outfile=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
++ cdo timmean -select,startdate=1966-12-01,enddate=1971-03-31 /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-r1i1p1f1_gn_196201-197112-anoms.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
 cdo(1) select: Process started
 cdo(1) select: Processed 20 values from 1 variable over 32 timesteps.
 cdo    timmean: Processed 20 values from 1 variable over 20 timesteps [0.01s 19MB].
@@ -986,34 +986,34 @@ cdo    timmean: Processed 20 values from 1 variable over 20 timesteps [0.01s 19M
 + files_init_minus_1_to_merge=($TEMP_DIR/*-anoms.init-minus-1.nc)
 + files_init_minus_2_to_merge=($TEMP_DIR/*-anoms.init-minus-2.nc)
 + files_init_minus_3_to_merge=($TEMP_DIR/*-anoms.init-minus-3.nc)
-+ echo 'Files to merge same init: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc'
-Files to merge same init: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
-+ echo 'Files to merge init - 1: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc'
-Files to merge init - 1: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
-+ echo 'Files to merge init - 2: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc'
-Files to merge init - 2: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
-+ echo 'Files to merge init - 3: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc'
-Files to merge init - 3: /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
-+ '[' '!' -f /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc ']'
-+ '[' '!' -f /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc ']'
-+ '[' '!' -f /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc ']'
-+ '[' '!' -f /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc ']'
++ echo 'Files to merge same init: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc'
+Files to merge same init: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc
++ echo 'Files to merge init - 1: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc'
+Files to merge init - 1: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc
++ echo 'Files to merge init - 2: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc'
+Files to merge init - 2: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc
++ echo 'Files to merge init - 3: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc'
+Files to merge init - 3: /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc
++ '[' '!' -f /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc ']'
++ '[' '!' -f /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc ']'
++ '[' '!' -f /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc ']'
++ '[' '!' -f /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc ']'
 + output_fname_same_init=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc
 + output_fname_init_minus_1=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-1.nc
 + output_fname_init_minus_2=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-2.nc
 + output_fname_init_minus_3=years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-3.nc
-+ output_file_same_init=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc
-+ output_file_init_minus_1=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-1.nc
-+ output_file_init_minus_2=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-2.nc
-+ output_file_init_minus_3=/work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-3.nc
-+ cdo mergetime /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc
++ output_file_same_init=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc
++ output_file_init_minus_1=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-1.nc
++ output_file_init_minus_2=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-2.nc
++ output_file_init_minus_3=/work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-3.nc
++ cdo mergetime /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-1962-12-01-1970-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1971-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1972-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1973-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1974-03-31-anoms.init-minus-0.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc
 
-cdo    mergetime (Abort): Outputfile /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc already exists!
-+ cdo mergetime /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-1.nc
+cdo    mergetime (Abort): Outputfile /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.same-init.nc already exists!
++ cdo mergetime /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1962-1963-12-01-1970-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1971-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1972-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1973-03-31-anoms.init-minus-1.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-1.nc
 cdo    mergetime: Processed 4 values from 4 variables over 4 timesteps [0.01s 18MB].
-+ cdo mergetime /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-2.nc
++ cdo mergetime /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1963-1964-12-01-1970-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1971-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1972-03-31-anoms.init-minus-2.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-2.nc
 cdo    mergetime: Processed 3 values from 3 variables over 3 timesteps [0.01s 18MB].
-+ cdo mergetime /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc /work/scratch-nopw/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-3.nc
++ cdo mergetime /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1964-1965-12-01-1970-03-31-anoms.init-minus-3.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/tmp/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1965-1966-12-01-1971-03-31-anoms.init-minus-3.nc /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/azores/years_2-9/DJFM/outputs/lag_4_anoms/years-2-9-DJFM-azores-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_anoms.r1i1.init-minus-3.nc
 cdo    mergetime: Processed 2 values from 2 variables over 2 timesteps [0.01s 18MB].
 + echo '[INFO] Script completed successfully.'
 [INFO] Script completed successfully.

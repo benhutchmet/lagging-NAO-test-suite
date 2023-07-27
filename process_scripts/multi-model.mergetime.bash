@@ -32,14 +32,14 @@ module load jaspy
 
 
 # the anomaly files are in the following directory:
-# /work/scratch-nopw/benhutch/psl/CMCC-CM2-SR5/north-atlantic/years_2-9/DJFM/outputs/anoms
+# /work/scratch-nopw2/benhutch/psl/CMCC-CM2-SR5/north-atlantic/years_2-9/DJFM/outputs/anoms
 # they are named as follows:
 # mean-years-2-9-DJFM-north-atlantic-psl_Amon_CMCC-CM2-SR5_dcppA-hindcast_s1960-r10i1p1f1_gn_196011-197012-anoms.nc
 
 
 
 # set up the files
-anom_files_dir="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/anoms"
+anom_files_dir="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/anoms"
 anom_files_name="mean-years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}i${init_scheme}*anoms.nc"
 files="$anom_files_dir/$anom_files_name"
 

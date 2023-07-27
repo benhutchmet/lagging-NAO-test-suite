@@ -139,7 +139,7 @@ echo "Extracting data for all of the models: ${models}"
     esac
 
     # Set up the output dir for the LOTUS output
-    OUTPUTS_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/years_${forecast_range}/${season}/lotus-outputs"
+    OUTPUTS_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/years_${forecast_range}/${season}/lotus-outputs"
     mkdir -p $OUTPUTS_DIR
 
         # loop over the ensemble members
@@ -178,7 +178,7 @@ else
 echo "Processing ${model}"
 
 # Set up the output dir for the LOTUS output
-OUTPUTS_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/years_${forecast_range}/${season}/lotus-outputs"
+OUTPUTS_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/years_${forecast_range}/${season}/lotus-outputs"
 mkdir -p $OUTPUTS_DIR
 
 # Case statement to set the number of ensemble members and inits

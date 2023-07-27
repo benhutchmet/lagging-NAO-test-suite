@@ -25,7 +25,7 @@ init=$4
 variable=$5
 
 # set the output directory
-OUTPUT_DIR=/work/scratch-nopw/benhutch/$variable/$model/outputs/mergetime
+OUTPUT_DIR=/work/scratch-nopw2/benhutch/$variable/$model/outputs/mergetime
 # make the output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
 

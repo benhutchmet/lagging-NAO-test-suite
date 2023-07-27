@@ -35,7 +35,7 @@ module load jaspy
 
 # Set up the input directory
 # We want the dir which contains the anoms data
-INPUT_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/anoms"
+INPUT_DIR="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/anoms"
 
 # Files will have filename like this:
 #years-2-9-DJFM-north-atlantic-psl_Amon_CMCC-CM2-SR5_dcppA-hindcast_s2019-r9i1p1f1_gn_201911-202912-anoms.nc
@@ -54,8 +54,8 @@ if [ ! -f $files ]; then
 fi
 
 # Set up the output directory
-OUTPUT_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/lag_${lag}_anoms"
-TEMP_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/tmp"
+OUTPUT_DIR="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/lag_${lag}_anoms"
+TEMP_DIR="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs/tmp"
 
 # Create the output directory if it doesn't exist
 if [ ! -d $OUTPUT_DIR ]; then

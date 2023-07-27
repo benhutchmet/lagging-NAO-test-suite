@@ -48,7 +48,7 @@ echo "[INFO] Extracting data for all models: $models"
 
     # Set up the output directory
     # For the LOTUS outputs
-    OUTPUT_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/lotus-outputs"
+    OUTPUT_DIR="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/lotus-outputs"
     mkdir -p $OUTPUT_DIR
 
     # Echo the output directory
@@ -69,7 +69,7 @@ echo "[INFO] Calculating anomalies for model: $model"
 
 # Set up the output directory
 # For the LOTUS outputs
-OUTPUT_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/lotus-outputs"
+OUTPUT_DIR="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/lotus-outputs"
 mkdir -p $OUTPUT_DIR
 
 # Echo the output directory

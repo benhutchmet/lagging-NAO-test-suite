@@ -51,7 +51,7 @@ def load_lagged_ensemble_members(forecast_range, season, models):
     """
 
     # set up the pattern for the directory where the files are stored
-    NAO_dir = "/work/scratch-nopw/benhutch/psl/"
+    NAO_dir = "/work/scratch-nopw2/benhutch/psl/"
 
     # create an empty dictionary
     lagged_ensemble_members = {}

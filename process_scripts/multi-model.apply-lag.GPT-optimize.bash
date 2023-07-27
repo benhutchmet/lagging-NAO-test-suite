@@ -35,8 +35,8 @@ init=$8
 
 module load jaspy
 
-BASE_DIR="/work/scratch-nopw/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs"
-INPUT_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs/anoms"
+BASE_DIR="/work/scratch-nopw2/benhutch/$variable/$model/$region/years_${forecast_range}/$season/outputs"
+INPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs/anoms"
 OUTPUT_DIR="${BASE_DIR}/lag_${lag}_anoms"
 TEMP_DIR="${BASE_DIR}/tmp"
 mkdir -p "$OUTPUT_DIR" "$TEMP_DIR"

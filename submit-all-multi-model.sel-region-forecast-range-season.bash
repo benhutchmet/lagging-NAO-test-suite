@@ -99,7 +99,7 @@ echo "[INFO] Extracting data for all models: $models"
     echo "[INFO] Number of ensemble members: $run"
 
     # Set the output directory for the LOTUS outputs
-    OUTPUTS_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/lotus-outputs"
+    OUTPUTS_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/lotus-outputs"
     mkdir -p $OUTPUTS_DIR
 
         # sequence through the years specified
@@ -129,7 +129,7 @@ else
 echo "[INFO] Extracting data for model: $model"
 
 # Set up the output directory for the LOTUS outputs
-OUTPUTS_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/lotus-outputs"
+OUTPUTS_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/lotus-outputs"
 mkdir -p $OUTPUTS_DIR
 
 # Set up the number of ensemble members using a case statement

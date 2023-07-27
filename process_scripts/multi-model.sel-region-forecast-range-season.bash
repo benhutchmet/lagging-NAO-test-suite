@@ -84,7 +84,7 @@ if [ "$variable" == "psl" ]; then
     # if the model is HadGEM3 or EC-Earth3
     elif [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
     # set up the input files
-    files="/work/scratch-nopw/benhutch/psl/${model}/outputs/mergetime/psl_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
+    files="/work/scratch-nopw2/benhutch/psl/${model}/outputs/mergetime/psl_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
     else
     echo "[ERROR] Model not recognised for variable psl"
     exit 1
@@ -104,7 +104,7 @@ elif [ "$variable" == "tas" ]; then
     # if the model is HadGEM3 or EC-Earth3
     elif [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
     # set up the input files
-    files="/work/scratch-nopw/benhutch/tas/${model}/outputs/mergetime/tas_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
+    files="/work/scratch-nopw2/benhutch/tas/${model}/outputs/mergetime/tas_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
     else
     echo "[ERROR] Model not recognised for variable tas"
     exit 1
@@ -123,7 +123,7 @@ elif [ "$variable" == "rsds" ]; then
     files="/work/xfc/vol5/user_cache/benhutch/rsds/${model}/rsds_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*p*f*_g*_*.nc"
     elif [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
     # set up the input files
-    files="/work/scratch-nopw/benhutch/rsds/${model}/outputs/mergetime/rsds_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
+    files="/work/scratch-nopw2/benhutch/rsds/${model}/outputs/mergetime/rsds_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
     else
     echo "[ERROR] Model not recognised for variable rsds"
     exit 1
@@ -134,7 +134,7 @@ elif [ "$variable" == "sfcWind" ]; then
     # this includes HadGEM3-GC31-MM, EC-Earth3
     if [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
     # set up the input files
-    files="/work/scratch-nopw/benhutch/sfcWind/${model}/outputs/mergetime/sfcWind_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
+    files="/work/scratch-nopw2/benhutch/sfcWind/${model}/outputs/mergetime/sfcWind_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
     # set up the models downloaded from ESGF
     # this includes CESM1-1-CAM5-CMIP5, FGOALS-f3-L, BCC-CSM2-MR, IPSL-CM6A-LR, MIROC6, MPI-ESM1-2-HR, CanESM5, CMCC-CM2-SR5
     elif [ "$model" == "CESM1-1-CAM5-CMIP5" ] || [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "BCC-CSM2-MR" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
@@ -153,7 +153,7 @@ fi
 module load jaspy
 
 # set up the output directory
-OUTPUT_DIR="/work/scratch-nopw/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs"
+OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs"
 mkdir -p $OUTPUT_DIR
 
 # loop through the files and process them

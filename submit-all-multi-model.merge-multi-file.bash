@@ -51,7 +51,7 @@ if [ $model == "all" ]; then
         echo "[INFO] No. of ensemble members: $run"
 
         # set the output directory
-        OUTPUT_DIR=/work/scratch-nopw/benhutch/$variable/$model/lotus-outputs/
+        OUTPUT_DIR=/work/scratch-nopw2/benhutch/$variable/$model/lotus-outputs/
         # make the output directory if it doesn't exist
         mkdir -p $OUTPUT_DIR
 
@@ -136,7 +136,7 @@ else
     echo "[INFO] Submitting jobs for $model"
 
     # set up the output directory
-    OUTPUT_DIR=/work/scratch-nopw/benhutch/$variable/$model/lotus-outputs/
+    OUTPUT_DIR=/work/scratch-nopw2/benhutch/$variable/$model/lotus-outputs/
     # make the output directory if it doesn't exist
     mkdir -p $OUTPUT_DIR
 
