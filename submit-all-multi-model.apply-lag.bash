@@ -38,6 +38,34 @@ forecast_range=$4
 season=$5
 lag=$6
 
+# If model is a number
+# Between 1-12
+# Then model is equal to the ith element of the models array $models
+if [[ $model =~ ^[0-9]+$ ]]; then
+    # echo the model number
+    echo "[INFO] Model number: $model"
+
+    # Convert the models string to an array
+    models_array=($models)
+    # Echo the models array
+    echo "[INFO] models array: ${models_array[*]}"
+
+    # Extract the numbered element of the models array
+    model=${models_array[$model-1]}
+
+    # echo the model name
+    echo "[INFO] Model name: $model"
+    echo "[INFO] Extracting data for model: $model"
+fi
+
+# If the region is the number 1, then region = azores
+# If the region is the number 2, then region = iceland
+if [[ $region -eq 1 ]]; then
+    region=azores
+elif [[ $region -eq 2 ]]; then
+    region=iceland
+fi
+
 # set the extractor script
 #EXTRACTOR=$PWD/process_scripts/multi-model.apply-lag.bash
 # Additional options for the extractor script
