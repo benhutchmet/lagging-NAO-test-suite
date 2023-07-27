@@ -6,16 +6,17 @@ source ~/lagging-NAO-test-suite/dictionaries.bash
 echo "[INFO] models list: $models"
 
 # set the usage message
-USAGE_MESSAGE="Usage: test-model-no.bash <model_no>"
+USAGE_MESSAGE="Usage: test-model-no.bash <model_no> <region_no>"
 
 # check that the correct number of arguments have been passed
-if [ $# -ne 1 ]; then
+if [ $# -ne 2 ]; then
     echo "$USAGE_MESSAGE"
     exit 1
 fi
 
 # extract the model, initial year and final year
 model=$1
+region=$2
 
 # If model is a number
 # Between 1-12
@@ -42,3 +43,14 @@ if [[ $model =~ ^[0-9]+$ ]]; then
     echo "[INFO] Extracting data for model: $model"
 
 fi
+
+# If the region is the number 1, then region = azores
+# If the region is the number 2, then region = iceland
+if [[ $region -eq 1 ]]; then
+    region=azores
+elif [[ $region -eq 2 ]]; then
+    region=iceland
+fi
+
+# Echo the region name
+echo "[INFO] Selecting data for region $region"
