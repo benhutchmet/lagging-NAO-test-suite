@@ -156,6 +156,17 @@ module load jaspy
 OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs"
 mkdir -p $OUTPUT_DIR
 
+# If there are files
+# Ending with *.nc
+# in the OUTPUT DIR
+# Then echo "Files already exist"
+# and remove and overwrite these files
+if [ -f $OUTPUT_DIR/*.nc ]; then
+    echo "Files already exist"
+    echo "Overwriting files"
+    rm -f $OUTPUT_DIR/*.nc
+fi
+
 # loop through the files and process them
 for INPUT_FILE in $files; do
 
