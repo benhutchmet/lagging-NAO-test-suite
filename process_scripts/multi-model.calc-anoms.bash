@@ -64,21 +64,24 @@ process_files() {
         exit 1
     fi
 
-    # If there are files ending in *.nc
-    # in the $base_dir/anoms/*.nc directory
-    # then echo "Files already exist"
-    # and remove and overwrite these files
-    if [ -f $base_dir/anoms/*.nc ]; then
-        echo "Files already exist"
-        echo "Overwriting files"
-        rm -f $base_dir/anoms/*.nc
-    fi
+
 
     # Calculate the anomalies
     for file in $files_path; do
+        # Set up the filename and path
         filename=$(basename ${file})
+        OUTPUT_FILE="$base_dir/anoms/${filename%.nc}-anoms.nc"
+
+        # If the output file already exists, echo that this will be overwritten
+        # and remove the existing file
+        if [ -f $OUTPUT_FILE ]; then
+            echo "[WARNING] Output file already exists: $OUTPUT_FILE"
+            rm -f $OUTPUT_FILE
+            echo "[INFO] Removed existing file."
+        fi
+
         # take the fldmeans in this case for calculating NAO anomalies
-        cdo sub -fldmean ${file} -fldmean ${temp_model_mean_state} "$base_dir/anoms/${filename%.nc}-anoms.nc"
+        cdo sub -fldmean ${file} -fldmean ${temp_model_mean_state} ${OUTPUT_FILE}
     done
 }
 
