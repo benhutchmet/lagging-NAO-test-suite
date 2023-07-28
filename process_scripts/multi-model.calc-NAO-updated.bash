@@ -4,7 +4,7 @@
 # for each season and forecast range
 # NAO anomaly = azores - iceland
 #    
-# mutli-model.calc-NAO.bash <model> <variable> \
+# mutli-model.calc-NAO-updated.bash <model> <variable> \
 # <forecast-range> <season> <lag> <run> <init>
 #
 # For example: multi-model.calc-NAO.bash HadGEM3-GC31-MM psl \

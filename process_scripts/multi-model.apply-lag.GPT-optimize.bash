@@ -41,7 +41,7 @@ OUTPUT_DIR="${BASE_DIR}/lag_${lag}_anoms"
 TEMP_DIR="${BASE_DIR}/tmp"
 mkdir -p "$OUTPUT_DIR" "$TEMP_DIR"
 
-pattern="years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}i${init}*anoms.nc"
+pattern="mean-years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}i${init}*anoms.nc"
 files=($INPUT_DIR/$pattern)
 
 echo "Files being processed: ${files[*]}"
