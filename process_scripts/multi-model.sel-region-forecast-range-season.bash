@@ -156,17 +156,6 @@ module load jaspy
 OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs"
 mkdir -p $OUTPUT_DIR
 
-# If there are files
-# Ending with *.nc
-# in the OUTPUT DIR
-# Then echo "Files already exist"
-# and remove and overwrite these files
-if [ -f $OUTPUT_DIR/*.nc ]; then
-    echo "Files already exist"
-    echo "Overwriting files"
-    rm -f $OUTPUT_DIR/*.nc
-fi
-
 # loop through the files and process them
 for INPUT_FILE in $files; do
 
@@ -179,6 +168,32 @@ for INPUT_FILE in $files; do
     REGRIDDED_FILE="$OUTPUT_DIR/${regridded_fname}"
     OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
     MEAN_FILE="$OUTPUT_DIR/mean-${season_fname}"
+
+    # If any of the TEMP_FILE, REGRIDDED_FILE, OUTPUT_FILE, or MEAN_FILE already exist
+    # echo that the file already exists and these will be overwritten
+    if [ -f "$TEMP_FILE" ]; then
+        echo "WARNING: TEMP_FILE already exists: $TEMP_FILE"
+        echo "WARNING: TEMP_FILE will be overwritten"
+        rm -f $TEMP_FILE
+    fi
+
+    if [ -f "$REGRIDDED_FILE" ]; then
+        echo "WARNING: REGRIDDED_FILE already exists: $REGRIDDED_FILE"
+        echo "WARNING: REGRIDDED_FILE will be overwritten"
+        rm -f $REGRIDDED_FILE
+    fi
+
+    if [ -f "$OUTPUT_FILE" ]; then
+        echo "WARNING: OUTPUT_FILE already exists: $OUTPUT_FILE"
+        echo "WARNING: OUTPUT_FILE will be overwritten"
+        rm -f $OUTPUT_FILE
+    fi
+
+    if [ -f "$MEAN_FILE" ]; then
+        echo "WARNING: MEAN_FILE already exists: $MEAN_FILE"
+        echo "WARNING: MEAN_FILE will be overwritten"
+        rm -f $MEAN_FILE
+    fi
 
     # Regrid using bilinear interpolation
     # Selects region (as long as x and y dimensions divide by 2.5)
