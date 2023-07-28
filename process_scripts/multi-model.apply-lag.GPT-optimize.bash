@@ -124,10 +124,10 @@ done
 # Set up the files to be merged
 # These are in the format:
 # years-2-9-DJFM-azores-psl_Amon_CMCC-CM2-SR5_dcppA-hindcast_s2000-2001-12-01-2006-03-31-r7-i1-anoms.init-minus-0.nc
-files_same_init_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}-i${init}-anoms.init-minus-0.nc)
-files_init_minus_1_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}-i${init}-anoms.init-minus-1.nc)
-files_init_minus_2_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}-i${init}-anoms.init-minus-2.nc)
-files_init_minus_3_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????-r${run}-i${init}-anoms.init-minus-3.nc)
+files_same_init_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????*-r${run}-i${init}-anoms.init-minus-0.nc)
+files_init_minus_1_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????*-r${run}-i${init}-anoms.init-minus-1.nc)
+files_init_minus_2_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????*-r${run}-i${init}-anoms.init-minus-2.nc)
+files_init_minus_3_to_merge=($TEMP_DIR/years-${forecast_range}-${season}-${region}-${variable}_Amon_${model}_dcppA-hindcast_s????*-r${run}-i${init}-anoms.init-minus-3.nc)
 
 
 # echo the files we are trying to find
