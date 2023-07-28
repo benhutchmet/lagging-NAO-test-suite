@@ -40,6 +40,14 @@ process_files() {
 
     temp_model_mean_state="$base_dir/tmp/model_mean_state_${init_scheme}.nc"
 
+    # If the model mean state file already exists, then echo
+    # "Model mean state file already exists" and overwrite it
+    if [ -f $temp_model_mean_state ]; then
+        echo "Model mean state file already exists"
+        echo "Overwriting model mean state file"
+        rm -f $temp_model_mean_state
+    fi
+
     # Calculate the model mean state
     for file in $files_path; do
         temp_fname="temp-$(basename ${file})"
