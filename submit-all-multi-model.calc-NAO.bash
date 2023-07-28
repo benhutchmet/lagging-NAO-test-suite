@@ -57,7 +57,7 @@ if [[ $model =~ ^[0-9]+$ ]]; then
 fi
     
 # Set up the extractor script to be used
-EXTRACTOR=$PWD/process_scripts/multi-model.calc-NAO.bash
+EXTRACTOR=$PWD/process_scripts/multi-model.calc-NAO-updated.bash
 
 # Check that CDO is loaded
 module load jaspy
