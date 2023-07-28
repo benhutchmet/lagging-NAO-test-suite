@@ -65,7 +65,6 @@ process_files() {
     fi
 
 
-
     # Calculate the anomalies
     for file in $files_path; do
         # Set up the filename and path
