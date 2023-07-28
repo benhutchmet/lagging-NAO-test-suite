@@ -24,6 +24,12 @@ submit_job() {
 
 # Main script
 main() {
+    # Check that dictionaries.bash exists
+    if [ ! -f "$PWD/dictionaries.bash" ]; then
+        echo "[ERROR] dictionaries.bash does not exist"
+        exit 1
+    fi
+
     # Source the models list
     source "$PWD/dictionaries.bash"
     echo "[INFO] Models list: $models"
