@@ -64,6 +64,16 @@ process_files() {
         exit 1
     fi
 
+    # If there are files ending in *.nc
+    # in the $base_dir/anoms/*.nc directory
+    # then echo "Files already exist"
+    # and remove and overwrite these files
+    if [ -f $base_dir/anoms/*.nc ]; then
+        echo "Files already exist"
+        echo "Overwriting files"
+        rm -f $base_dir/anoms/*.nc
+    fi
+
     # Calculate the anomalies
     for file in $files_path; do
         filename=$(basename ${file})
