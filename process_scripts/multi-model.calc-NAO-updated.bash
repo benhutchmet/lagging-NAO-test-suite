@@ -116,44 +116,13 @@ output_shifted_minus_1="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${seaso
 output_shifted_minus_2="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-2.nc"
 output_shifted_minus_3="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.nc"
 
-# create extra temp files for iceland for init-minus-1 and init-minus-3
-iceland_pattern_minus_1_file_temp_2="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-1.temp-2.nc"
-iceland_pattern_minus_3_file_temp_2="${OUTPUT_DIR}/iceland_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.temp-2.nc"
-
-# and for azores
-azores_pattern_minus_1_file_temp_2="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-1.temp-2.nc"
-azores_pattern_minus_3_file_temp_2="${OUTPUT_DIR}/azores_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.temp-2.nc"
-
-# extra hour shift
-# for init-minus-1 and init-minus-3
-# for both iceland and the azores
-cdo shifttime,18hour $iceland_pattern_minus_1_file $iceland_pattern_minus_1_file_temp_2
-cdo shifttime,18hour $iceland_pattern_minus_3_file $iceland_pattern_minus_3_file_temp_2
-
-# for the azores
-cdo shifttime,18hour $azores_pattern_minus_1_file $azores_pattern_minus_1_file_temp_2
-cdo shifttime,18hour $azores_pattern_minus_3_file $azores_pattern_minus_3_file_temp_2
-
-# echo the times of the files
-echo "times of the files - iceland"
-cdo showdate $iceland_pattern_same_file
-cdo showdate $iceland_pattern_minus_1_file_temp_2
-cdo showdate $iceland_pattern_minus_2_file
-cdo showdate $iceland_pattern_minus_3_file_temp_2
-
-echo "times of the files - azores"
-cdo showdate $azores_pattern_same_file
-cdo showdate $azores_pattern_minus_1_file_temp_2
-cdo showdate $azores_pattern_minus_2_file
-cdo showdate $azores_pattern_minus_3_file_temp_2
-
 # take the difference between the azores and iceland files
 # for init-minus-1
-cdo sub $azores_pattern_minus_1_file_temp_2 $iceland_pattern_minus_1_file_temp_2 $output_shifted_minus_1
+cdo sub $azores_pattern_minus_1_file $iceland_pattern_minus_1_file $output_shifted_minus_1
 # for init-minus-2
 cdo sub $azores_pattern_minus_2_file $iceland_pattern_minus_2_file $output_shifted_minus_2
 # for init-minus-3
-cdo sub $azores_pattern_minus_3_file_temp_2 $iceland_pattern_minus_3_file_temp_2 $output_shifted_minus_3
+cdo sub $azores_pattern_minus_3_file $iceland_pattern_minus_3_file $output_shifted_minus_3
 
 # calculate the NAO for the same init files
 cdo sub $azores_pattern_same_file $iceland_pattern_same_file $output_same
