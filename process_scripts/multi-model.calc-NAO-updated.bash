@@ -116,6 +116,34 @@ output_shifted_minus_1="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${seaso
 output_shifted_minus_2="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-2.nc"
 output_shifted_minus_3="${OUTPUT_DIR}/NAO_${model}_${variable}_${region}_${season}_lag-${lag}_r${run}i${init}.init-minus-3.nc"
 
+# if the output files already exist, echo that this will be overwritten
+# and remove the existing files
+# within the output directory
+if [ -f "$output_same" ]; then
+    echo "[WARNING] Output file already exists: $output_same"
+    rm -f "$output_same"
+    echo "[INFO] Removed existing file."
+fi
+
+if [ -f "$output_shifted_minus_1" ]; then
+    echo "[WARNING] Output file already exists: $output_shifted_minus_1"
+    rm -f "$output_shifted_minus_1"
+    echo "[INFO] Removed existing file."
+fi
+
+if [ -f "$output_shifted_minus_2" ]; then
+    echo "[WARNING] Output file already exists: $output_shifted_minus_2"
+    rm -f "$output_shifted_minus_2"
+    echo "[INFO] Removed existing file."
+fi
+
+if [ -f "$output_shifted_minus_3" ]; then
+    echo "[WARNING] Output file already exists: $output_shifted_minus_3"
+    rm -f "$output_shifted_minus_3"
+    echo "[INFO] Removed existing file."
+fi
+
+
 # take the difference between the azores and iceland files
 # for init-minus-1
 cdo sub $azores_pattern_minus_1_file $iceland_pattern_minus_1_file $output_shifted_minus_1
