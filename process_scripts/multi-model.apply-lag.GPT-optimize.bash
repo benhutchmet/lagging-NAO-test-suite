@@ -16,6 +16,15 @@ process_file() {
     local end_date="$2"
     local infile="$3"
     local outfile="$4"
+
+    # If the output file already exists, echo that this will be overwritten
+    # and remove the existing file
+    if [ -f "$outfile" ]; then
+        echo "[WARNING] Output file already exists: $outfile"
+        rm -f "$outfile"
+        echo "[INFO] Removed existing file."
+    fi
+
     cdo timmean -select,startdate="$start_date",enddate="$end_date" "$infile" "$outfile"
 }
 
