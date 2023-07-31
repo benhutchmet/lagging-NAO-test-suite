@@ -677,6 +677,9 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
             # Increment the ensemble members count
             ensemble_members_count[model] += 1
 
+    # Convert the counts to a list of tuples
+    ensemble_members_count_list = [(model, count) for model, count in ensemble_members_count.items()]
+
     # Convert the list of ensemble members to an array
     ensemble_members_array = np.array(ensemble_members)
 
