@@ -710,13 +710,11 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     # Convert the type of years
     years = years.astype(str)
 
-    # Define the model times array using the years variable
-    model_times = np.array([f"{year}-01-01" for year in years])
+    # convert the data type of years to dtype='datetime64[Y]
+    years = years.astype("datetime64[Y]")
 
-    print("For the obs time:", type(obs_time))
-    print("For the model time:", type(model_times))
-    print("obs time", obs_time)
-    print("model time", model_times)
+    # set model time to years
+    model_time = years
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
