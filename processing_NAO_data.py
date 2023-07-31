@@ -719,9 +719,9 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
     acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
-                                               obs_time, "1968-01-01", "1970-12-31")
+                                               obs_time, "1968-01-01", "2010-12-31")
     acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
-                                              obs_time, "1968-01-01", "1970-12-31")
+                                              obs_time, "1968-01-01", "2019-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
     # For the short and long period
