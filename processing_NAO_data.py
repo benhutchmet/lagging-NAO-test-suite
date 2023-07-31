@@ -714,15 +714,15 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     model_times = np.array([f"{year}-01-01" for year in years])
 
     print("For the obs time:", type(obs_time))
-    print("For the model time:", type(years))
+    print("For the model time:", type(model_times))
     print("obs time", obs_time)
-    print("model time", years)
+    print("model time", model_times)
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
-    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, years,
+    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_times,
                                                obs_time, "1968-01-01", "1970-12-31")
-    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, years,
+    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_times,
                                               obs_time, "1968-01-01", "1970-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
