@@ -565,77 +565,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members,
 
     # Create a figure
     fig, ax = plt.subplots(figsize=(10, 6))
-
-    # extract the time from the combined model data
-    model_times = all_ensemble_members['time'].values
-
-    # convert the times
-    # define the desired format
-    desired_calendar = "standard"
-
-    # Convert the model times to the desired calendar type
-    converted_times = []
-    for time in model_times:
-        if isinstance(time, cftime.DatetimeNoLeap):
-            if hasattr(time, 'units'):
-                converted_time = cftime.date2num(time, units=time.units, calendar=desired_calendar)
-            else:
-                converted_time = time
-        elif isinstance(time, pd.Timestamp):
-            converted_time = cftime.date2num(time.to_pydatetime(), units=time.tz, calendar=desired_calendar)
-        else:
-            converted_time = time
-        converted_times.append(converted_time)
-
-    converted_times = np.array(converted_times)
-
-    # print the model times
-    print("model times", model_times)
-    print("model times shape", model_times.shape)
-
-    # print the converted times
-    print("converted times", converted_times)
-    print("converted times shape", converted_times.shape)
-
-    # create a new time array
-    # starting from the first year of the model times
-    # and ending at the last year of the model times
-    # in timestamp format
-    # extract the values from model times first
-    model_times_values = model_times
-    print("model times values", model_times_values)
-
-    # extract the first and last years
-    first_year = model_times_values[0].year
-    last_year = model_times_values[-1].year
-
-    # create a new time array
-    new_time_array = pd.date_range(start=f'{first_year}', end=f'{last_year}', freq='YS')
-
-    # Calculate the NAO index for the full lagged ensemble
-    model_nao_anoms_mean = all_ensemble_members.mean(dim=['model', 'init_scheme_member', 'lat', 'lon'])
-
-    # check the shape of this
-    print("shape of model nao anoms mean", np.shape(model_nao_anoms_mean))
-    print("values of model nao anoms mean", model_nao_anoms_mean)
-
-    # Extract the necessary data from 'all_ensemble_members'
-    extracted_data = all_ensemble_members
-
-    # Get the number of models, ensemble members, and time steps
-    num_models = len(models)
-    ensemble_members = extracted_data.shape[-1]
-    time_steps = extracted_data.shape[1]
-
-    # Create the new NumPy array
-    all_ensemble_members_array = np.zeros((ensemble_members * num_models, time_steps))
-
-    # Fill the array with the extracted data
-    for model_idx, model in enumerate(models):
-        start_idx = model_idx * ensemble_members
-        end_idx = start_idx + ensemble_members
-        all_ensemble_members_array[start_idx:end_idx] = extracted_data[model_idx, :, 0, 0, :].T
-
+    
     # Print the resulting array
     print(all_ensemble_members_array)
 
