@@ -534,6 +534,81 @@ def compute_rmse_confidence_intervals(obs_nao_anoms, adjusted_lagged_model_nao_a
 def ensemble_mean(data_array):
     return np.mean(data_array, axis=0)
 
+# Define a function to constrain the years to the years that are in all of the model members
+def constrain_years(model_data, models):
+    """
+    Constrains the years to the years that are in all of the models.
+
+    Parameters:
+    model_data (dict): The processed model data.
+    models (list): The list of models to be plotted.
+
+    Returns:
+    constrained_data (dict): The model data with years constrained to the years that are in all of the models.
+    """
+    # Initialize a list to store the years for each model
+    years_list = []
+
+    # Print the models being proces
+    # print("models:", models)
+    
+    # Loop over the models
+    for model in models:
+        # Extract the model data
+        model_data_combined = model_data[model]
+
+        # Loop over the ensemble members in the model data
+        for member in model_data_combined:
+            # Extract the years
+            years = member.time.dt.year.values
+
+            # Append the years to the list of years
+            years_list.append(years)
+
+    # Find the years that are in all of the models
+    common_years = list(set(years_list[0]).intersection(*years_list))
+
+    # Print the common years for debugging
+    # print("Common years:", common_years)
+    # print("Common years type:", type(common_years))
+    # print("Common years shape:", np.shape(common_years))
+
+    # Initialize a dictionary to store the constrained data
+    constrained_data = {}
+
+    # Loop over the models
+    for model in models:
+        # Extract the model data
+        model_data_combined = model_data[model]
+
+        # Loop over the ensemble members in the model data
+        for member in model_data_combined:
+            # Extract the years
+            years = member.time.dt.year.values
+
+            # Print the years extracted from the model
+            # print('model years', years)
+            # print('model years shape', np.shape(years))
+            
+            # Find the years that are in both the model data and the common years
+            years_in_both = np.intersect1d(years, common_years)
+
+            # print("years in both shape", np.shape(years_in_both))
+            # print("years in both", years_in_both)
+            
+            # Select only those years from the model data
+            member = member.sel(time=member.time.dt.year.isin(years_in_both))
+
+            # Add the member to the constrained data dictionary
+            if model not in constrained_data:
+                constrained_data[model] = []
+            constrained_data[model].append(member)
+
+    # # Print the constrained data for debugging
+    # print("Constrained data:", constrained_data)
+
+    return constrained_data
+
 # Define a plotting function that will plot the variance adjusted lag data
 def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members, obs_nao_anom,
                                                    obs_time, forecast_range, season, lag=4):
@@ -565,7 +640,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members,
 
     # Create a figure
     fig, ax = plt.subplots(figsize=(10, 6))
-    
+
     # Print the resulting array
     print(all_ensemble_members_array)
 
