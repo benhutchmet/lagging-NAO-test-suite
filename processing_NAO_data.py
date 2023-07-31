@@ -670,9 +670,12 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
             # Extract the years
             years = member.time.dt.year.values
 
+            # Extract the time
+            model_time = member.time.values
+
             # Print the years extracted from the model
-            print("years", years)
-            print("years shape", np.shape(years))
+            # print("years", years)
+            # print("years shape", np.shape(years))
 
             # Increment the ensemble members count
             ensemble_members_count[model] += 1
@@ -691,24 +694,24 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
-    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, model_nao_anoms_mean, new_time_array,
+    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, model_nao_anoms_mean, model_time,
                                                obs_time, "1969-01-01", "1970-12-31")
-    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, model_nao_anoms_mean, new_time_array,
+    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, model_nao_anoms_mean, model_time,
                                               obs_time, "1969-01-01", "1970-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
     # For the short and long period
     rpc_short_lagged = calculate_rpc_time(acc_score_short_lagged, all_ensemble_members_array,
-                                          new_time_array, "1960-01-01", "2010-12-31")
+                                          model_time, "1960-01-01", "2010-12-31")
     rpc_long_lagged = calculate_rpc_time(acc_score_long_lagged, all_ensemble_members_array,
-                                         new_time_array, "1960-01-01", "2019-12-31")
+                                         model_time, "1960-01-01", "2019-12-31")
 
     # Now use the RPC scores to calculate the RPS
     # To be used in the variance adjustment
     rps_short_lagged = calculate_rps_time(rpc_short_lagged, obs_nao_anom, all_ensemble_members_array,
-                                          new_time_array, "1960-01-01", "2010-12-31")
+                                          model_time, "1960-01-01", "2010-12-31")
     rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, all_ensemble_members_array,
-                                         new_time_array, "1960-01-01", "2019-12-31")
+                                         model_time, "1960-01-01", "2019-12-31")
 
     # print these rpc scores
     print("RPC short lagged", rpc_short_lagged)
@@ -727,35 +730,35 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
     # Calculate the ACC scores for the lagged adjusted ensemble mean
     # for the short period and the long period
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short,
-                                                    new_time_array, obs_time, "1969-01-01", "2010-12-31")
+                                                    model_time, obs_time, "1969-01-01", "2010-12-31")
     acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long,
-                                                  new_time_array, obs_time, "1969-01-01", "2019-12-31")
+                                                  model_time, obs_time, "1969-01-01", "2019-12-31")
 
     # Calculate the 5-95% confidence intervals using compute_rmse_confidence_intervals
     conf_interval_lower_short, conf_interval_upper_short = compute_rmse_confidence_intervals(obs_nao_anom,
                                                                                              lagged_adjusted_ensemble_mean_short,
                                                                                              obs_time,
-                                                                                             new_time_array)
+                                                                                             model_time)
     conf_interval_lower_long, conf_interval_upper_long = compute_rmse_confidence_intervals(obs_nao_anom,
                                                                                            lagged_adjusted_ensemble_mean_long,
                                                                                            obs_time,
-                                                                                           new_time_array)
+                                                                                           model_time)
 
     # plot the RPS adjusted lagged ensemble mean
     # for both the short period RPS adjust
     # and the long period RPS adjust
     # short period:
-    ax.plot(new_time_array, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A")
+    ax.plot(model_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A")
     # long period:
-    ax.plot(new_time_array, lagged_adjusted_ensemble_mean_long, color="red")
+    ax.plot(model_time, lagged_adjusted_ensemble_mean_long, color="red")
 
     # Calculate the ACC for the short and long periods
     # Using the function pearsonr_score
     # For the lagged ensemble mean
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short,
-                                                    new_time_array, obs_time, "1969-01-01", "2010-12-31")
+                                                    model_time, obs_time, "1969-01-01", "2010-12-31")
     acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long,
-                                                  new_time_array, obs_time, "1969-01-01", "2019-12-31")
+                                                  model_time, obs_time, "1969-01-01", "2019-12-31")
 
     # # check the dimensions of the ci's before plotting
     # print("conf interval lower short", np.shape(conf_interval_lower_short))
@@ -765,10 +768,10 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
     # print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
 
     # Plot the confidence intervals for the short period
-    ax.fill_between(new_time_array, conf_interval_lower_short, conf_interval_upper_short,
+    ax.fill_between(model_time, conf_interval_lower_short, conf_interval_upper_short,
                     color="red", alpha=0.2)
     # for the long period
-    ax.fill_between(new_time_array, conf_interval_lower_long, conf_interval_upper_long, color="red",
+    ax.fill_between(model_time, conf_interval_lower_long, conf_interval_upper_long, color="red",
                     alpha=0.25)
 
     # Plot ERA5 data
