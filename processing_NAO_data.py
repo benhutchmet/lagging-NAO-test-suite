@@ -655,6 +655,12 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
         # Extract the model data
         model_data_combined = model_data[model]
 
+        # Set up the model time
+        model_time = list(model_data_combined.values())[0]
+
+        # Echo the model time
+        print("model time", model_time)
+
         # Print the model data for debugging
         print("Extracting data for model:", model)
 
@@ -670,8 +676,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
             # Extract the years
             years = member.time.dt.year.values
 
-            # Extract the time
-            model_time = member.time.values
+            # # Extract the time
+            # model_time = member.time.values
 
             # Print the years extracted from the model
             # print("years", years)
@@ -691,6 +697,12 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
 
     # Take the equal weighted mean of the ensemble members
     ensemble_mean = ensemble_members_array.mean(axis=0)
+
+    # print the types for the time
+    print("For the obs time:", type(obs_time))
+    print("For the model time:", type(model_time))
+    print("obs time", obs_time)
+    print("model time", model_time)
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
