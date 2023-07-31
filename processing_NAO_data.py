@@ -57,7 +57,7 @@ def load_lagged_ensemble_members(forecast_range, season, models):
     lagged_ensemble_members = {}
 
     # set up the argpath
-    arg_path = f"/NAO/years_{forecast_range}/{season}/outputs"
+    arg_path = f"/NAO/years_{forecast_range}/{season}/outputs/"
 
     # echo the models being used
     print("models being used: ", models)
@@ -81,19 +81,31 @@ def load_lagged_ensemble_members(forecast_range, season, models):
 
         # find all the netCDF files for this model
         files = glob.glob(model_path + "/*.nc")
+        
+        # Get a list of all files in the directory
+        all_files = os.listdir(model_path)
+        
+        # Filter the list to include only netCDF files
+        nc_files = [f for f in all_files if f.endswith(".nc")]
+        
+        # Print the list of netCDF files
+        print(nc_files)
+
+        # Echo files
+        print("searching for files:", files)
 
         # loop over the files
         for file in files:
             # extract the initialization scheme from the filename
             init_scheme = os.path.basename(file).split('__')[-1].split('.')[1]
 
-            # print("searching in list",os.path.basename(file).split('_'))
-            #
-            # # echo the filename
-            # print("filename: ", file)
-            #
-            # # echo the initialization scheme
-            # print("init scheme: ", init_scheme)
+            print("searching in list",os.path.basename(file).split('_'))
+            
+            # echo the filename
+            print("filename: ", file)
+            
+            # echo the initialization scheme
+            print("init scheme: ", init_scheme)
 
             # if file does not exist
             # print "File does not exist"
