@@ -610,7 +610,7 @@ def constrain_years(model_data, models):
     return constrained_data
 
 # Define a plotting function that will plot the variance adjusted lag data
-def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members, obs_nao_anom,
+def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_anom,
                                                    obs_time, forecast_range, season, lag=4):
     """
     Plot the ensemble mean of all members from all models and each of the ensemble members, with lagged and adjusted variance applied to the grand ensemble mean.
@@ -637,6 +637,15 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, all_ensemble_members,
     -------
     None
     """
+
+    # Set up a list for the ensemble members
+    ensemble_members = []
+
+    # Set up a dictionary to store the number of ensemble members for each model
+    ensemble_members_count = {}
+
+    # First constrain the years to the years that are in all of the models
+    model_data = constrain_years(all_ensemble_members, models)
 
     # Create a figure
     fig, ax = plt.subplots(figsize=(10, 6))
