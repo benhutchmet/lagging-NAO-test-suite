@@ -2,3 +2,6 @@
 plots/*.png
 plots/.ipynb_checkpoints
 plots/*.ipynb
+*.pyc
+__pycache__/*.pyc
+.ipynb_checkpoints/*.ipynb
