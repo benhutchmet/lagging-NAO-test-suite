@@ -610,7 +610,7 @@ def constrain_years(model_data, models):
     return constrained_data
 
 # Define a plotting function that will plot the variance adjusted lag data
-def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_anom,
+def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_time, obs_nao_anom,
                                                    obs_time, forecast_range, season, lag=4):
     """
     Plot the ensemble mean of all members from all models and each of the ensemble members, with lagged and adjusted variance applied to the grand ensemble mean.
@@ -619,8 +619,10 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
     ----------
     models : dict
         A dictionary containing a list of models.
-    all_ensemble_members : list
+    model_data : list
         A list containing all ensemble members.
+    model_time: dict
+        A dictionary containing the times for all of the ensemble members.
     obs_nao_anom : numpy.ndarray
         The observed NAO anomalies time series.
     obs_time : numpy.ndarray
@@ -654,12 +656,13 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
     for model in models:
         # Extract the model data
         model_data_combined = model_data[model]
+        # model_time = model_time[model]
 
-        # Set up the model time
-        model_time = list(model_data_combined.values())[0]
+        # # Set up the model time
+        # model_time = list(model_time.values())[0]
 
-        # Echo the model time
-        print("model time", model_time)
+        # # Echo the model time
+        # print("model time", model_time)
 
         # Print the model data for debugging
         print("Extracting data for model:", model)
@@ -677,7 +680,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
             years = member.time.dt.year.values
 
             # # Extract the time
-            # model_time = member.time.values
+            model_time = member.time.values
 
             # Print the years extracted from the model
             # print("years", years)
@@ -700,15 +703,26 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
 
     # print the types for the time
     print("For the obs time:", type(obs_time))
-    print("For the model time:", type(model_time))
+    print("For the model time:", type(years))
     print("obs time", obs_time)
-    print("model time", model_time)
+    print("model time", years)
+
+    # Convert the type of years
+    years = years.astype(str)
+
+    # Define the model times array using the years variable
+    model_times = np.array([f"{year}-01-01" for year in years])
+
+    print("For the obs time:", type(obs_time))
+    print("For the model time:", type(years))
+    print("obs time", obs_time)
+    print("model time", years)
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
-    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
+    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, years,
                                                obs_time, "1968-01-01", "1970-12-31")
-    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
+    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, years,
                                               obs_time, "1968-01-01", "1970-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
