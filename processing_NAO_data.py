@@ -650,28 +650,41 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
     # Print the shape of the model data
     print("model data shape", np.shape(model_data))
 
-    # Create a figure
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # Loop over the models
+    for model in models:
+        # Extract the model data
+        model_data_combined = model_data[model]
 
-    # Print the resulting array
-    print(all_ensemble_members_array)
+        # Print the model data for debugging
+        print("Extracting data for model:", model)
 
-    # Print the resulting array
-    print('test ens members array', all_ensemble_members_array)
-    # print the shape of the resulting array
-    print('test ens members array shape', all_ensemble_members_array.shape)
+        # Set the ensemble members count to zero
+        if model not in ensemble_members_count:
+            ensemble_members_count[model] = 0
 
+        # Loop over the ensemble members in the model data
+        for member in model_data_combined:
+            # Append each ensemble member to the list of ensemble members
+            ensemble_members.append(member)
 
-    # Extract the number of ensemble members
-    no_ensemble_members = all_ensemble_members_array.shape[0]
+            # Extract the years
+            years = member.time.dt.year.values
 
-    # print
-    print("before acc score is calculated for the lagged ensemble mean")
-    print("shape of obs time", np.shape(obs_time))
-    print("shape of model time", np.shape(new_time_array))
-    print("values of model times", new_time_array)
-    print("shape of lagged ensemble mean", np.shape(model_nao_anoms_mean))
-    print("shape of obs nao anom", np.shape(obs_nao_anom))
+            # Print the years extracted from the model
+            print("years", years)
+            print("years shape", np.shape(years))
+
+            # Increment the ensemble members count
+            ensemble_members_count[model] += 1
+
+    # Convert the list of ensemble members to an array
+    ensemble_members_array = np.array(ensemble_members)
+
+    # Print the dimensions of the ensemble members array
+    print("ensemble members array shape", np.shape(ensemble_members_array))
+
+    # Take the equal weighted mean of the ensemble members
+    ensemble_mean = ensemble_members_array.mean(axis=0)
 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
