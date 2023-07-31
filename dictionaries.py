@@ -11,7 +11,7 @@ smith_cmip6_models = [ 'MPI-ESM1-2-HR', 'HadGEM3-GC31-MM', 'EC-Earth3', 'MIROC6'
 
 # File path for the observations from ERA5
 # Processed using CDO manipulation
-obs = "/home/users/benhutch/ERA5_psl/nao-anomaly/nao-anomaly-ERA5.8yrRM.nc"
+obs = "/home/users/benhutch/ERA5_psl/nao-anomaly/nao-anomaly-ERA5.5yrRM.nc"
 
 # long obs
 obs_long = "/home/users/benhutch/multi-model/multi-model-jasmin/NAO_index_8yrRM_long.nc"
