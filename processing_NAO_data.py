@@ -645,7 +645,10 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, obs_nao_a
     ensemble_members_count = {}
 
     # First constrain the years to the years that are in all of the models
-    model_data = constrain_years(all_ensemble_members, models)
+    model_data = constrain_years(model_data, models)
+
+    # Print the shape of the model data
+    print("model data shape", np.shape(model_data))
 
     # Create a figure
     fig, ax = plt.subplots(figsize=(10, 6))
