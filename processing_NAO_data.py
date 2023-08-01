@@ -640,6 +640,10 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     None
     """
 
+
+    # Create a figure
+    fig, ax = plt.subplots(figsize=(10, 6))
+                           
     # Set up a list for the ensemble members
     ensemble_members = []
 
@@ -695,12 +699,16 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     # Convert the list of ensemble members to an array
     ensemble_members_array = np.array(ensemble_members)
 
+    # save the number of ensemble members
+    no_ensemble_members = len(ensemble_members_array[:,0,0,0])
+
     # Print the dimensions of the ensemble members array
     print("ensemble members array shape", np.shape(ensemble_members_array))
 
     # Take the equal weighted mean of the ensemble members
     ensemble_mean = ensemble_members_array.mean(axis=0)
-
+    ensemble_mean = ensemble_mean[:, 0, 0]                                                 
+                                                       
     # print the types for the time
     print("For the obs time:", type(obs_time))
     print("For the model time:", type(years))
@@ -723,9 +731,16 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     # print the types for the time
     print("for the obs nao anoms:", type(obs_nao_anom))
     print("for the model nao anoms:", type(ensemble_mean))
-    print("obs nao anoms", obs_nao_anom)
-    print("model nao anoms", ensemble_mean)
+    print("obs nao anoms shape", np.shape(obs_nao_anom))
+    print("model nao anoms shape", np.shape(ensemble_mean))
 
+    # constrain obs time
+    obs_time = obs_time[4:-1]
+
+    # constrain obs nao anom
+    obs_nao_anom = obs_nao_anom[4:-1]                                            
+                                                    
+                                                       
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
     acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
@@ -809,7 +824,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
                     alpha=0.25)
 
     # Plot ERA5 data
-    ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")
+    ax.plot(obs_time, obs_nao_anom, color="black", label="ERA5")
 
     ax.axhline(y=0, color="black", linestyle="-", linewidth=0.5)
     ax.set_xlim([np.datetime64("1960"), np.datetime64("2020")])
