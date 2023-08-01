@@ -13,7 +13,8 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        sel_region<model><initial_year><final_year><variable><region><forecast_range><season> => calc_anoms<model><variable><region><forecast_range><season>
+        sel_region<model><initial_year><final_year><variable><region><forecast_range><season> => calc_mms<model><variable><region><forecast_range><season>
+        calc_mms<model><variable><region><forecast_range><season> => calc_anoms<model><initial_year><final_year><variable><region><forecast_range><season>
         calc_anoms<model><variable><region><forecast_range><season> => apply_lag<model><variable><region><forecast_range><season><lag>
         apply_lag<model><variable><region><forecast_range><season><lag> => calc_nao<model><variable><forecast_range><season><lag>"""
 
