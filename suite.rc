@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model = 1
+        model = 2..12
         initial_year = 1961
         final_year = 2014
         variable = psl
