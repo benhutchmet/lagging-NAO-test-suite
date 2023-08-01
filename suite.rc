@@ -31,6 +31,10 @@
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
         bash submit-all-multi-model.sel-region-forecast-range-season.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_initial_year} ${CYLC_TASK_PARAM_final_year} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
+    [[calc_mms<model><variable><region><forecast_range><season>]]
+        script = """module load jaspy
+        cd ${CYLC_SUITE_RUN_DIR}/
+        bash submit-all-multi-model.calc-anoms-model-mean-state.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_season}"""
     [[calc_anoms<model><variable><region><forecast_range><season>]]
         script = """module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
