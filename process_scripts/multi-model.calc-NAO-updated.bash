@@ -143,17 +143,32 @@ if [ -f "$output_shifted_minus_3" ]; then
     echo "[INFO] Removed existing file."
 fi
 
+# Special case for IPSL-CM6A-LR
+# Some of the 1960 runs have not had their spatial mean taken
+# use an if statement to check for this
+if [ "$model" = "IPSL-CM6A-LR" ]; then
+    echo "[INFO] Model is IPSL-CM6A-LR"
+    echo "[INFO] Special case, taking the field means when calculating NAO anoms"
 
-# take the difference between the azores and iceland files
-# for init-minus-1
-cdo sub $azores_pattern_minus_1_file $iceland_pattern_minus_1_file $output_shifted_minus_1
-# for init-minus-2
-cdo sub $azores_pattern_minus_2_file $iceland_pattern_minus_2_file $output_shifted_minus_2
-# for init-minus-3
-cdo sub $azores_pattern_minus_3_file $iceland_pattern_minus_3_file $output_shifted_minus_3
+    # Take the differences between the fldmeans of the azores and iceland files
+    cdo sub -fldmean ${azores_pattern_same_file} -fldmean ${iceland_pattern_same_file} $output_same
+    cdo sub -fldmean ${azores_pattern_minus_1_file} -fldmean ${iceland_pattern_minus_1_file} $output_shifted_minus_1
+    cdo sub -fldmean ${azores_pattern_minus_2_file} -fldmean ${iceland_pattern_minus_2_file} $output_shifted_minus_2
+    cdo sub -fldmean ${azores_pattern_minus_3_file} -fldmean ${iceland_pattern_minus_3_file} $output_shifted_minus_3
+else
+    echo "[INFO] Model is not IPSL-CM6A-LR"
 
-# calculate the NAO for the same init files
-cdo sub $azores_pattern_same_file $iceland_pattern_same_file $output_same
+    # take the difference between the azores and iceland files
+    # for init-minus-1
+    cdo sub $azores_pattern_minus_1_file $iceland_pattern_minus_1_file $output_shifted_minus_1
+    # for init-minus-2
+    cdo sub $azores_pattern_minus_2_file $iceland_pattern_minus_2_file $output_shifted_minus_2
+    # for init-minus-3
+    cdo sub $azores_pattern_minus_3_file $iceland_pattern_minus_3_file $output_shifted_minus_3
+
+    # calculate the NAO for the same init files
+    cdo sub $azores_pattern_same_file $iceland_pattern_same_file $output_same
+fi
 
 # remove the temp files
 rm ${OUTPUT_DIR}/*temp*.nc
