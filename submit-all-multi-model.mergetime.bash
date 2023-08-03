@@ -219,7 +219,7 @@ case $model in
         init_methods=1
         ;;
     CESM1-1-CAM5-CMIP5)
-        run=10
+        run=40
         init_methods=1
         ;;
     NorCPM1)
