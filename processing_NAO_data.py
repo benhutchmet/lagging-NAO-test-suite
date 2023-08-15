@@ -974,6 +974,8 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # Calculate the grand ensemble mean using the new method
     grand_ensemble_mean = np.mean(all_ensemble_members_array, axis=0)
 
+    # extract only the first axis of the grand ensemble mean
+    grand_ensemble_mean = grand_ensemble_mean[:, 0, 0]
 
     # Print the type of the times
     print("obs_time type:", type(obs_time))
@@ -992,6 +994,13 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # print the shape of the obs nao anoms and the grand ensemble mean
     print("obs nao anoms shape:", np.shape(obs_nao_anom))
     print("grand ensemble mean shape:", np.shape(grand_ensemble_mean))
+
+    # print the type of the grand ensemble mean
+    model_time = list(model_times_by_model.values())[0]
+
+    # extract the first element of model time
+    # first time array for BCC-CSM2-MR
+    model_time = model_time[0,:]
 
     # Calculate the ACC score for the \
     # short period using the function pearsonr_score
