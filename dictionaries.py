@@ -29,10 +29,10 @@ full_era5 = "/home/users/benhutch/ERA5/adaptor.mars.internal-1691509121.3261805-
 base_directory = "/home/users/benhutch/alternate-lag-processed-data"
 
 # Define the path to the processed azores data file
-azores_data_path = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_azores.npy"
+azores_data_path = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_azores.nc"
 
 # Define the path to the processed iceland data file
-iceland_data_path = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_iceland.npy"
+iceland_data_path = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_iceland.nc"
 
 # saved data dir
 saved_data_dir = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/"
