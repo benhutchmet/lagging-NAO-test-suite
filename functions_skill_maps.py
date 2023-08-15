@@ -712,6 +712,31 @@ def process_observations(variable, region, region_grid, forecast_range, season, 
         print(f"Error processing observations dataset: {e}")
         sys.exit()
 
+# Write a new function to calculate the NAO index
+# this function takes the azores_obs and iceland_obs as processed above
+# takes the fieldmeans of these
+# and calculates the NAO index
+# returns the NAO index
+def calculate_nao_index(azores_obs, iceland_obs):
+    """
+    Calculate the field means of the processed azores and iceland obs and then calculates the NAO
+    index. Azores - iceland.
+    """
+
+    # Calculate the field means
+    # average over the lat and lon dimensions
+    azores_obs_fieldmean = azores_obs.mean(dim=['lat', 'lon'])
+
+    # take the iceland obs fieldmean
+    iceland_obs_fieldmean = iceland_obs.mean(dim=['lat', 'lon'])
+
+    # calculate the NAO index
+    nao_index = azores_obs_fieldmean - iceland_obs_fieldmean
+
+    return nao_index
+
+
+
 def plot_data(obs_data, variable_data, model_time):
     """
     Plots the observations and model data as two subplots on the same figure.
