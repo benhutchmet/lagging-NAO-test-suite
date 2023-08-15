@@ -705,6 +705,12 @@ def process_observations(variable, region, region_grid, forecast_range, season, 
         if forecast_range == "2-2":
             obs_anomalies_annual_forecast_range = obs_anomalies_annual_forecast_range.shift(time=1)
 
+        # In the case that season is DJFM
+        # we need to shift the dataset forward by 1 month - i.e. for a december result, to the next year
+        # As the same 5 year mean results in a December result for the obs
+        # but a January result for the model - same DJFM, but different years
+        if season == "DJFM":
+            obs_anomalies_annual_forecast_range = obs_anomalies_annual_forecast_range.shift(time=1, fill_value=np.nan)
 
         return obs_anomalies_annual_forecast_range
 

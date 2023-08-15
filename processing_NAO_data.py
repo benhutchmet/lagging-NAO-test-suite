@@ -362,6 +362,24 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     obs_start_index = np.where(obs_times >= start_date)[0][0]
     obs_end_index = np.where(obs_times <= end_date)[0][-1]
 
+    # print the model start index
+    print("model start index", model_start_index)
+    print("model end index", model_end_index)
+    print("obs start index", obs_start_index)
+    print("obs end index", obs_end_index)
+
+    # Get the filtered times seriers
+    filtered_model_times = model_times[model_start_index:model_end_index+1]
+    filtered_obs_times = obs_times[obs_start_index:obs_end_index+1]
+
+    # print the shape and values of the filtered model times
+    print("filtered model times shape", np.shape(filtered_model_times))
+    print("filtered model times values", filtered_model_times)
+
+    # print the shape and values of the filtered obs times
+    print("filtered obs times shape", np.shape(filtered_obs_times))
+    print("filtered obs times values", filtered_obs_times)
+
     # Filter the time series based on the analyzed dimensions
     filtered_time_series1 = time_series1[obs_start_index:obs_end_index+1]
     filtered_time_series2 = time_series2[model_start_index:model_end_index+1]
@@ -1077,6 +1095,13 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # Then calculate_confidence_intervals
     conf_interval_lower, conf_interval_upper = calculate_confidence_intervals(all_ensemble_members_array)
 
+    # print model time and grand ensemble mean shapes
+    print("model time shape before plot", np.shape(model_time))
+    print("grand ensemble mean shape before plot", np.shape(grand_ensemble_mean))
+
+    # print the model time and grand ensemble mean
+    print("model time before plot", model_time)
+
     # Plot the grand ensemble mean with the ACC score in the legend
     ax.plot(model_time, grand_ensemble_mean, color="red", label=f"DCPP-A")
 
@@ -1086,6 +1111,13 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     ax.fill_between(model_time[:-9], conf_interval_lower[:-9], conf_interval_upper[:-9], color="red", alpha=0.3)
     # for period 2010 - 2019
     ax.fill_between(model_time[-10:], conf_interval_lower[-10:], conf_interval_upper[-10:], color="red", alpha=0.2)
+
+    # print obs time and obs nao anoms shapes
+    print("obs time shape before plot", np.shape(obs_time))
+    print("obs nao anoms shape before plot", np.shape(obs_nao_anom))
+
+    # print obs time and obs nao anoms
+    print("obs time before plot", obs_time)
 
     # Plot ERA5 data
     ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")
