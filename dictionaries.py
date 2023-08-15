@@ -21,3 +21,6 @@ obs_long = "/home/users/benhutch/multi-model/multi-model-jasmin/NAO_index_8yrRM_
 
 # Directory for plots
 plots_dir = "/home/users/benhutch/lagging-NAO-test-suite/plots/"
+
+# Full ERA5 dataset for processing
+full_era5 = "/home/users/benhutch/ERA5/adaptor.mars.internal-1691509121.3261805-29348-4-3a487c76-fc7b-421f-b5be-7436e2eb78d7.nc"
