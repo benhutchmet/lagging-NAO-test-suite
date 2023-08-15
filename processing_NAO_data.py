@@ -873,6 +873,186 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     # Show the figure
     plt.show()
 
+# Calculate confidence intervals for the variance adjusted lagged ensemble mean
+# Second way - more simple
+# Function to calculate the confidence intervals
+def calculate_confidence_intervals(ensemble_members_array, lower_bound=5, upper_bound=95):
+    """
+    Calculate the confidence intervals of an ensemble members array using a simpler
+    method that directly computes the percentiles of the ensemble members data.
+
+    Parameters
+    ----------
+    ensemble_members_array : numpy.ndarray
+        The array of ensemble members data.
+    lower_bound : int, optional, default: 5
+        The lower percentile bound for the confidence interval.
+    upper_bound : int, optional, default: 95
+        The upper percentile bound for the confidence interval.
+
+    Returns
+    -------
+    conf_interval_lower : numpy.ndarray
+        The lower bound of the confidence interval.
+    conf_interval_upper : numpy.ndarray
+        The upper bound of the confidence interval.
+    """
+    conf_interval_lower = np.percentile(ensemble_members_array, lower_bound, axis=0)
+    conf_interval_upper = np.percentile(ensemble_members_array, upper_bound, axis=0)
+    return conf_interval_lower, conf_interval_upper
+
+# PLotting function for the no lag case
+# Copied from multi-model-jasmin functions.py
+def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms_by_model, obs_nao_anom, obs_time):
+    """
+    Plot the ensemble mean of all members from all models and each of the ensemble members.
+
+    Parameters
+    ----------
+    models : dict
+        A dictionary containing a list of models.
+    model_times_by_model : dict
+        A dictionary containing model times for each model.
+    model_nao_anoms_by_model : dict
+        A dictionary containing model NAO anomalies for each model.
+    obs_nao_anom : numpy.ndarray
+        The observed NAO anomalies time series.
+    obs_time : numpy.ndarray
+        The observed time array.
+
+    Returns
+    -------
+    None
+    """
+
+    # Create a figure
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Initialize an empty list to store all ensemble members
+    all_ensemble_members = []
+
+    # Plot the ensemble members and calculate the ensemble mean for each model
+    ensemble_means = []
+
+    # Initialize a dictionary to store the count of ensemble members for each model
+    ensemble_member_counts = {}
+
+    # Iterate over the models
+    for model_name in models:
+        model_time = model_times_by_model[model_name]
+        model_nao_anom = model_nao_anoms_by_model[model_name]
+
+        # If the model_name is not in the dictionary, initialize its count to 0
+        if model_name not in ensemble_member_counts:
+            ensemble_member_counts[model_name] = 0
+
+        # Plot ensemble members
+        for member in model_nao_anom:
+            ax.plot(model_time, member, color="grey", alpha=0.1, linewidth=0.5)
+
+            # Add each member to the list of all ensemble members
+            all_ensemble_members.append(member)
+
+            # Increment the count of ensemble members for the current model
+            ensemble_member_counts[model_name] += 1
+
+        # Calculate and store ensemble mean
+        ensemble_means.append(ensemble_mean(model_nao_anom))
+
+    # Convert the ensemble_member_counts dictionary to a list of tuples
+    ensemble_member_counts_list = [(model, count) for model, count in ensemble_member_counts.items()]
+
+    # Convert the list of all ensemble members to a NumPy array
+    all_ensemble_members_array = np.array(all_ensemble_members)
+
+    # save the number of ensemble members
+    no_ensemble_members = len(all_ensemble_members_array[:,0])
+
+    # Calculate the grand ensemble mean using the new method
+    grand_ensemble_mean = np.mean(all_ensemble_members_array, axis=0)
+
+
+    # Print the type of the times
+    print("obs_time type:", type(obs_time))
+    print("model_time type:", type(list(model_times_by_model.values())[0]))
+    print("obs_time:", obs_time)
+    print("model time:", list(model_times_by_model.values())[0])
+    
+    # Calculate the ACC score for the \
+    # short period using the function pearsonr_score
+    acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, grand_ensemble_mean, list(model_times_by_model.values())[0], obs_time, "1966-01-01","2010-12-31")
+
+    # Calculate the ACC score for the \
+    # long period using the function pearsonr_score
+    # long period 1966 - 2019
+    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, grand_ensemble_mean, list(model_times_by_model.values())[0], obs_time, "1966-01-01","2019-12-31")
+
+    # Calculate the RPC score for the short period
+    # using the function calculate_rpc_time
+    # short period 1966 - 2010
+    rpc_short = calculate_rpc_time(acc_score_short, all_ensemble_members_array, list(model_times_by_model.values())[0], "1966-01-01","2010-12-31")
+
+    # Calculate the RPC score for the long period
+    # using the function calculate_rpc_time
+    # long period 1966 - 2019
+    rpc_long = calculate_rpc_time(acc_score_long, all_ensemble_members_array, list(model_times_by_model.values())[0], "1966-01-01","2019-12-31")
+
+    # Calculate the 5-95% confidence intervals using the two functions options
+    # First calculate_confidence_intervals_sd
+    # Then calculate_confidence_intervals
+    conf_interval_lower, conf_interval_upper = calculate_confidence_intervals(all_ensemble_members_array)
+
+    # Plot the grand ensemble mean with the ACC score in the legend
+    ax.plot(list(model_times_by_model.values())[0], grand_ensemble_mean, color="red", label=f"DCPP-A")
+
+    # Plot the 5-95% confidence intervals
+    # different shading for the two different time periods
+    # short period 1966 - 2010
+    ax.fill_between(list(model_times_by_model.values())[0][:-9], conf_interval_lower[:-9], conf_interval_upper[:-9], color="red", alpha=0.3)
+    # for period 2010 - 2019
+    ax.fill_between(list(model_times_by_model.values())[0][-10:], conf_interval_lower[-10:], conf_interval_upper[-10:], color="red", alpha=0.2)
+
+    # Plot ERA5 data
+    ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")
+
+    ax.axhline(y=0, color="black", linestyle="-", linewidth=0.5)
+    ax.set_xlim([np.datetime64("1960"), np.datetime64("2020")])
+    ax.set_ylim([-10, 10])
+    ax.set_xlabel("Year")
+    ax.set_ylabel("NAO anomalies (hPa)")
+
+    # check if the p-value is les than 0.01
+    # Check if the p_values are less than 0.01 and set the text accordingly
+    if p_value_short < 0.01 and p_value_long < 0.01:
+        p_value_text_short = '< 0.01'
+        p_value_text_long = '< 0.01'
+    elif p_value_short < 0.01:
+        p_value_text_short = '< 0.01'
+        p_value_text_long = f'= {p_value_long:.2f}'
+    elif p_value_long < 0.01:
+        p_value_text_short = f'= {p_value_short:.2f}'
+        p_value_text_long = '< 0.01'
+    else:
+        p_value_text_short = f'= {p_value_short:.2f}'
+        p_value_text_long = f'= {p_value_long:.2f}'
+    
+    # Set the title with the ACC and RPC scores
+    # the title will be formatted like this:
+    # "ACC = +{acc_score_short:.2f} (+{acc_score_long:.2f}), P = {p_value_short} ({p_value_long}), RPC = {rpc_short:.2f} ({rpc_long:.2f}), N = {no_ensemble_members}"
+    ax.set_title(f"ACC = +{acc_score_short:.2f} (+{acc_score_long:.2f}), P {p_value_text_short} ({p_value_text_long}), RPC = +{rpc_short:.2f} (+{rpc_long:.2f}), N = {no_ensemble_members}")
+
+    # Add a legend in the bottom right corner
+    ax.legend(loc="lower right")
+
+    # Save the figure
+    # In the plots_dir directory
+    #fig.savefig(os.path.join(plots_dir, "nao_ensemble_mean_and_individual_members.png"), dpi=300)
+    # include the number of ensemble members in the filename
+    # and the current date
+    fig.savefig(os.path.join(plots_dir, f"nao_ensemble_mean_and_individual_members_{no_ensemble_members}_{datetime.now().strftime('%Y-%m-%d')}.png"), dpi=300)
+
+    # Show the figure
+    plt.show()
 
 # first we start a main function which will parse the arguments from the command line
 # these arguments include the forecast range and season
