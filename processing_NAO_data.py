@@ -351,8 +351,8 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     print("obs times shape post vectorize", np.shape(obs_times))
 
     # print the values of model_times
-    print("model times values post vectorize", model_times)
-    print("obs times values post vectorize", obs_times)
+    # print("model times values post vectorize", model_times)
+    # print("obs times values post vectorize", obs_times)
 
     # debugging for NAO matching
     # print("model times", model_times)
@@ -366,10 +366,10 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     obs_end_index = np.where(obs_times <= end_date)[0][-1]
 
     # print the model start index
-    print("model start index", model_start_index)
-    print("model end index", model_end_index)
-    print("obs start index", obs_start_index)
-    print("obs end index", obs_end_index)
+    # print("model start index", model_start_index)
+    # print("model end index", model_end_index)
+    # print("obs start index", obs_start_index)
+    # print("obs end index", obs_end_index)
 
     # Get the filtered times seriers
     filtered_model_times = model_times[model_start_index:model_end_index+1]
@@ -377,11 +377,11 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
 
     # print the shape and values of the filtered model times
     print("filtered model times shape", np.shape(filtered_model_times))
-    print("filtered model times values", filtered_model_times)
+    # print("filtered model times values", filtered_model_times)
 
     # print the shape and values of the filtered obs times
     print("filtered obs times shape", np.shape(filtered_obs_times))
-    print("filtered obs times values", filtered_obs_times)
+    # print("filtered obs times values", filtered_obs_times)
 
     # Filter the time series based on the analyzed dimensions
     filtered_time_series1 = time_series1[obs_start_index:obs_end_index+1]
@@ -452,13 +452,33 @@ def calculate_rps_time(RPC, obs, forecast_members, model_times, start_date, end_
     float: Ratio of Predictable Signals (RPS)
     """
 
+    # Print the types of the input arrays
+    print("obs type", type(obs))
+    print("forecast members type", type(forecast_members))
+    print("model times type", type(model_times))
+
+
     # Convert the input arrays to numpy arrays
     obs = np.array(obs)
     forecast_members = np.array(forecast_members)
 
+    # Print types of the input arrays post conversion
+    print("obs type post conversion", type(obs))
+    print("forecast members type post conversion", type(forecast_members))
+
+    # Print the obs and forecast members
+    print("obs", obs)
+    print("forecast members", forecast_members)
+
+    # print the shape of the obs and forecast members
+    print("obs shape", np.shape(obs))
+    print("forecast members shape", np.shape(forecast_members))
+
     # Convert the start_date and end_date to pandas Timestamp objects
     start_date = pd.Timestamp(start_date)
     end_date = pd.Timestamp(end_date)
+
+    # test
 
     # Find the start and end indices of the time period for the model
     model_start_index = np.where(model_times >= start_date)[0][0]
@@ -468,10 +488,20 @@ def calculate_rps_time(RPC, obs, forecast_members, model_times, start_date, end_
     forecast_members = forecast_members[:, model_start_index:model_end_index+1]
 
     # Calculate the total variance of the observations
-    variance_obs = np.std(obs)
+    variance_obs = np.nanstd(obs)
+
+    # print the variance of the observations
+    print("variance obs", variance_obs)
+    # print the type of the variance of the observations
+    print("variance obs type", type(variance_obs))
 
     # Calculate the total variance of the forecast members
     variance_forecast_members = np.std(forecast_members)
+
+    # print the variance of the forecast members
+    print("variance forecast members", variance_forecast_members)
+    # print the type of the variance of the forecast members
+    print("variance forecast members type", type(variance_forecast_members))
 
     # Calculate the RPS
     RPS = RPC * (variance_obs / variance_forecast_members)
@@ -540,27 +570,59 @@ def compute_rmse_confidence_intervals(obs_nao_anoms, adjusted_lagged_model_nao_a
         The upper bound of the confidence interval.
     """
 
+    # Convert the obs_time to an array of years
+    obs_time = obs_time.astype("datetime64[Y]").astype(int) + 1970
+
     # print the obs time and model time
     print("shape of obs time", np.shape(obs_time))
     print("shape of model time", np.shape(model_time_lagged))
     print("obs_time", obs_time)
     print("model time", model_time_lagged)
 
+    # Check that both obs_time and model_time_lagged are arrays of years
+    assert obs_time.dtype == np.dtype('int64')
+    # assert model_time_lagged.dtype == np.dtype('int64')
+
     # Match the years in obs_time and model_time_lagged
     common_years = np.intersect1d(obs_time, model_time_lagged)
 
     # Match the years in obs_time and model_time_lagged
     common_years = np.intersect1d(obs_time, model_time_lagged)
+
+    # print the common years
+    print("common years", common_years)
+    # print the type of the common years
+    print("common years type", type(common_years))
 
     # Find the indices of the common years in both arrays
     obs_indices = np.where(np.isin(obs_time, common_years))[0]
     model_indices = np.where(np.isin(model_time_lagged, common_years))[0]
 
+    # print the obs indices and model indices
+    print("obs indices", obs_indices)
     print("model indices", model_indices)
 
+    # print the shape and type of obs_nao_anoms
+    print("obs nao anoms shape", np.shape(obs_nao_anoms))
+    print("obs nao anoms type", type(obs_nao_anoms))
+
+    # Print the shape and type of adjusted_lagged_model_nao_anoms
+    print("adjusted lagged model nao anoms shape", np.shape(adjusted_lagged_model_nao_anoms))
+    print("adjusted lagged model nao anoms type", type(adjusted_lagged_model_nao_anoms))
+
     # Create new arrays with the corresponding values for the common years
-    obs_nao_anoms_matched = obs_nao_anoms[obs_indices].values
+    obs_nao_anoms_matched = obs_nao_anoms[obs_indices]
     adjusted_lagged_model_nao_anoms_matched = adjusted_lagged_model_nao_anoms[model_indices]
+
+    # print the shape and type of obs_nao_anoms_matched
+    print("obs nao anoms matched shape", np.shape(obs_nao_anoms_matched))
+    print("obs nao anoms matched type", type(obs_nao_anoms_matched))
+    print("obs nao anoms matched", obs_nao_anoms_matched)
+
+    # print the shape and type of adjusted_lagged_model_nao_anoms_matched
+    print("adjusted lagged model nao anoms matched shape", np.shape(adjusted_lagged_model_nao_anoms_matched))
+    print("adjusted lagged model nao anoms matched type", type(adjusted_lagged_model_nao_anoms_matched))
+    print("adjusted lagged model nao anoms matched", adjusted_lagged_model_nao_anoms_matched)
 
     # Compute the root-mean-square error (RMSE) between the ensemble mean and the observations
     rmse = np.sqrt(np.mean((obs_nao_anoms_matched - adjusted_lagged_model_nao_anoms_matched) ** 2, axis=0))
@@ -1280,17 +1342,17 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # calculate the ACC (short and long) for the lagged grand 
     # ensemble mean
     acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, lagged_ensemble_members_time, obs_time, "1969-01-01","2010-12-31")
-    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, lagged_ensemble_members_time, obs_time, "1969-01-01","2019-12-31")
+    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, lagged_ensemble_members_time, obs_time, "1969-01-01","2018-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
     # For the short and long period
     rpc_short_lagged = calculate_rpc_time(acc_score_short_lagged, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2010-12-31")
-    rpc_long_lagged = calculate_rpc_time(acc_score_long_lagged, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2019-12-31")
+    rpc_long_lagged = calculate_rpc_time(acc_score_long_lagged, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2018-12-31")
 
     # Now use the RPC scores to calculate the RPS
     # To be used in the variance adjustment
     rps_short_lagged = calculate_rps_time(rpc_short_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2010-12-31")
-    rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2019-12-31")
+    rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2018-12-31")
 
     # print these rpc scores
     print("RPC short lagged", rpc_short_lagged)
@@ -1318,7 +1380,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # Calculate the ACC scores for the lagged adjusted ensemble mean
     # for the short period and the long period
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short, lagged_ensemble_members_time, obs_time, "1969-01-01","2010-12-31")
-    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2019-12-31")
+    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2018-12-31")
 
     # Calculate the 5-95% confidence intervals using compute_rmse_confidence_intervals
     conf_interval_lower_short, conf_interval_upper_short = compute_rmse_confidence_intervals(obs_nao_anom, lagged_adjusted_ensemble_mean_short, obs_time, lagged_ensemble_members_time)
@@ -1345,7 +1407,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # Using the function pearsonr_score
     # For the lagged ensemble mean
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short, lagged_ensemble_members_time, obs_time, "1969-01-01","2010-12-31")
-    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2019-12-31")
+    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2018-12-31")
     
     # check the dimensions of the ci's before plotting
     print("conf interval lower short", np.shape(conf_interval_lower_short))
