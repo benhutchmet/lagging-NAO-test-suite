@@ -24,3 +24,6 @@ plots_dir = "/home/users/benhutch/lagging-NAO-test-suite/plots/"
 
 # Full ERA5 dataset for processing
 full_era5 = "/home/users/benhutch/ERA5/adaptor.mars.internal-1691509121.3261805-29348-4-3a487c76-fc7b-421f-b5be-7436e2eb78d7.nc"
+
+# Set up the base directory where the processed files are stored
+base_directory = "/home/users/benhutch/alternate-lag-processed-data"
