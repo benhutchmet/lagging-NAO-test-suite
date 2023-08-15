@@ -573,6 +573,8 @@ def compute_rmse_confidence_intervals(obs_nao_anoms, adjusted_lagged_model_nao_a
     # Convert the obs_time to an array of years
     obs_time = obs_time.astype("datetime64[Y]").astype(int) + 1970
 
+    model_time_lagged = model_time_lagged.astype(int) + 1970
+
     # print the obs time and model time
     print("shape of obs time", np.shape(obs_time))
     print("shape of model time", np.shape(model_time_lagged))
