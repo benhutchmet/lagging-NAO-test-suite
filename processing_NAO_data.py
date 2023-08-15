@@ -38,6 +38,9 @@ import os
 # set up the plots directory
 plots_dir = dic.plots_dir
 
+# Import the lag ensemble function from NAO_Matching
+from NAO_Matching import lag_ensemble
+
 
 def load_lagged_ensemble_members(forecast_range, season, models):
     """
@@ -1157,6 +1160,243 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # include the number of ensemble members in the filename
     # and the current date
     fig.savefig(os.path.join(plots_dir, f"nao_ensemble_mean_and_individual_members_{no_ensemble_members}_{datetime.now().strftime('%Y-%m-%d')}.png"), dpi=300)
+
+    # Show the figure
+    plt.show()
+
+# Copied function from multi-model-jasmin for ensemble members and lagged adjusted mean
+# Define a function for plotting the model subplots for the raw data
+# TODO -- SORT OUT THIS FUNCTION AND ITS ASSOCIATED FUNCTIONS
+    # -RPC SCORES TOO LOW
+    # -EXTEND PERIOD FOR 2010-2019
+    # IS IS SCALED TO THE RIGHT MAGNITUDE?
+    # EMAIL DOUG POTENTIALLY
+def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model, model_nao_anoms_by_model, obs_nao_anom, obs_time, lag=4):
+    """
+    Plot the ensemble mean of all members from all models and each of the ensemble members, with lagged and adjusted variance applied to the grand ensemble mean.
+
+    Parameters
+    ----------
+    models : dict
+        A dictionary containing a list of models.
+    model_times_by_model : dict
+        A dictionary containing model times for each model.
+    model_nao_anoms_by_model : dict
+        A dictionary containing model NAO anomalies for each model.
+    obs_nao_anom : numpy.ndarray
+        The observed NAO anomalies time series.
+    obs_time : numpy.ndarray
+        The observed time array.
+    lag : int, optional, default: 4
+        The number of years to lag the grand ensemble mean by.
+
+    Returns
+    -------
+    None
+    """
+
+    # Create a figure
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Initialize an empty list to store all ensemble members
+    all_ensemble_members = []
+
+    # Plot the ensemble members and calculate the ensemble mean for each model
+    ensemble_means = []
+
+    # Initialize a dictionary to store the count of ensemble members for each model
+    ensemble_member_counts = {}
+
+    # Iterate over the models
+    for model_name in models:
+        model_time = model_times_by_model[model_name]
+        model_nao_anom = model_nao_anoms_by_model[model_name]
+
+        # If the model_name is not in the dictionary, initialize its count to 0
+        if model_name not in ensemble_member_counts:
+            ensemble_member_counts[model_name] = 0
+
+        # Plot ensemble members
+        for member in model_nao_anom:
+            #ax.plot(model_time, member, color="grey", alpha=0.1, linewidth=0.5)
+
+            # Add each member to the list of all ensemble members
+            all_ensemble_members.append(member)
+
+            # Increment the count of ensemble members for the current model
+            ensemble_member_counts[model_name] += 1
+
+        # Calculate and store ensemble mean
+        ensemble_means.append(ensemble_mean(model_nao_anom))
+
+    # Convert the ensemble_member_counts dictionary to a list of tuples
+    ensemble_member_counts_list = [(model, count) for model, count in ensemble_member_counts.items()]
+
+    # Convert the list of all ensemble members to a NumPy array
+    all_ensemble_members_array = np.array(all_ensemble_members)
+
+    # Remove the extra dimension from the all_ensemble_members_array
+    # all_ensemble_members_array shape (158, 54, 1, 1)
+    all_ensemble_members_array = np.squeeze(all_ensemble_members_array)
+
+    # print the dimensions of all ensemble members array
+    print("shape of all ensemble members array", np.shape(all_ensemble_members_array))
+
+    # Create an array for the nolag
+    all_ensemble_members_mean_nolag = np.mean(all_ensemble_members_array, axis=0)
+
+    # Set up the model time
+    model_time = list(model_times_by_model.values())[0]
+
+    # Extract the first element of model time
+    # first time array for BCC-CSM2-MR
+    model_time = model_time[0]
+
+    # Call the lag_ensemble function from the NAO_matching.py file
+    lagged_ensemble_members_array, lagged_ensemble_members_time = lag_ensemble(all_ensemble_members_array, model_time, lag=lag)
+
+    # Calculate the NAO index for the full lagged ensemble
+    lagged_ensemble_mean = np.mean(lagged_ensemble_members_array, axis=0)
+
+    # Extract the number of ensemble members
+    no_ensemble_members = lagged_ensemble_members_array.shape[0]
+
+
+    # print the shape of the lagged ensemble mean
+    print("shape of lagged ens mean", np.shape(lagged_ensemble_members_array))
+    # also print the model times and its shape
+    print("model time", (model_time))
+
+    # # check the time output from this function
+    # print("shape of model_time_lagged", np.shape(model_time_lagged))
+    # print("model_time_lagged", model_time_lagged)
+    # print("shape of lagged_grand_ensemble_mean", np.shape(lagged_grand_ensemble_mean))
+    # print("lagged_grand_ensemble_mean", lagged_grand_ensemble_mean)
+
+    # check the dimensions of lagged ensemble members time
+    print("shape of lagged_ensemble_members_time", np.shape(lagged_ensemble_members_time))
+    print("lagged_ensemble_members_time", lagged_ensemble_members_time)
+
+    # calculate the ACC (short and long) for the lagged grand 
+    # ensemble mean
+    acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, lagged_ensemble_members_time, obs_time, "1969-01-01","2010-12-31")
+    acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, lagged_ensemble_mean, lagged_ensemble_members_time, obs_time, "1969-01-01","2019-12-31")
+
+    # Now use these ACC scores to calculate the RPC scores
+    # For the short and long period
+    rpc_short_lagged = calculate_rpc_time(acc_score_short_lagged, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2010-12-31")
+    rpc_long_lagged = calculate_rpc_time(acc_score_long_lagged, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2019-12-31")
+
+    # Now use the RPC scores to calculate the RPS
+    # To be used in the variance adjustment
+    rps_short_lagged = calculate_rps_time(rpc_short_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2010-12-31")
+    rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2019-12-31")
+
+    # print these rpc scores
+    print("RPC short lagged", rpc_short_lagged)
+    print("RPC long lagged", rpc_long_lagged)
+
+    # print these rps scores
+    print("RPS short lagged", rps_short_lagged)
+    print("RPS long lagged", rps_long_lagged)
+
+    # apply the variance adjustment (via RPS scaling) to the 
+    # lagged grand ensemble mean
+    lagged_adjusted_ensemble_mean_short, lagged_adjusted_ensemble_mean_long = adjust_variance(lagged_ensemble_mean, rps_short_lagged, rps_long_lagged)
+
+    # Also apply the adjustment (via RPS scaling) to the ensemble mean
+    # NO LAGGING
+    # For explanation purposes
+    adjusted_ensemble_mean_short_nolag, adjusted_ensemble_mean_long_nolag = adjust_variance(all_ensemble_members_mean_nolag, rps_short_lagged, rps_long_lagged)
+
+    # Print the shape and values of this to check whether it is realistic
+    print("lagged adjusted ensemble mean short", np.shape(lagged_adjusted_ensemble_mean_short))
+    print("lagged adjusted ensemble mean short", lagged_adjusted_ensemble_mean_short)
+    print("lagged adjusted ensemble mean long", np.shape(lagged_adjusted_ensemble_mean_long))
+    print("lagged adjusted ensemble mean long", lagged_adjusted_ensemble_mean_long)
+    
+    # Calculate the ACC scores for the lagged adjusted ensemble mean
+    # for the short period and the long period
+    acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short, lagged_ensemble_members_time, obs_time, "1969-01-01","2010-12-31")
+    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2019-12-31")
+
+    # Calculate the 5-95% confidence intervals using compute_rmse_confidence_intervals
+    conf_interval_lower_short, conf_interval_upper_short = compute_rmse_confidence_intervals(obs_nao_anom, lagged_adjusted_ensemble_mean_short, obs_time, lagged_ensemble_members_time)
+    conf_interval_lower_long, conf_interval_upper_long = compute_rmse_confidence_intervals(obs_nao_anom, lagged_adjusted_ensemble_mean_long, obs_time, lagged_ensemble_members_time)
+
+    # plot the RPS adjusted nolag ensemble mean
+    ax.plot(model_time, adjusted_ensemble_mean_short_nolag, color="red", alpha=0.8, linewidth=0.8)
+
+    # plot the RPS adjusted lagged ensemble mean
+    # for both the short period RPS adjust
+    # and the long period RPS adjust
+    # short period:
+    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A")  
+    # long period:
+    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_long, color="red")
+
+    # ----TESTING----
+    # try plotting the each individual lagged member
+    # as thin grey lines
+    # for member in lagged_ensemble_members_array:
+        # ax.plot(lagged_ensemble_members_time, member, color="grey", alpha=0.1, linewidth=0.5)
+    
+    # Calculate the ACC for the short and long periods
+    # Using the function pearsonr_score
+    # For the lagged ensemble mean
+    acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short, lagged_ensemble_members_time, obs_time, "1969-01-01","2010-12-31")
+    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2019-12-31")
+    
+    # check the dimensions of the ci's before plotting
+    print("conf interval lower short", np.shape(conf_interval_lower_short))
+    print("conf interval upper short", np.shape(conf_interval_upper_short))
+    print("conf interval lower long", np.shape(conf_interval_lower_long))
+    print("conf interval upper long", np.shape(conf_interval_upper_long))
+    print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
+
+    # Plot the confidence intervals for the short period
+    ax.fill_between(lagged_ensemble_members_time[:-9], conf_interval_lower_short[:-9], conf_interval_upper_short[:-9], color="red", alpha=0.2)
+    # for the long period
+    ax.fill_between(lagged_ensemble_members_time, conf_interval_lower_long, conf_interval_upper_long, color="red", alpha=0.25)
+
+    # Plot ERA5 data
+    ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")
+
+    ax.axhline(y=0, color="black", linestyle="-", linewidth=0.5)
+    ax.set_xlim([np.datetime64("1960"), np.datetime64("2020")])
+    ax.set_ylim([-10, 10])
+    ax.set_xlabel("Year")
+    ax.set_ylabel("NAO (hPa)")
+
+    # check if the p-value is les than 0.01
+    # Check if the p_values are less than 0.01 and set the text accordingly
+    if p_value_short < 0.01 and p_value_long < 0.01:
+        p_value_text_short = '< 0.01'
+        p_value_text_long = '< 0.01'
+    elif p_value_short < 0.01:
+        p_value_text_short = '< 0.01'
+        p_value_text_long = f'= {p_value_long:.2f}'
+    elif p_value_long < 0.01:
+        p_value_text_short = f'= {p_value_short:.2f}'
+        p_value_text_long = '< 0.01'
+    else:
+        p_value_text_short = f'= {p_value_short:.2f}'
+        p_value_text_long = f'= {p_value_long:.2f}'
+    
+    # Set the title with the ACC and RPC scores
+    # the title will be formatted like this:
+    # "ACC = +{acc_score_short:.2f} (+{acc_score_long:.2f}), P = {p_value_short} ({p_value_long}), RPC = {rpc_short:.2f} ({rpc_long:.2f}), N = {no_ensemble_members}"
+    ax.set_title(f"ACC = +{acc_score_short:.2f} (+{acc_score_long:.2f}), P {p_value_text_short} ({p_value_text_long}), RPC = {rpc_short_lagged:.2f} ({rpc_long_lagged:.2f}), N = {no_ensemble_members}")
+
+    # Add a legend in the bottom right corner
+    ax.legend(loc="lower right")
+
+    # Save the figure
+    # In the plots_dir directory
+    # with the lag in the filename
+    # and the current date
+    # and the number of ensemble members#
+    fig.savefig(os.path.join(plots_dir, f"nao_ensemble_mean_and_individual_members_lag_{lag}_{no_ensemble_members}_{datetime.now().strftime('%Y-%m-%d')}.png"), dpi=300)
 
     # Show the figure
     plt.show()
