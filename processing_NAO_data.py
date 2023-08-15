@@ -331,6 +331,26 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     # Convert obs_times to an array of Timestamp objects
     obs_times = np.vectorize(pd.Timestamp)(obs_times)
 
+    # print the type of model_times
+    print("model times type", type(model_times))
+
+    # print the type of obs_times
+    print("obs times type", type(obs_times))
+
+    # Convert model_times to an array of Timestamp objects
+    model_times = np.vectorize(pd.Timestamp)(model_times)
+
+    # print the type of model_times
+    print("model times type post vectorize", type(model_times))
+
+    # print the shape of model_times
+    print("model times shape post vectorize", np.shape(model_times))
+    print("obs times shape post vectorize", np.shape(obs_times))
+
+    # print the values of model_times
+    print("model times values post vectorize", model_times)
+    print("obs times values post vectorize", obs_times)
+
     # debugging for NAO matching
     # print("model times", model_times)
     # print("model times shape", np.shape(model_times))
@@ -971,15 +991,31 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # save the number of ensemble members
     no_ensemble_members = len(all_ensemble_members_array[:,0])
 
+    # Remove the extra dimension from the all_ensemble_members_array
+    # all_ensemble_members_array shape (158, 54, 1, 1)
+    all_ensemble_members_array = np.squeeze(all_ensemble_members_array)
+
+    # Print the dimensions of the all_ensemble_members_array
+    print("all_ensemble_members_array shape", np.shape(all_ensemble_members_array))
+
+    # print the all_ensemble_members_array
+    print("all_ensemble_members_array", all_ensemble_members_array)
+
     # Calculate the grand ensemble mean using the new method
     grand_ensemble_mean = np.mean(all_ensemble_members_array, axis=0)
 
+    # print the grand ensemble mean shape
+    print("grand ensemble mean shape", np.shape(grand_ensemble_mean))
+
+    # print the grand ensemble mean
+    print("grand ensemble mean", grand_ensemble_mean)
+
     # extract only the first axis of the grand ensemble mean
-    grand_ensemble_mean = grand_ensemble_mean[:, 0, 0]
+    # grand_ensemble_mean = grand_ensemble_mean[:, 0, 0]
 
     # Print the type of the times
     print("obs_time type:", type(obs_time))
-    print("model_time type:", type(list(model_times_by_model.values())[0]))
+    print("model_time type:", type(model_time))
     print("obs_time:", obs_time)
     print("model time:", list(model_times_by_model.values())[0])
     
@@ -998,28 +1034,43 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # print the type of the grand ensemble mean
     model_time = list(model_times_by_model.values())[0]
 
+    # print the type of the model time
+    print("model time type:", type(model_time))
+    # print the shape of the model time
+    print("model time shape:", np.shape(model_time))
+
+    # print grand ensemble mean values
+    print("grand ensemble mean values:", grand_ensemble_mean)
+
+
     # extract the first element of model time
     # first time array for BCC-CSM2-MR
-    model_time = model_time[0,:]
+    model_time = model_time[0]
+
+    # print the type of the model time
+    print("model time type:", type(model_time))
+
+    # print the shape of the model time
+    print("model time shape:", np.shape(model_time))
 
     # Calculate the ACC score for the \
     # short period using the function pearsonr_score
-    acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, grand_ensemble_mean, list(model_times_by_model.values())[0], obs_time, "1966-01-01","2010-12-31")
+    acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, grand_ensemble_mean, model_time, obs_time, "1966-01-01","2010-12-31")
 
     # Calculate the ACC score for the \
     # long period using the function pearsonr_score
     # long period 1966 - 2019
-    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, grand_ensemble_mean, list(model_times_by_model.values())[0], obs_time, "1966-01-01","2019-12-31")
+    acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, grand_ensemble_mean, model_time, obs_time, "1966-01-01","2018-12-31")
 
     # Calculate the RPC score for the short period
     # using the function calculate_rpc_time
     # short period 1966 - 2010
-    rpc_short = calculate_rpc_time(acc_score_short, all_ensemble_members_array, list(model_times_by_model.values())[0], "1966-01-01","2010-12-31")
+    rpc_short = calculate_rpc_time(acc_score_short, all_ensemble_members_array, model_time, "1966-01-01","2010-12-31")
 
     # Calculate the RPC score for the long period
     # using the function calculate_rpc_time
     # long period 1966 - 2019
-    rpc_long = calculate_rpc_time(acc_score_long, all_ensemble_members_array, list(model_times_by_model.values())[0], "1966-01-01","2019-12-31")
+    rpc_long = calculate_rpc_time(acc_score_long, all_ensemble_members_array, model_time, "1966-01-01","2018-12-31")
 
     # Calculate the 5-95% confidence intervals using the two functions options
     # First calculate_confidence_intervals_sd
@@ -1027,14 +1078,14 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     conf_interval_lower, conf_interval_upper = calculate_confidence_intervals(all_ensemble_members_array)
 
     # Plot the grand ensemble mean with the ACC score in the legend
-    ax.plot(list(model_times_by_model.values())[0], grand_ensemble_mean, color="red", label=f"DCPP-A")
+    ax.plot(model_time, grand_ensemble_mean, color="red", label=f"DCPP-A")
 
     # Plot the 5-95% confidence intervals
     # different shading for the two different time periods
     # short period 1966 - 2010
-    ax.fill_between(list(model_times_by_model.values())[0][:-9], conf_interval_lower[:-9], conf_interval_upper[:-9], color="red", alpha=0.3)
+    ax.fill_between(model_time[:-9], conf_interval_lower[:-9], conf_interval_upper[:-9], color="red", alpha=0.3)
     # for period 2010 - 2019
-    ax.fill_between(list(model_times_by_model.values())[0][-10:], conf_interval_lower[-10:], conf_interval_upper[-10:], color="red", alpha=0.2)
+    ax.fill_between(model_time[-10:], conf_interval_lower[-10:], conf_interval_upper[-10:], color="red", alpha=0.2)
 
     # Plot ERA5 data
     ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")

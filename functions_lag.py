@@ -238,7 +238,7 @@ def process_data(datasets_by_model, variable):
             # Using try and except to catch any errors.
             try:
                 # Extract the variable.
-                variable_data = dataset["psl"]
+                variable_data = dataset["psl"] / 100
 
                 # print the values of the variable data
                 # print("Variable data values: ", variable_data.values)
