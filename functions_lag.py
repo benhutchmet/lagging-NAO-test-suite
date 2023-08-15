@@ -116,6 +116,76 @@ def load_data(base_directory, models, variable, forecast_range, season):
     # Return the dictionary of datasets.
     return datasets_by_model
 
+# Load data only for the same init files function
+def load_data_same_init(base_directory, models, variable, forecast_range, season):
+    """Load the data from the base directory into a dictionary of datasets.
+    
+    This function takes a base directory and a list of models and loads
+    all of the individual ensemble members into a dictionary of datasets
+    grouped by models.
+    
+    Args:
+        base_directory: The base directory where the data is stored.
+        models: A list of models to load.
+        variable: The variable to load, extracted from the command line.
+        forecast_range: The forecast range to load, extracted from the command line.
+        season: The season to load, extracted from the command line.
+        
+    Returns:
+        A dictionary of datasets grouped by models.
+    """
+    
+    # Create an empty dictionary to store the datasets.
+    datasets_by_model = {}
+    
+    # Loop over the models.
+    for model in models:
+        
+        # Create an empty list to store the datasets for this model.
+        datasets_by_model[model] = []
+        
+        # create the path to the files for this model
+        # NAO_BCC-CSM2-MR_psl__DJFM_lag-4_r1i1.same-init.nc
+        files_path = base_directory + "/*same-init.nc"
+
+        # print the path to the files
+        print("Searching for files in ", files_path)
+
+        # Create a list of the files for this model.
+        files = glob.glob(files_path)
+
+        # if the list of files is empty, print a warning and
+        # exit the program
+        if len(files) == 0:
+            print("No files found for " + model)
+            sys.exit()
+        
+        # Print the files to the screen.
+        print("Files for " + model + ":", files)
+
+        # Loop over the files.
+        for file in files:
+
+            # Print the file to the screen.
+            # print(file)
+            
+            # check that the file exists
+            # if it doesn't exist, print a warning and
+            # exit the program
+            if not os.path.exists(file):
+                print("File " + file + " does not exist")
+                sys.exit()
+
+            # Load the dataset.
+            dataset = xr.open_dataset(file, chunks = {"time":50})
+
+            # Append the dataset to the list of datasets for this model.
+            datasets_by_model[model].append(dataset)
+            
+    # Return the dictionary of datasets.
+    return datasets_by_model
+
+
 # Write a function to process the data
 # this includes an outer function that takes datasets by model
 # and an inner function that takes a single dataset
