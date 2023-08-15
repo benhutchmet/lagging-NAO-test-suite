@@ -951,7 +951,7 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
 
         # Plot ensemble members
         for member in model_nao_anom:
-            ax.plot(model_time, member, color="grey", alpha=0.1, linewidth=0.5)
+            # ax.plot(model_time, member, color="grey", alpha=0.1, linewidth=0.5)
 
             # Add each member to the list of all ensemble members
             all_ensemble_members.append(member)
@@ -981,6 +981,18 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     print("obs_time:", obs_time)
     print("model time:", list(model_times_by_model.values())[0])
     
+    # print the shape of the obs time and model time
+    print("obs time shape:", np.shape(obs_time))
+    print("model time shape:", np.shape(list(model_times_by_model.values())[0]))
+
+    # print the type of the obs nao anoms and the grand ensemble mean
+    print("obs nao anoms type:", type(obs_nao_anom))
+    print("grand ensemble mean type:", type(grand_ensemble_mean))
+
+    # print the shape of the obs nao anoms and the grand ensemble mean
+    print("obs nao anoms shape:", np.shape(obs_nao_anom))
+    print("grand ensemble mean shape:", np.shape(grand_ensemble_mean))
+
     # Calculate the ACC score for the \
     # short period using the function pearsonr_score
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, grand_ensemble_mean, list(model_times_by_model.values())[0], obs_time, "1966-01-01","2010-12-31")
