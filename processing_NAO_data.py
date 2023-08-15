@@ -35,6 +35,9 @@ import xarray as xr
 import glob
 import os
 
+# set up the plots directory
+plots_dir = dic.plots_dir
+
 
 def load_lagged_ensemble_members(forecast_range, season, models):
     """
