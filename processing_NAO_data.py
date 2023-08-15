@@ -724,6 +724,18 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     # set model time to years
     model_time = years
 
+    # constrain obs time
+    obs_time = obs_time[7:]
+
+    # # constrain obs nao anom
+    obs_nao_anom = obs_nao_anom[7:, 0, 0]
+
+    # constrain model time
+    model_time = model_time[:-2]
+
+    # constrain ensemble mean
+    ensemble_mean = ensemble_mean[:-2]                                                   
+                                                       
     print("model time shape", np.shape(model_time))
     print("model time", model_time)
 
@@ -732,15 +744,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_tim
     print("for the obs nao anoms:", type(obs_nao_anom))
     print("for the model nao anoms:", type(ensemble_mean))
     print("obs nao anoms shape", np.shape(obs_nao_anom))
-    print("model nao anoms shape", np.shape(ensemble_mean))
-
-    # constrain obs time
-    obs_time = obs_time[4:-1]
-
-    # constrain obs nao anom
-    obs_nao_anom = obs_nao_anom[4:-1]                                            
-                                                    
-                                                       
+    print("model nao anoms shape", np.shape(ensemble_mean))             
+                                                
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
     acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
