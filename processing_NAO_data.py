@@ -718,7 +718,7 @@ def constrain_years(model_data, models):
     return constrained_data
 
 # Define a plotting function that will plot the variance adjusted lag data
-def plot_ensemble_members_and_lagged_adjusted_mean(models, model_data, model_time, obs_nao_anom,
+def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, model_time, obs_nao_anom,
                                                    obs_time, forecast_range, season, lag=4):
     """
     Plot the ensemble mean of all members from all models and each of the ensemble members, with lagged and adjusted variance applied to the grand ensemble mean.
@@ -1389,15 +1389,15 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     conf_interval_lower_long, conf_interval_upper_long = compute_rmse_confidence_intervals(obs_nao_anom, lagged_adjusted_ensemble_mean_long, obs_time, lagged_ensemble_members_time)
 
     # plot the RPS adjusted nolag ensemble mean
-    ax.plot(model_time, adjusted_ensemble_mean_short_nolag, color="red", alpha=0.8, linewidth=0.8)
+    # ax.plot(model_time, adjusted_ensemble_mean_short_nolag, color="red", alpha=0.8, linewidth=0.8)
 
     # plot the RPS adjusted lagged ensemble mean
     # for both the short period RPS adjust
     # and the long period RPS adjust
     # short period:
-    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A")  
+    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A (short RPS)")  
     # long period:
-    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_long, color="red")
+    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_long, color="red", alpha=0.3, label=f"DCPP-A (long RPS)")
 
     # ----TESTING----
     # try plotting the each individual lagged member
@@ -1419,12 +1419,12 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
 
     # Plot the confidence intervals for the short period
-    ax.fill_between(lagged_ensemble_members_time[:-9], conf_interval_lower_short[:-9], conf_interval_upper_short[:-9], color="red", alpha=0.2)
+    ax.fill_between(lagged_ensemble_members_time, conf_interval_lower_short, conf_interval_upper_short, color="red", alpha=0.2)
     # for the long period
-    ax.fill_between(lagged_ensemble_members_time, conf_interval_lower_long, conf_interval_upper_long, color="red", alpha=0.25)
+    #ax.fill_between(lagged_ensemble_members_time, conf_interval_lower_long, conf_interval_upper_long, color="red", alpha=0.25)
 
     # Plot ERA5 data
-    ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")
+    ax.plot(obs_time[6:-4], obs_nao_anom[6:-4], color="black", label="ERA5")
 
     ax.axhline(y=0, color="black", linestyle="-", linewidth=0.5)
     ax.set_xlim([np.datetime64("1960"), np.datetime64("2020")])
