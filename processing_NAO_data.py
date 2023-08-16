@@ -351,8 +351,8 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     print("obs times shape post vectorize", np.shape(obs_times))
 
     # print the values of model_times
-    # print("model times values post vectorize", model_times)
-    # print("obs times values post vectorize", obs_times)
+    print("model times values post vectorize", model_times)
+    print("obs times values post vectorize", obs_times)
 
     # debugging for NAO matching
     # print("model times", model_times)
@@ -375,17 +375,24 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     filtered_model_times = model_times[model_start_index:model_end_index+1]
     filtered_obs_times = obs_times[obs_start_index:obs_end_index+1]
 
-    # print the shape and values of the filtered model times
-    print("filtered model times shape", np.shape(filtered_model_times))
-    # print("filtered model times values", filtered_model_times)
+    # # print the shape and values of the filtered model times
+    # print("filtered model times shape", np.shape(filtered_model_times))
+    # # print("filtered model times values", filtered_model_times)
 
-    # print the shape and values of the filtered obs times
-    print("filtered obs times shape", np.shape(filtered_obs_times))
-    # print("filtered obs times values", filtered_obs_times)
+    # # print the shape and values of the filtered obs times
+    # print("filtered obs times shape", np.shape(filtered_obs_times))
+    # # print("filtered obs times values", filtered_obs_times)
 
     # Filter the time series based on the analyzed dimensions
     filtered_time_series1 = time_series1[obs_start_index:obs_end_index+1]
     filtered_time_series2 = time_series2[model_start_index:model_end_index+1]
+
+    # print the shapes of the filtered time series
+    print("filtered time series 1 shape", np.shape(filtered_time_series1))
+    print("filtered time series 2 shape", np.shape(filtered_time_series2))
+    print("filtered time series 1", filtered_time_series1)
+    print("filtered time series 2", filtered_time_series2)
+
 
     # Calculate the Pearson correlation coefficient and p-value
     correlation_coefficient, p_value = stats.pearsonr(filtered_time_series1, filtered_time_series2)
@@ -835,8 +842,11 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # constrain obs time
     obs_time = obs_time[7:]
 
+    # print the shape of the obs nao anoms
+    print("obs nao anoms shape", np.shape(obs_nao_anom))
+
     # # constrain obs nao anom
-    obs_nao_anom = obs_nao_anom[7:, 0, 0]
+    obs_nao_anom = obs_nao_anom[7:]
 
     # constrain model time
     model_time = model_time[:-2]
@@ -859,21 +869,21 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     acc_score_short_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
                                                obs_time, "1968-01-01", "2010-12-31")
     acc_score_long_lagged, _ = pearsonr_score(obs_nao_anom, ensemble_mean, model_time,
-                                              obs_time, "1968-01-01", "2019-12-31")
+                                              obs_time, "1968-01-01", "2018-12-31")
 
     # Now use these ACC scores to calculate the RPC scores
     # For the short and long period
     rpc_short_lagged = calculate_rpc_time(acc_score_short_lagged, ensemble_members_array,
                                           model_time, "1968-01-01", "2010-12-31")
     rpc_long_lagged = calculate_rpc_time(acc_score_long_lagged, ensemble_members_array,
-                                         model_time, "1968-01-01", "2019-12-31")
+                                         model_time, "1968-01-01", "2018-12-31")
 
     # Now use the RPC scores to calculate the RPS
     # To be used in the variance adjustment
     rps_short_lagged = calculate_rps_time(rpc_short_lagged, obs_nao_anom, ensemble_members_array,
                                           model_time, "1968-01-01", "2010-12-31")
     rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, ensemble_members_array,
-                                         model_time, "1968-01-01", "2019-12-31")
+                                         model_time, "1968-01-01", "2018-12-31")
 
     # print these rpc scores
     print("RPC short lagged", rpc_short_lagged)
@@ -894,7 +904,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short,
                                                     model_time, obs_time, "1968-01-01", "2010-12-31")
     acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long,
-                                                  model_time, obs_time, "1968-01-01", "2019-12-31")
+                                                  model_time, obs_time, "1968-01-01", "2018-12-31")
 
     # Calculate the 5-95% confidence intervals using compute_rmse_confidence_intervals
     conf_interval_lower_short, conf_interval_upper_short = compute_rmse_confidence_intervals(obs_nao_anom,
@@ -920,7 +930,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     acc_score_short, p_value_short = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_short,
                                                     model_time, obs_time, "1968-01-01", "2010-12-31")
     acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long,
-                                                  model_time, obs_time, "1968-01-01", "2019-12-31")
+                                                  model_time, obs_time, "1968-01-01", "2018-12-31")
 
     # # check the dimensions of the ci's before plotting
     # print("conf interval lower short", np.shape(conf_interval_lower_short))
