@@ -474,8 +474,8 @@ def calculate_rps_time(RPC, obs, forecast_members, model_times, start_date, end_
     print("forecast members type post conversion", type(forecast_members))
 
     # Print the obs and forecast members
-    print("obs", obs)
-    print("forecast members", forecast_members)
+    # print("obs", obs)
+    # print("forecast members", forecast_members)
 
     # print the shape of the obs and forecast members
     print("obs shape", np.shape(obs))
@@ -726,7 +726,9 @@ def constrain_years(model_data, models):
 
 # Define a plotting function that will plot the variance adjusted lag data
 def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, model_time, obs_nao_anom,
-                                                   obs_time, forecast_range, season, lag=4):
+                                                obs_time, forecast_range, season,
+                                                lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short_norm_lag,
+                                                lag=4):
     """
     Plot the ensemble mean of all members from all models and each of the ensemble members, with lagged and adjusted variance applied to the grand ensemble mean.
 
@@ -827,8 +829,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # print the types for the time
     print("For the obs time:", type(obs_time))
     print("For the model time:", type(years))
-    print("obs time", obs_time)
-    print("model time", years)
+    # print("obs time", obs_time)
+    # print("model time", years)
 
     # Convert the type of years
     years = years.astype(str)
@@ -855,7 +857,7 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     ensemble_mean = ensemble_mean[:-2]                                                   
                                                        
     print("model time shape", np.shape(model_time))
-    print("model time", model_time)
+    # print("model time", model_time)
 
 
     # print the types for the time
@@ -923,6 +925,9 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     ax.plot(model_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A (short RPS)")
     # long period:
     ax.plot(model_time, lagged_adjusted_ensemble_mean_long, color="red", label = f"DCPP-A (long RPS)", alpha=0.3)
+
+    # Also plot the lagged_ensemble_members_time and the lagged_adjusted_ensemble_mean_short
+    ax.plot(lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short_norm_lag, color="blue", label="DCPP-A (normal lag)", alpha=0.3)
 
     # Calculate the ACC for the short and long periods
     # Using the function pearsonr_score
@@ -1474,6 +1479,9 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
 
     # Show the figure
     plt.show()
+
+    # return lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short
+    return lagged_ensemble_members_time, lagged_adjusted_ensemble_mean_short
 
 # first we start a main function which will parse the arguments from the command line
 # these arguments include the forecast range and season
