@@ -920,9 +920,9 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # for both the short period RPS adjust
     # and the long period RPS adjust
     # short period:
-    ax.plot(model_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A")
+    ax.plot(model_time, lagged_adjusted_ensemble_mean_short, color="red", label=f"DCPP-A (short RPS)")
     # long period:
-    ax.plot(model_time, lagged_adjusted_ensemble_mean_long, color="red")
+    ax.plot(model_time, lagged_adjusted_ensemble_mean_long, color="red", label = f"DCPP-A (long RPS)", alpha=0.3)
 
     # Calculate the ACC for the short and long periods
     # Using the function pearsonr_score
@@ -943,8 +943,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     ax.fill_between(model_time, conf_interval_lower_short, conf_interval_upper_short,
                     color="red", alpha=0.2)
     # for the long period
-    ax.fill_between(model_time, conf_interval_lower_long, conf_interval_upper_long, color="red",
-                    alpha=0.25)
+    # ax.fill_between(model_time, conf_interval_lower_long, conf_interval_upper_long, color="red",
+    #                 alpha=0.25)
 
     # Plot ERA5 data
     ax.plot(obs_time, obs_nao_anom, color="black", label="ERA5")
