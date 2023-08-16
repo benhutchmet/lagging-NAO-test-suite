@@ -66,21 +66,21 @@ def load_lagged_ensemble_members(forecast_range, season, models):
     arg_path = f"/NAO/years_{forecast_range}/{season}/outputs/"
 
     # echo the models being used
-    print("models being used: ", models)
+    #print("models being used: ", models)
 
     # define initialization schemes
     init_schemes = ['same-init', 'init-minus-1', 'init-minus-2', 'init-minus-3']
 
     # loop over the models
     for model in models:
-        # # print the model name
-        print("model name: ", model)
+        # # #print the model name
+        #print("model name: ", model)
 
         # create the model path
         model_path = NAO_dir + model + arg_path
 
-        # # print the model path
-        print("model path: ", model_path)
+        # # #print the model path
+        #print("model path: ", model_path)
 
         # create a nested dictionary for each model
         lagged_ensemble_members[model] = {init_scheme: [] for init_scheme in init_schemes}
@@ -94,41 +94,41 @@ def load_lagged_ensemble_members(forecast_range, season, models):
         # Filter the list to include only netCDF files
         nc_files = [f for f in all_files if f.endswith(".nc")]
         
-        # Print the list of netCDF files
-        print(nc_files)
+        # #print the list of netCDF files
+        #print(nc_files)
 
         # Echo files
-        print("searching for files:", files)
+        #print("searching for files:", files)
 
         # loop over the files
         for file in files:
             # extract the initialization scheme from the filename
             init_scheme = os.path.basename(file).split('__')[-1].split('.')[1]
 
-            print("searching in list",os.path.basename(file).split('_'))
+            #print("searching in list",os.path.basename(file).split('_'))
             
             # echo the filename
-            print("filename: ", file)
+            #print("filename: ", file)
             
             # echo the initialization scheme
-            print("init scheme: ", init_scheme)
+            #print("init scheme: ", init_scheme)
 
             # if file does not exist
-            # print "File does not exist"
+            # #print "File does not exist"
             # and exit the program with an error message
             if not os.path.exists(file):
-                print("File does not exist")
+                #print("File does not exist")
                 sys.exit(1)
 
             # open the file and append the dataset to the appropriate list
             ds = xr.open_dataset(file)
             lagged_ensemble_members[model][init_scheme].append(ds)
 
-        # print the init schemes
-        print("init schemes: ", init_schemes)
+        # #print the init schemes
+        #print("init schemes: ", init_schemes)
 
-        # print the model
-        print("model: ", model)
+        # #print the model
+        #print("model: ", model)
 
         # concatenate the list of datasets for each init scheme into a single dataset
         for init_scheme in init_schemes:
@@ -148,27 +148,27 @@ def process_model_datasets_by_init(datasets_by_init):
         model_nao_anoms_by_init = {}
 
         model_data = init_data['same-init']['psl']
-        print("testing model time values", model_data['time'].values)
+        #print("testing model time values", model_data['time'].values)
 
         for init_scheme, datasets in init_data.items():
             # Extract the data for 'psl'
             model_data = datasets['psl']
 
-            print("model data shape", np.shape(model_data))
-            print("model data", model_data)
+            #print("model data shape", np.shape(model_data))
+            #print("model data", model_data)
 
             # Extract the 'time' variable and convert its data type
             model_time = model_data['time'].values
             model_time = model_time.astype("datetime64[Y]")
 
-            print("model time shape", np.shape(model_time))
-            print("model time", model_time)
+            #print("model time shape", np.shape(model_time))
+            #print("model time", model_time)
 
             # Process the 'psl' data from Pa to hPa
             model_nao_anom = model_data / 100
 
-            print("model nao anom shape", np.shape(model_nao_anom))
-            print("model nao anom", model_nao_anom)
+            #print("model nao anom shape", np.shape(model_nao_anom))
+            #print("model nao anom", model_nao_anom)
 
             model_times_by_init[init_scheme] = model_time
             model_nao_anoms_by_init[init_scheme] = model_nao_anom
@@ -192,30 +192,30 @@ def combine_model_data(model_times_by_model_by_init, model_nao_anoms_by_model_by
         # Use the years from the 'init-minus-3' scheme as the overlapping years
         overlapping_years = (model_times_by_init['init-minus-3'])
 
-        print("overlapping years", overlapping_years)
-        print("overlapping years shape", np.shape(overlapping_years))
+        #print("overlapping years", overlapping_years)
+        #print("overlapping years shape", np.shape(overlapping_years))
 
         # Select and combine the data for the overlapping years
         combined_data = []
         for init_scheme in ['same-init', 'init-minus-1', 'init-minus-2', 'init-minus-3']:
 
-            print("init scheme", init_scheme)
+            #print("init scheme", init_scheme)
 
-            # print the data we want to look at
-            print("model times by init", model_times_by_init[init_scheme])
-            # print the shape of the data we want to look at
-            print("model times by init shape", np.shape(model_times_by_init[init_scheme]))
-            # print the type of the data we want to look at
-            print("type of model times by init", type(model_times_by_init[init_scheme]))
+            # #print the data we want to look at
+            #print("model times by init", model_times_by_init[init_scheme])
+            # #print the shape of the data we want to look at
+            #print("model times by init shape", np.shape(model_times_by_init[init_scheme]))
+            # #print the type of the data we want to look at
+            #print("type of model times by init", type(model_times_by_init[init_scheme]))
 
             # Select the data for the overlapping years
             overlap_mask = np.in1d(model_times_by_init[init_scheme], overlapping_years)
             overlap_mask_xr = xr.DataArray(overlap_mask, dims=['time'])
 
-            print("overlap mask", overlap_mask)
-            print("overlap mask shape", np.shape(overlap_mask))
-            print("overlap mask xr", overlap_mask_xr['time'])
-            print("overlap mask xr shape", np.shape(overlap_mask_xr))
+            #print("overlap mask", overlap_mask)
+            #print("overlap mask shape", np.shape(overlap_mask))
+            #print("overlap mask xr", overlap_mask_xr['time'])
+            #print("overlap mask xr shape", np.shape(overlap_mask_xr))
 
             selected_data = model_nao_anoms_by_init[init_scheme].where(overlap_mask_xr, drop=True)
 
@@ -293,8 +293,8 @@ def process_observations(obs):
     obs_psl = obs["var151"]
     obs_time = obs_psl["time"].values
 
-    print(np.shape(obs_psl))
-    print(np.shape(obs_time))
+    #print(np.shape(obs_psl))
+    #print(np.shape(obs_time))
 
     # Set the type for the time variable
     obs_time = obs_time.astype("datetime64[Y]")
@@ -334,30 +334,30 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     # Convert obs_times to an array of Timestamp objects
     obs_times = np.vectorize(pd.Timestamp)(obs_times)
 
-    # print the type of model_times
-    print("model times type", type(model_times))
+    # #print the type of model_times
+    #print("model times type", type(model_times))
 
-    # print the type of obs_times
-    print("obs times type", type(obs_times))
+    # #print the type of obs_times
+    #print("obs times type", type(obs_times))
 
     # Convert model_times to an array of Timestamp objects
     model_times = np.vectorize(pd.Timestamp)(model_times)
 
-    # print the type of model_times
-    print("model times type post vectorize", type(model_times))
+    # #print the type of model_times
+    #print("model times type post vectorize", type(model_times))
 
-    # print the shape of model_times
-    print("model times shape post vectorize", np.shape(model_times))
-    print("obs times shape post vectorize", np.shape(obs_times))
+    # #print the shape of model_times
+    #print("model times shape post vectorize", np.shape(model_times))
+    #print("obs times shape post vectorize", np.shape(obs_times))
 
-    # print the values of model_times
-    # print("model times values post vectorize", model_times)
-    # print("obs times values post vectorize", obs_times)
+    # #print the values of model_times
+    # #print("model times values post vectorize", model_times)
+    # #print("obs times values post vectorize", obs_times)
 
     # debugging for NAO matching
-    # print("model times", model_times)
-    # print("model times shape", np.shape(model_times))
-    # print("model times type", type(model_times))
+    # #print("model times", model_times)
+    # #print("model times shape", np.shape(model_times))
+    # #print("model times type", type(model_times))
 
     # Analyze dimensions of model_times and obs_times
     model_start_index = np.where(model_times == start_date)[0][0]
@@ -365,33 +365,33 @@ def pearsonr_score(obs, model, model_times, obs_times, start_date, end_date):
     obs_start_index = np.where(obs_times >= start_date)[0][0]
     obs_end_index = np.where(obs_times <= end_date)[0][-1]
 
-    # print the model start index
-    # print("model start index", model_start_index)
-    # print("model end index", model_end_index)
-    # print("obs start index", obs_start_index)
-    # print("obs end index", obs_end_index)
+    # #print the model start index
+    # #print("model start index", model_start_index)
+    # #print("model end index", model_end_index)
+    # #print("obs start index", obs_start_index)
+    # #print("obs end index", obs_end_index)
 
     # Get the filtered times seriers
     filtered_model_times = model_times[model_start_index:model_end_index+1]
     filtered_obs_times = obs_times[obs_start_index:obs_end_index+1]
 
-    # # print the shape and values of the filtered model times
-    # print("filtered model times shape", np.shape(filtered_model_times))
-    # # print("filtered model times values", filtered_model_times)
+    # # #print the shape and values of the filtered model times
+    # #print("filtered model times shape", np.shape(filtered_model_times))
+    # # #print("filtered model times values", filtered_model_times)
 
-    # # print the shape and values of the filtered obs times
-    # print("filtered obs times shape", np.shape(filtered_obs_times))
-    # # print("filtered obs times values", filtered_obs_times)
+    # # #print the shape and values of the filtered obs times
+    # #print("filtered obs times shape", np.shape(filtered_obs_times))
+    # # #print("filtered obs times values", filtered_obs_times)
 
     # Filter the time series based on the analyzed dimensions
     filtered_time_series1 = time_series1[obs_start_index:obs_end_index+1]
     filtered_time_series2 = time_series2[model_start_index:model_end_index+1]
 
-    # print the shapes of the filtered time series
-    print("filtered time series 1 shape", np.shape(filtered_time_series1))
-    print("filtered time series 2 shape", np.shape(filtered_time_series2))
-    # print("filtered time series 1", filtered_time_series1)
-    # print("filtered time series 2", filtered_time_series2)
+    # #print the shapes of the filtered time series
+    #print("filtered time series 1 shape", np.shape(filtered_time_series1))
+    #print("filtered time series 2 shape", np.shape(filtered_time_series2))
+    # #print("filtered time series 1", filtered_time_series1)
+    # #print("filtered time series 2", filtered_time_series2)
 
 
     # Calculate the Pearson correlation coefficient and p-value
@@ -459,27 +459,27 @@ def calculate_rps_time(RPC, obs, forecast_members, model_times, start_date, end_
     float: Ratio of Predictable Signals (RPS)
     """
 
-    # Print the types of the input arrays
-    print("obs type", type(obs))
-    print("forecast members type", type(forecast_members))
-    print("model times type", type(model_times))
+    # #print the types of the input arrays
+    #print("obs type", type(obs))
+    #print("forecast members type", type(forecast_members))
+    #print("model times type", type(model_times))
 
 
     # Convert the input arrays to numpy arrays
     obs = np.array(obs)
     forecast_members = np.array(forecast_members)
 
-    # Print types of the input arrays post conversion
-    print("obs type post conversion", type(obs))
-    print("forecast members type post conversion", type(forecast_members))
+    # #print types of the input arrays post conversion
+    #print("obs type post conversion", type(obs))
+    #print("forecast members type post conversion", type(forecast_members))
 
-    # Print the obs and forecast members
-    # print("obs", obs)
-    # print("forecast members", forecast_members)
+    # #print the obs and forecast members
+    # #print("obs", obs)
+    # #print("forecast members", forecast_members)
 
-    # print the shape of the obs and forecast members
-    print("obs shape", np.shape(obs))
-    print("forecast members shape", np.shape(forecast_members))
+    # #print the shape of the obs and forecast members
+    #print("obs shape", np.shape(obs))
+    #print("forecast members shape", np.shape(forecast_members))
 
     # Convert the start_date and end_date to pandas Timestamp objects
     start_date = pd.Timestamp(start_date)
@@ -497,18 +497,18 @@ def calculate_rps_time(RPC, obs, forecast_members, model_times, start_date, end_
     # Calculate the total variance of the observations
     variance_obs = np.nanstd(obs)
 
-    # print the variance of the observations
-    print("variance obs", variance_obs)
-    # print the type of the variance of the observations
-    print("variance obs type", type(variance_obs))
+    # #print the variance of the observations
+    #print("variance obs", variance_obs)
+    # #print the type of the variance of the observations
+    #print("variance obs type", type(variance_obs))
 
     # Calculate the total variance of the forecast members
     variance_forecast_members = np.std(forecast_members)
 
-    # print the variance of the forecast members
-    print("variance forecast members", variance_forecast_members)
-    # print the type of the variance of the forecast members
-    print("variance forecast members type", type(variance_forecast_members))
+    # #print the variance of the forecast members
+    #print("variance forecast members", variance_forecast_members)
+    # #print the type of the variance of the forecast members
+    #print("variance forecast members type", type(variance_forecast_members))
 
     # Calculate the RPS
     RPS = RPC * (variance_obs / variance_forecast_members)
@@ -582,11 +582,11 @@ def compute_rmse_confidence_intervals(obs_nao_anoms, adjusted_lagged_model_nao_a
 
     model_time_lagged = model_time_lagged.astype(int) + 1970
 
-    # print the obs time and model time
-    print("shape of obs time", np.shape(obs_time))
-    print("shape of model time", np.shape(model_time_lagged))
-    print("obs_time", obs_time)
-    print("model time", model_time_lagged)
+    # #print the obs time and model time
+    #print("shape of obs time", np.shape(obs_time))
+    #print("shape of model time", np.shape(model_time_lagged))
+    #print("obs_time", obs_time)
+    #print("model time", model_time_lagged)
 
     # Check that both obs_time and model_time_lagged are arrays of years
     assert obs_time.dtype == np.dtype('int64')
@@ -598,40 +598,40 @@ def compute_rmse_confidence_intervals(obs_nao_anoms, adjusted_lagged_model_nao_a
     # Match the years in obs_time and model_time_lagged
     common_years = np.intersect1d(obs_time, model_time_lagged)
 
-    # print the common years
-    print("common years", common_years)
-    # print the type of the common years
-    print("common years type", type(common_years))
+    # #print the common years
+    #print("common years", common_years)
+    # #print the type of the common years
+    #print("common years type", type(common_years))
 
     # Find the indices of the common years in both arrays
     obs_indices = np.where(np.isin(obs_time, common_years))[0]
     model_indices = np.where(np.isin(model_time_lagged, common_years))[0]
 
-    # print the obs indices and model indices
-    print("obs indices", obs_indices)
-    print("model indices", model_indices)
+    # #print the obs indices and model indices
+    #print("obs indices", obs_indices)
+    #print("model indices", model_indices)
 
-    # print the shape and type of obs_nao_anoms
-    print("obs nao anoms shape", np.shape(obs_nao_anoms))
-    print("obs nao anoms type", type(obs_nao_anoms))
+    # #print the shape and type of obs_nao_anoms
+    #print("obs nao anoms shape", np.shape(obs_nao_anoms))
+    #print("obs nao anoms type", type(obs_nao_anoms))
 
-    # Print the shape and type of adjusted_lagged_model_nao_anoms
-    print("adjusted lagged model nao anoms shape", np.shape(adjusted_lagged_model_nao_anoms))
-    print("adjusted lagged model nao anoms type", type(adjusted_lagged_model_nao_anoms))
+    # #print the shape and type of adjusted_lagged_model_nao_anoms
+    #print("adjusted lagged model nao anoms shape", np.shape(adjusted_lagged_model_nao_anoms))
+    #print("adjusted lagged model nao anoms type", type(adjusted_lagged_model_nao_anoms))
 
     # Create new arrays with the corresponding values for the common years
     obs_nao_anoms_matched = obs_nao_anoms[obs_indices]
     adjusted_lagged_model_nao_anoms_matched = adjusted_lagged_model_nao_anoms[model_indices]
 
-    # print the shape and type of obs_nao_anoms_matched
-    print("obs nao anoms matched shape", np.shape(obs_nao_anoms_matched))
-    print("obs nao anoms matched type", type(obs_nao_anoms_matched))
-    print("obs nao anoms matched", obs_nao_anoms_matched)
+    # #print the shape and type of obs_nao_anoms_matched
+    #print("obs nao anoms matched shape", np.shape(obs_nao_anoms_matched))
+    #print("obs nao anoms matched type", type(obs_nao_anoms_matched))
+    #print("obs nao anoms matched", obs_nao_anoms_matched)
 
-    # print the shape and type of adjusted_lagged_model_nao_anoms_matched
-    print("adjusted lagged model nao anoms matched shape", np.shape(adjusted_lagged_model_nao_anoms_matched))
-    print("adjusted lagged model nao anoms matched type", type(adjusted_lagged_model_nao_anoms_matched))
-    print("adjusted lagged model nao anoms matched", adjusted_lagged_model_nao_anoms_matched)
+    # #print the shape and type of adjusted_lagged_model_nao_anoms_matched
+    #print("adjusted lagged model nao anoms matched shape", np.shape(adjusted_lagged_model_nao_anoms_matched))
+    #print("adjusted lagged model nao anoms matched type", type(adjusted_lagged_model_nao_anoms_matched))
+    #print("adjusted lagged model nao anoms matched", adjusted_lagged_model_nao_anoms_matched)
 
     # Compute the root-mean-square error (RMSE) between the ensemble mean and the observations
     rmse = np.sqrt(np.mean((obs_nao_anoms_matched - adjusted_lagged_model_nao_anoms_matched) ** 2, axis=0))
@@ -664,8 +664,8 @@ def constrain_years(model_data, models):
     # Initialize a list to store the years for each model
     years_list = []
 
-    # Print the models being proces
-    # print("models:", models)
+    # #print the models being proces
+    # #print("models:", models)
     
     # Loop over the models
     for model in models:
@@ -683,10 +683,10 @@ def constrain_years(model_data, models):
     # Find the years that are in all of the models
     common_years = list(set(years_list[0]).intersection(*years_list))
 
-    # Print the common years for debugging
-    # print("Common years:", common_years)
-    # print("Common years type:", type(common_years))
-    # print("Common years shape:", np.shape(common_years))
+    # #print the common years for debugging
+    # #print("Common years:", common_years)
+    # #print("Common years type:", type(common_years))
+    # #print("Common years shape:", np.shape(common_years))
 
     # Initialize a dictionary to store the constrained data
     constrained_data = {}
@@ -701,15 +701,15 @@ def constrain_years(model_data, models):
             # Extract the years
             years = member.time.dt.year.values
 
-            # Print the years extracted from the model
-            # print('model years', years)
-            # print('model years shape', np.shape(years))
+            # #print the years extracted from the model
+            # #print('model years', years)
+            # #print('model years shape', np.shape(years))
             
             # Find the years that are in both the model data and the common years
             years_in_both = np.intersect1d(years, common_years)
 
-            # print("years in both shape", np.shape(years_in_both))
-            # print("years in both", years_in_both)
+            # #print("years in both shape", np.shape(years_in_both))
+            # #print("years in both", years_in_both)
             
             # Select only those years from the model data
             member = member.sel(time=member.time.dt.year.isin(years_in_both))
@@ -719,8 +719,8 @@ def constrain_years(model_data, models):
                 constrained_data[model] = []
             constrained_data[model].append(member)
 
-    # # Print the constrained data for debugging
-    # print("Constrained data:", constrained_data)
+    # # #print the constrained data for debugging
+    # #print("Constrained data:", constrained_data)
 
     return constrained_data
 
@@ -770,8 +770,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # First constrain the years to the years that are in all of the models
     model_data = constrain_years(model_data, models)
 
-    # Print the shape of the model data
-    print("model data shape", np.shape(model_data))
+    # #print the shape of the model data
+    #print("model data shape", np.shape(model_data))
 
     # Loop over the models
     for model in models:
@@ -783,10 +783,10 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
         # model_time = list(model_time.values())[0]
 
         # # Echo the model time
-        # print("model time", model_time)
+        # #print("model time", model_time)
 
-        # Print the model data for debugging
-        print("Extracting data for model:", model)
+        # #print the model data for debugging
+        #print("Extracting data for model:", model)
 
         # Set the ensemble members count to zero
         if model not in ensemble_members_count:
@@ -803,9 +803,9 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
             # # Extract the time
             model_time = member.time.values
 
-            # Print the years extracted from the model
-            # print("years", years)
-            # print("years shape", np.shape(years))
+            # #print the years extracted from the model
+            # #print("years", years)
+            # #print("years shape", np.shape(years))
 
             # Increment the ensemble members count
             ensemble_members_count[model] += 1
@@ -819,18 +819,18 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # save the number of ensemble members
     no_ensemble_members = len(ensemble_members_array[:,0,0,0])
 
-    # Print the dimensions of the ensemble members array
-    print("ensemble members array shape", np.shape(ensemble_members_array))
+    # #print the dimensions of the ensemble members array
+    #print("ensemble members array shape", np.shape(ensemble_members_array))
 
     # Take the equal weighted mean of the ensemble members
     ensemble_mean = ensemble_members_array.mean(axis=0)
     ensemble_mean = ensemble_mean[:, 0, 0]                                                 
                                                        
-    # print the types for the time
-    print("For the obs time:", type(obs_time))
-    print("For the model time:", type(years))
-    # print("obs time", obs_time)
-    # print("model time", years)
+    # #print the types for the time
+    #print("For the obs time:", type(obs_time))
+    #print("For the model time:", type(years))
+    # #print("obs time", obs_time)
+    # #print("model time", years)
 
     # Convert the type of years
     years = years.astype(str)
@@ -844,8 +844,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # constrain obs time
     obs_time = obs_time[7:]
 
-    # print the shape of the obs nao anoms
-    print("obs nao anoms shape", np.shape(obs_nao_anom))
+    # #print the shape of the obs nao anoms
+    #print("obs nao anoms shape", np.shape(obs_nao_anom))
 
     # # constrain obs nao anom
     obs_nao_anom = obs_nao_anom[7:]
@@ -856,15 +856,15 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     # constrain ensemble mean
     ensemble_mean = ensemble_mean[:-2]                                                   
                                                        
-    print("model time shape", np.shape(model_time))
-    # print("model time", model_time)
+    #print("model time shape", np.shape(model_time))
+    # #print("model time", model_time)
 
 
-    # print the types for the time
-    print("for the obs nao anoms:", type(obs_nao_anom))
-    print("for the model nao anoms:", type(ensemble_mean))
-    print("obs nao anoms shape", np.shape(obs_nao_anom))
-    print("model nao anoms shape", np.shape(ensemble_mean))             
+    # #print the types for the time
+    #print("for the obs nao anoms:", type(obs_nao_anom))
+    #print("for the model nao anoms:", type(ensemble_mean))
+    #print("obs nao anoms shape", np.shape(obs_nao_anom))
+    #print("model nao anoms shape", np.shape(ensemble_mean))             
                                                 
     # calculate the ACC (short and long) for the lagged grand
     # ensemble mean
@@ -887,13 +887,13 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
     rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, ensemble_members_array,
                                          model_time, "1968-01-01", "2016-12-31")
 
-    # print these rpc scores
-    print("RPC short lagged", rpc_short_lagged)
-    print("RPC long lagged", rpc_long_lagged)
+    # #print these rpc scores
+    #print("RPC short lagged", rpc_short_lagged)
+    #print("RPC long lagged", rpc_long_lagged)
 
-    # print these rps scores
-    print("RPS short lagged", rps_short_lagged)
-    print("RPS long lagged", rps_long_lagged)
+    # #print these rps scores
+    #print("RPS short lagged", rps_short_lagged)
+    #print("RPS long lagged", rps_long_lagged)
 
     # apply the variance adjustment (via RPS scaling) to the
     # lagged grand ensemble mean
@@ -938,11 +938,11 @@ def plot_ensemble_members_and_lagged_adjusted_mean_alt_lag(models, model_data, m
                                                   model_time, obs_time, "1968-01-01", "2016-12-31")
 
     # # check the dimensions of the ci's before plotting
-    # print("conf interval lower short", np.shape(conf_interval_lower_short))
-    # print("conf interval upper short", np.shape(conf_interval_upper_short))
-    # print("conf interval lower long", np.shape(conf_interval_lower_long))
-    # print("conf interval upper long", np.shape(conf_interval_upper_long))
-    # print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
+    # #print("conf interval lower short", np.shape(conf_interval_lower_short))
+    # #print("conf interval upper short", np.shape(conf_interval_upper_short))
+    # #print("conf interval lower long", np.shape(conf_interval_lower_long))
+    # #print("conf interval upper long", np.shape(conf_interval_upper_long))
+    # #print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
 
     # Plot the confidence intervals for the short period
     ax.fill_between(model_time, conf_interval_lower_short, conf_interval_upper_short,
@@ -1095,63 +1095,63 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # all_ensemble_members_array shape (158, 54, 1, 1)
     all_ensemble_members_array = np.squeeze(all_ensemble_members_array)
 
-    # Print the dimensions of the all_ensemble_members_array
-    print("all_ensemble_members_array shape", np.shape(all_ensemble_members_array))
+    # #print the dimensions of the all_ensemble_members_array
+    #print("all_ensemble_members_array shape", np.shape(all_ensemble_members_array))
 
-    # print the all_ensemble_members_array
-    print("all_ensemble_members_array", all_ensemble_members_array)
+    # #print the all_ensemble_members_array
+    #print("all_ensemble_members_array", all_ensemble_members_array)
 
     # Calculate the grand ensemble mean using the new method
     grand_ensemble_mean = np.mean(all_ensemble_members_array, axis=0)
 
-    # print the grand ensemble mean shape
-    print("grand ensemble mean shape", np.shape(grand_ensemble_mean))
+    # #print the grand ensemble mean shape
+    #print("grand ensemble mean shape", np.shape(grand_ensemble_mean))
 
-    # print the grand ensemble mean
-    print("grand ensemble mean", grand_ensemble_mean)
+    # #print the grand ensemble mean
+    #print("grand ensemble mean", grand_ensemble_mean)
 
     # extract only the first axis of the grand ensemble mean
     # grand_ensemble_mean = grand_ensemble_mean[:, 0, 0]
 
-    # Print the type of the times
-    print("obs_time type:", type(obs_time))
-    print("model_time type:", type(model_time))
-    print("obs_time:", obs_time)
-    print("model time:", list(model_times_by_model.values())[0])
+    # #print the type of the times
+    #print("obs_time type:", type(obs_time))
+    #print("model_time type:", type(model_time))
+    #print("obs_time:", obs_time)
+    #print("model time:", list(model_times_by_model.values())[0])
     
-    # print the shape of the obs time and model time
-    print("obs time shape:", np.shape(obs_time))
-    print("model time shape:", np.shape(list(model_times_by_model.values())[0]))
+    # #print the shape of the obs time and model time
+    #print("obs time shape:", np.shape(obs_time))
+    #print("model time shape:", np.shape(list(model_times_by_model.values())[0]))
 
-    # print the type of the obs nao anoms and the grand ensemble mean
-    print("obs nao anoms type:", type(obs_nao_anom))
-    print("grand ensemble mean type:", type(grand_ensemble_mean))
+    # #print the type of the obs nao anoms and the grand ensemble mean
+    #print("obs nao anoms type:", type(obs_nao_anom))
+    #print("grand ensemble mean type:", type(grand_ensemble_mean))
 
-    # print the shape of the obs nao anoms and the grand ensemble mean
-    print("obs nao anoms shape:", np.shape(obs_nao_anom))
-    print("grand ensemble mean shape:", np.shape(grand_ensemble_mean))
+    # #print the shape of the obs nao anoms and the grand ensemble mean
+    #print("obs nao anoms shape:", np.shape(obs_nao_anom))
+    #print("grand ensemble mean shape:", np.shape(grand_ensemble_mean))
 
-    # print the type of the grand ensemble mean
+    # #print the type of the grand ensemble mean
     model_time = list(model_times_by_model.values())[0]
 
-    # print the type of the model time
-    print("model time type:", type(model_time))
-    # print the shape of the model time
-    print("model time shape:", np.shape(model_time))
+    # #print the type of the model time
+    #print("model time type:", type(model_time))
+    # #print the shape of the model time
+    #print("model time shape:", np.shape(model_time))
 
-    # print grand ensemble mean values
-    print("grand ensemble mean values:", grand_ensemble_mean)
+    # #print grand ensemble mean values
+    #print("grand ensemble mean values:", grand_ensemble_mean)
 
 
     # extract the first element of model time
     # first time array for BCC-CSM2-MR
     model_time = model_time[0]
 
-    # print the type of the model time
-    print("model time type:", type(model_time))
+    # #print the type of the model time
+    #print("model time type:", type(model_time))
 
-    # print the shape of the model time
-    print("model time shape:", np.shape(model_time))
+    # #print the shape of the model time
+    #print("model time shape:", np.shape(model_time))
 
     # Calculate the ACC score for the \
     # short period using the function pearsonr_score
@@ -1177,12 +1177,12 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # Then calculate_confidence_intervals
     conf_interval_lower, conf_interval_upper = calculate_confidence_intervals(all_ensemble_members_array)
 
-    # print model time and grand ensemble mean shapes
-    print("model time shape before plot", np.shape(model_time))
-    print("grand ensemble mean shape before plot", np.shape(grand_ensemble_mean))
+    # #print model time and grand ensemble mean shapes
+    #print("model time shape before plot", np.shape(model_time))
+    #print("grand ensemble mean shape before plot", np.shape(grand_ensemble_mean))
 
-    # print the model time and grand ensemble mean
-    print("model time before plot", model_time)
+    # #print the model time and grand ensemble mean
+    #print("model time before plot", model_time)
 
     # Plot the grand ensemble mean with the ACC score in the legend
     ax.plot(model_time, grand_ensemble_mean, color="red", label=f"DCPP-A")
@@ -1194,12 +1194,12 @@ def plot_ensemble_members_and_mean(models, model_times_by_model, model_nao_anoms
     # for period 2010 - 2019
     ax.fill_between(model_time[-10:], conf_interval_lower[-10:], conf_interval_upper[-10:], color="red", alpha=0.2)
 
-    # print obs time and obs nao anoms shapes
-    print("obs time shape before plot", np.shape(obs_time))
-    print("obs nao anoms shape before plot", np.shape(obs_nao_anom))
+    # #print obs time and obs nao anoms shapes
+    #print("obs time shape before plot", np.shape(obs_time))
+    #print("obs nao anoms shape before plot", np.shape(obs_nao_anom))
 
-    # print obs time and obs nao anoms
-    print("obs time before plot", obs_time)
+    # #print obs time and obs nao anoms
+    #print("obs time before plot", obs_time)
 
     # Plot ERA5 data
     ax.plot(obs_time[2:], obs_nao_anom[2:], color="black", label="ERA5")
@@ -1318,8 +1318,8 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # all_ensemble_members_array shape (158, 54, 1, 1)
     all_ensemble_members_array = np.squeeze(all_ensemble_members_array)
 
-    # print the dimensions of all ensemble members array
-    print("shape of all ensemble members array", np.shape(all_ensemble_members_array))
+    # #print the dimensions of all ensemble members array
+    #print("shape of all ensemble members array", np.shape(all_ensemble_members_array))
 
     # Create an array for the nolag
     all_ensemble_members_mean_nolag = np.mean(all_ensemble_members_array, axis=0)
@@ -1341,20 +1341,20 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     no_ensemble_members = lagged_ensemble_members_array.shape[0]
 
 
-    # print the shape of the lagged ensemble mean
-    print("shape of lagged ens mean", np.shape(lagged_ensemble_members_array))
-    # also print the model times and its shape
-    print("model time", (model_time))
+    # #print the shape of the lagged ensemble mean
+    #print("shape of lagged ens mean", np.shape(lagged_ensemble_members_array))
+    # also #print the model times and its shape
+    #print("model time", (model_time))
 
     # # check the time output from this function
-    # print("shape of model_time_lagged", np.shape(model_time_lagged))
-    # print("model_time_lagged", model_time_lagged)
-    # print("shape of lagged_grand_ensemble_mean", np.shape(lagged_grand_ensemble_mean))
-    # print("lagged_grand_ensemble_mean", lagged_grand_ensemble_mean)
+    # #print("shape of model_time_lagged", np.shape(model_time_lagged))
+    # #print("model_time_lagged", model_time_lagged)
+    # #print("shape of lagged_grand_ensemble_mean", np.shape(lagged_grand_ensemble_mean))
+    # #print("lagged_grand_ensemble_mean", lagged_grand_ensemble_mean)
 
     # check the dimensions of lagged ensemble members time
-    print("shape of lagged_ensemble_members_time", np.shape(lagged_ensemble_members_time))
-    print("lagged_ensemble_members_time", lagged_ensemble_members_time)
+    #print("shape of lagged_ensemble_members_time", np.shape(lagged_ensemble_members_time))
+    #print("lagged_ensemble_members_time", lagged_ensemble_members_time)
 
     # calculate the ACC (short and long) for the lagged grand 
     # ensemble mean
@@ -1371,13 +1371,13 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     rps_short_lagged = calculate_rps_time(rpc_short_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2010-12-31")
     rps_long_lagged = calculate_rps_time(rpc_long_lagged, obs_nao_anom, lagged_ensemble_members_array, lagged_ensemble_members_time, "1969-01-01","2018-12-31")
 
-    # print these rpc scores
-    print("RPC short lagged", rpc_short_lagged)
-    print("RPC long lagged", rpc_long_lagged)
+    # #print these rpc scores
+    #print("RPC short lagged", rpc_short_lagged)
+    #print("RPC long lagged", rpc_long_lagged)
 
-    # print these rps scores
-    print("RPS short lagged", rps_short_lagged)
-    print("RPS long lagged", rps_long_lagged)
+    # #print these rps scores
+    #print("RPS short lagged", rps_short_lagged)
+    #print("RPS long lagged", rps_long_lagged)
 
     # apply the variance adjustment (via RPS scaling) to the 
     # lagged grand ensemble mean
@@ -1388,11 +1388,11 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     # For explanation purposes
     adjusted_ensemble_mean_short_nolag, adjusted_ensemble_mean_long_nolag = adjust_variance(all_ensemble_members_mean_nolag, rps_short_lagged, rps_long_lagged)
 
-    # Print the shape and values of this to check whether it is realistic
-    print("lagged adjusted ensemble mean short", np.shape(lagged_adjusted_ensemble_mean_short))
-    print("lagged adjusted ensemble mean short", lagged_adjusted_ensemble_mean_short)
-    print("lagged adjusted ensemble mean long", np.shape(lagged_adjusted_ensemble_mean_long))
-    print("lagged adjusted ensemble mean long", lagged_adjusted_ensemble_mean_long)
+    # #print the shape and values of this to check whether it is realistic
+    #print("lagged adjusted ensemble mean short", np.shape(lagged_adjusted_ensemble_mean_short))
+    #print("lagged adjusted ensemble mean short", lagged_adjusted_ensemble_mean_short)
+    #print("lagged adjusted ensemble mean long", np.shape(lagged_adjusted_ensemble_mean_long))
+    #print("lagged adjusted ensemble mean long", lagged_adjusted_ensemble_mean_long)
     
     # Calculate the ACC scores for the lagged adjusted ensemble mean
     # for the short period and the long period
@@ -1427,11 +1427,11 @@ def plot_ensemble_members_and_lagged_adjusted_mean(models, model_times_by_model,
     acc_score_long, p_value_long = pearsonr_score(obs_nao_anom, lagged_adjusted_ensemble_mean_long, lagged_ensemble_members_time, obs_time, "1969-01-01","2018-12-31")
     
     # check the dimensions of the ci's before plotting
-    print("conf interval lower short", np.shape(conf_interval_lower_short))
-    print("conf interval upper short", np.shape(conf_interval_upper_short))
-    print("conf interval lower long", np.shape(conf_interval_lower_long))
-    print("conf interval upper long", np.shape(conf_interval_upper_long))
-    print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
+    #print("conf interval lower short", np.shape(conf_interval_lower_short))
+    #print("conf interval upper short", np.shape(conf_interval_upper_short))
+    #print("conf interval lower long", np.shape(conf_interval_lower_long))
+    #print("conf interval upper long", np.shape(conf_interval_upper_long))
+    #print("lagged ensemble members time", np.shape(lagged_ensemble_members_time))
 
     # Plot the confidence intervals for the short period
     ax.fill_between(lagged_ensemble_members_time, conf_interval_lower_short, conf_interval_upper_short, color="red", alpha=0.2)
@@ -1496,7 +1496,7 @@ def main():
 
     # check if the number of arguments is correct
     if len(sys.argv) != 3:
-        print(USAGE_STATEMENT)
+        #print(USAGE_STATEMENT)
         sys.exit()
 
     # make the plots directory if it doesn't exist
@@ -1509,9 +1509,9 @@ def main():
     parser.add_argument("season", help="season", type=str)
     args = parser.parse_args()
 
-    # print the arguments to the screen
-    print("forecast range = ", args.forecast_range)
-    print("season = ", args.season)
+    # #print the arguments to the screen
+    #print("forecast range = ", args.forecast_range)
+    #print("season = ", args.season)
 
     # test run with the only model being
     test_model = [ "BCC-CSM2-MR" ]
@@ -1519,18 +1519,18 @@ def main():
     # call the function to load the data
     lagged_ensemble_members = load_lagged_ensemble_members(args.forecast_range, args.season, dic.models)
 
-    # # print statements to check the dimensions of the data
-    # print("lagged ensemble members", len(lagged_ensemble_members))
-    # # print("values in lagged ensemble members", list(lagged_ensemble_members.values())[0])
+    # # #print statements to check the dimensions of the data
+    # #print("lagged ensemble members", len(lagged_ensemble_members))
+    # # #print("values in lagged ensemble members", list(lagged_ensemble_members.values())[0])
     # same_init_data = lagged_ensemble_members['BCC-CSM2-MR']['same-init']
     # init_minus_1_data = lagged_ensemble_members['BCC-CSM2-MR']['init-minus-1']
     # init_minus_2_data = lagged_ensemble_members['BCC-CSM2-MR']['init-minus-2']
     # init_minus_3_data = lagged_ensemble_members['BCC-CSM2-MR']['init-minus-3']
-    # # print("same init data", np.shape(same_init_data))
-    # print("same init data", same_init_data)
-    # print("init minus 1 data", init_minus_1_data)
-    # print("init minus 2 data", init_minus_2_data)
-    # print("init minus 3 data", init_minus_3_data)
+    # # #print("same init data", np.shape(same_init_data))
+    # #print("same init data", same_init_data)
+    # #print("init minus 1 data", init_minus_1_data)
+    # #print("init minus 2 data", init_minus_2_data)
+    # #print("init minus 3 data", init_minus_3_data)
 
     # call the function to process the data
     model_times, model_nao_anoms = process_model_datasets_by_init(lagged_ensemble_members)
@@ -1540,18 +1540,18 @@ def main():
     init_minus_1_times = model_times['BCC-CSM2-MR']['init-minus-1']
     init_minus_1_nao_anoms = model_nao_anoms['BCC-CSM2-MR']['init-minus-1']
 
-    print("init minus 1 times", np.shape(init_minus_1_times))
-    print("init minus 1 nao anoms", np.shape(init_minus_1_nao_anoms))
-    print("init minus 1 times", init_minus_1_times)
-    print("init minus 1 nao anoms", init_minus_1_nao_anoms)
+    #print("init minus 1 times", np.shape(init_minus_1_times))
+    #print("init minus 1 nao anoms", np.shape(init_minus_1_nao_anoms))
+    #print("init minus 1 times", init_minus_1_times)
+    #print("init minus 1 nao anoms", init_minus_1_nao_anoms)
 
     combined_model_data = combine_model_data(model_times, model_nao_anoms)
 
-    # print statements to check the dimensions of the data
-    print("combined model data", np.shape(combined_model_data))
-    print("combined model data", combined_model_data['BCC-CSM2-MR']['time'].values)
-    print("combined model data", combined_model_data['BCC-CSM2-MR'].values)
-    print("combined model data shape", combined_model_data['BCC-CSM2-MR'].shape)
+    # #print statements to check the dimensions of the data
+    #print("combined model data", np.shape(combined_model_data))
+    #print("combined model data", combined_model_data['BCC-CSM2-MR']['time'].values)
+    #print("combined model data", combined_model_data['BCC-CSM2-MR'].values)
+    #print("combined model data shape", combined_model_data['BCC-CSM2-MR'].shape)
 
     # load the observations
     obs = xr.open_dataset(dic.obs_long, chunks={"time": 10})
@@ -1562,24 +1562,24 @@ def main():
     # extract the model data from the combined model data
     extracted_model_data = extract_model_data(dic.models, combined_model_data)
 
-    # print statements to check the dimensions of the data
-    print("extracted model data", np.shape(extracted_model_data))
-    print("extracted model data", extracted_model_data)
-    print("extracted model data model", extracted_model_data.sel(model='BCC-CSM2-MR').values)
+    # #print statements to check the dimensions of the data
+    #print("extracted model data", np.shape(extracted_model_data))
+    #print("extracted model data", extracted_model_data)
+    #print("extracted model data model", extracted_model_data.sel(model='BCC-CSM2-MR').values)
 
     extracted_model_data_mean = extracted_model_data.mean(dim=['model', 'init_scheme_member', 'lat', 'lon'])
-    print("extracted model data mean shape", np.shape(extracted_model_data_mean))
-    print("extracted model data mean", extracted_model_data_mean)
+    #print("extracted model data mean shape", np.shape(extracted_model_data_mean))
+    #print("extracted model data mean", extracted_model_data_mean)
 
     # extract the time coordinates from the model data
     model_times = extracted_model_data_mean['time'].values
-    print("model times shape", np.shape(model_times))
-    print("model times", model_times)
+    #print("model times shape", np.shape(model_times))
+    #print("model times", model_times)
 
     # create an array of the lag values
     extracted_model_data_array = np.array(extracted_model_data)
-    print("extracted model data array", np.shape(extracted_model_data_array))
-    print("extracted model data array", extracted_model_data_array[0,:,0,0,0])
+    #print("extracted model data array", np.shape(extracted_model_data_array))
+    #print("extracted model data array", extracted_model_data_array[0,:,0,0,0])
 
     # # call the function to plot the data
     plot_ensemble_members_and_lagged_adjusted_mean(dic.models, extracted_model_data, obs_nao_anom, obs_time, args.forecast_range, args.season)
