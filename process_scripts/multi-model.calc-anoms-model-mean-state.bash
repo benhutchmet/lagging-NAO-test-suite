@@ -6,6 +6,8 @@
 #
 # For example: calculate-model-mean-states.bash HadGEM3-GC31-MM psl DJFM
 
+# TODO: this needs to be tested
+
 # Set the usage message
 USAGE_MESSAGE="Usage: multi-model.calc-anoms-model-mean-state.bash <model> <variable> <season>"
 
