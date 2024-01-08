@@ -732,14 +732,6 @@ fi
 # loop through the files and process them
 for INPUT_FILE in $files; do
 
-    # extract the season from the command line
-    season=$7
-
-    # If the variable is ua or va, use the pressure level in the OUTPUT_DIR
-    # if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
-    #     # Set up the name for the output directory
-    #     OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/plev_${pressure_level}/outputs"
-
     # Set up the name for the output directory
     # NOTE: Modified for all forecast years
     OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/all_forecast_years/${season}/outputs"
@@ -758,7 +750,7 @@ for INPUT_FILE in $files; do
     echo "Processing $INPUT_FILE"
     base_fname=$(basename "$INPUT_FILE")
     regridded_fname="regridded-${base_fname}"
-    season_fname="years-${forecast_range}-${season}-${region}-${base_fname}"
+    season_fname="all-years-${season}-${region}-${base_fname}"
     TEMP_FILE="$OUTPUT_DIR/temp-${base_fname}"
     REGRIDDED_FILE="$OUTPUT_DIR/${regridded_fname}"
     OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
@@ -801,15 +793,14 @@ for INPUT_FILE in $files; do
     echo "Season: $season"
 
     # Constrain the input file to the DJFM season
-    cdo select,season=${season} "$REGRIDDED_FILE" "$TEMP_FILE"
-
-    # Take the time mean of the output file
-    cdo timmean "$TEMP_FILE" "$MEAN_FILE"
+    cdo select,season=${season} "$REGRIDDED_FILE" "$OUTPUT_FILE"
 
     # Remove the temporary, regridded, and original output files
-    rm "$TEMP_FILE"
-    rm "$REGRIDDED_FILE"
+    rm $TEMP_FILE
+    rm $REGRIDDED_FILE
 
     echo "[INFO] Finished processing: $INPUT_FILE"
+    echo "[INFO] Output file: $OUTPUT_FILE"
+
     # fi
 done
