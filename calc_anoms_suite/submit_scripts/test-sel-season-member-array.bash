@@ -4,10 +4,7 @@
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.err
 #SBATCH --time=10:00
-#SBATCH --array=1-5
-
-# TODO: Change array to 1-40 once tested
-# TODO: Change partition to short-serial once tested
+#SBATCH --array=1-40
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members"
