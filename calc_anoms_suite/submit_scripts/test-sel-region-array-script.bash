@@ -6,6 +6,9 @@
 #SBATCH --time=10:00
 #SBATCH --array=1960-2018
 
+#TODO: Update args for process script (should be 6)
+# TODO: Update sbatch data above
+
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-region-test"
 
