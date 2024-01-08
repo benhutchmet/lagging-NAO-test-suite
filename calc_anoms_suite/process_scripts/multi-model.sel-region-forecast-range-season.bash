@@ -756,13 +756,17 @@ for INPUT_FILE in $files; do
     OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
     MEAN_FILE="$OUTPUT_DIR/mean-${season_fname}"
 
-    # # If MEAN_FILE already exists, do not overwrite
-    # if [ -f "$MEAN_FILE" ]; then
-    #     echo "INFO: MEAN_FILE already exists: $MEAN_FILE"
-    #     echo "INFO: Not overwriting $MEAN_FILE"
-    # else
-    #     echo "INFO: MEAN_FILE does not exist: $MEAN_FILE"
-    #     echo "INFO: Proceeding with script"
+    # If MEAN_FILE already exists, do not overwrite
+    if [ -f "$OUTPUT_FILE" ]; then
+        echo "INFO: MEAN_FILE already exists: $OUTPUT_FILE"
+        echo "INFO: Not overwriting $OUTPUT_FILE"
+        echo "INFO: Exiting script"
+
+        # Exit the script
+        exit 1
+    else
+        echo "INFO: MEAN_FILE does not exist: $OUTPUT_FILE"
+        echo "INFO: Proceeding with script"
     
     # Regrid using bilinear interpolation
     # Selects region (as long as x and y dimensions divide by 2.5)
