@@ -767,6 +767,7 @@ for INPUT_FILE in $files; do
     else
         echo "INFO: MEAN_FILE does not exist: $OUTPUT_FILE"
         echo "INFO: Proceeding with script"
+    fi
     
     # Regrid using bilinear interpolation
     # Selects region (as long as x and y dimensions divide by 2.5)
