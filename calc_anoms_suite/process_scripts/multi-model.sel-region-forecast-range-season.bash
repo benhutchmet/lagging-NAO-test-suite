@@ -801,7 +801,6 @@ for INPUT_FILE in $files; do
     cdo select,season=${season} "$REGRIDDED_FILE" "$OUTPUT_FILE"
 
     # Remove the temporary, regridded, and original output files
-    rm $TEMP_FILE
     rm $REGRIDDED_FILE
 
     echo "[INFO] Finished processing: $INPUT_FILE"

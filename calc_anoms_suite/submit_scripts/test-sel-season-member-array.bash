@@ -69,7 +69,7 @@ if [ ! -f $process_script ]; then
 fi
 
 # If the method is 'all' then exit with an error
-if [ $method == "all" ]; then
+if [ $model == "all" ]; then
     echo "ERROR: method cannot be 'all'"
     exit 1
 fi
