@@ -1,10 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=ben-array-sel-season-test
-#SBATCH --partition=short-serial
+#SBATCH --partition=test
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test/%j.err
 #SBATCH --time=30:00
-#SBATCH --array=1960-2018
+#SBATCH --array=1960-1965
+
+# FIXME: Replace test with short-serial once tested
+# FIXME: Replace 1960-1965 with 1960-2018 once tested
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-region-test"
