@@ -3,7 +3,7 @@
 #SBATCH --partition=short-serial
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test/%j.err
-#SBATCH --time=10:00
+#SBATCH --time=30:00
 #SBATCH --array=1960-2018
 
 # Form the path for the logs folder and make sure it exists
