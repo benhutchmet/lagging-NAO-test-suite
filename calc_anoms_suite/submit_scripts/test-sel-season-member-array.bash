@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=test
+#SBATCH --partition=short-serial
 #SBATCH --job-name=ben-array-sel-season-test-members
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.err
