@@ -1,13 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=ben-array-sel-region-test
+#SBATCH --job-name=ben-array-sel-season-test
 #SBATCH --partition=short-serial
-#SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-region-test/%j.out
-#SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-region-test/%j.err
+#SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test/%j.out
+#SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test/%j.err
 #SBATCH --time=10:00
 #SBATCH --array=1960-2018
-
-#TODO: Update args for process script (should be 6)
-# TODO: Update sbatch data above
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-region-test"
@@ -25,6 +22,7 @@ if [ ! -f $PWD/dictionaries.bash ]; then
 fi
 
 # Source the dictionaries
+# Can be left as is
 source /home/users/benhutch/skill-maps-rose-suite/dictionaries.bash
 
 # Echo th task id
@@ -36,28 +34,24 @@ echo "Task id is: ${SLURM_ARRAY_TASK_ID}"
 # Print the CLI arguments
 echo "CLI arguments are: $@"
 echo "Number of CLI arguments is: $#"
-echo "Desired no. of arguments is: 6"
+echo "Desired no. of arguments is: 4"
 
 # Check if the correct number of arguments were passed
-if [ $# -ne 6 ]; then
-    echo "Usage: sbatch test-sel-region-array-script.bash <model> <variable> <region> <forecast-range> <season> <experiment>"
-    echo "Example: sbatch test-sel-region-array-script.bash HadGEM3-GC31-MM psl global 2-9 DJFM dcppA-hindcast"
+if [ $# -ne 4 ]; then
+    echo "Usage: sbatch test-sel-region-array-script.bash <model> <variable> <season> <experiment>"
+    echo "Example: sbatch test-sel-region-array-script.bash HadGEM3-GC31-MM psl DJFM dcppA-hindcast"
     exit 1
 fi
 
 # Extract the model, variable, region, forecast range and season
 model=$1
 variable=$2
-region=$3
-forecast_range=$4
-season=$5
-experiment=$6
+season=$3
+experiment=$4
 
 # Print the model, variable, region, forecast range and season
 echo "Model is: $model"
 echo "Variable is: $variable"
-echo "Region is: $region"
-echo "Forecast range is: $forecast_range"
 echo "Season is: $season"
 echo "Experiment is: $experiment"
 
@@ -65,7 +59,7 @@ echo "Experiment is: $experiment"
 module load jaspy
 
 # Set up the process script
-process_script=/home/users/benhutch/skill-maps-rose-suite/process_scripts/multi-model.sel-region-forecast-range-season.bash
+process_script=/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/process_scripts/multi-model.sel-region-forecast-range-season.bash
 
 # Declare an empty associative array
 declare -A nens_extractor
@@ -188,9 +182,9 @@ for run in $(seq 1 $nens); do
 
     # # Run the process script as an array job
     bash $process_script ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} \
-        ${region} ${forecast_range} ${season} ${experiment}
+        ${season} ${experiment}
 
 done
 
 # End of script
-echo "Finished processing ${model} ${variable} ${region} ${forecast_range} ${season} ${experiment} ${start_year} ${end_year}"
+echo "Finished processing ${model} ${variable} ${season} ${experiment} ${start_year} ${end_year}"
