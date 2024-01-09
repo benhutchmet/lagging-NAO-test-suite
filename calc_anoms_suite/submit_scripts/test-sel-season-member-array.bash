@@ -160,7 +160,7 @@ echo "Processing ensemble member: $SLURM_ARRAY_TASK_ID"
 if [ $model != "EC-Earth3" ] && [ $model != "NorCPM1" ]; then
     
     # Echo that there is only one initilaisation scheme
-    echo "Only one initialisation scheme for $model"]
+    echo "Only one initialisation scheme for $model"
 
     # set up the init_scheme
     init_scheme="1"
