@@ -33,7 +33,8 @@ if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
     exit 1
 else
     # Base directory
-    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/global/all_forecast_years/${season}/outputs"
+    # Example: /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/BCC-CSM2-MR/global/all_forecast_years/DJFM/outputs/
+    base_dir="/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/${variable}/${model}/global/all_forecast_years/${season}/outputs"
 fi
 
 OUTPUT_DIR="${base_dir}/anoms"
