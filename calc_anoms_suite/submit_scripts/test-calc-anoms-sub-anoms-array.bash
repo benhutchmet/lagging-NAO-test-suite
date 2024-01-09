@@ -4,7 +4,9 @@
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/calc-anoms-array-test/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/calc-anoms-array-test/%j.err
 #SBATCH --time=10:00
-#SBATCH --array=1960-2018
+#SBATCH --array=1970-1975
+
+# TODO: Replace 1970-1975 with 1960-2018 once tested
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/calc-anoms-array-test"
@@ -30,38 +32,29 @@ echo "SLURM_ARRAY_TASK_ID is: ${SLURM_ARRAY_TASK_ID}"
 # Echo trhe CLI's
 echo "CLI arguments are: $@"
 echo "Number of CLI arguments is: $#"
-echo "Desired no. of arguments is: 6" # FIXME: might need to change this
+echo "Desired no. of arguments is: 3" # FIXME: might need to change this
 
 # Check if the correct number of arguments were passed
-if [ $# -ne 6 ]; then
-    echo "Usage: sbatch calc-anoms-array-test.bash <model> <variable> <region> \
-<forecast-range> <season> <pressure-level>"
-    echo "Example: sbatch calc-anoms-array-test.bash HadGEM3-GC31-MM psl global \
-2-9 DJFM 100000"
+if [ $# -ne 3 ]; then
+    echo "Usage: sbatch calc-anoms-array-test.bash <model> <variable> <season>"
+    echo "Example: sbatch calc-anoms-array-test.bash HadGEM3-GC31-MM psl DJFM"
     exit 1
 fi
 
 # Extract the model, variable, region, forecast range and season
 model=$1
 variable=$2
-region=$3
-forecast_range=$4
-season=$5
-pressure_level=$6
+season=$3
 
 # Print the model, variable, region, forecast range and season
 echo "Model is: $model"
 echo "Variable is: $variable"
-echo "Region is: $region"
-echo "Forecast range is: $forecast_range"
 echo "Season is: $season"
-echo "Pressure level is: $pressure_level"
-
 # Load cdo
 module load jaspy
 
 # Set the process script
-process_script="/home/users/benhutch/skill-maps-rose-suite/process_scripts/multi-model.calc-anoms-sub-anoms.bash"
+process_script="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/process_scripts/multi-model.calc-anoms-sub-anoms.bash"
 
 # Check that the process script exists
 if [ ! -f $process_script ]; then
@@ -73,6 +66,8 @@ fi
 if [ $model == "all" ]; then
     
     echo "Extracting data for all models"
+    echo "This is not yet implemented"
+    exit 1
 
     # Extract the models list using a case statement
     case $variable in
@@ -125,9 +120,7 @@ echo "Extracting data for single model: $model"
 echo "Processing year: ${SLURM_ARRAY_TASK_ID}"
 
 # Run the process script as an array job
-bash $process_script ${model} ${SLURM_ARRAY_TASK_ID} ${variable} \
-    ${region} ${forecast_range} ${season} ${pressure_level}
+bash $process_script ${model} ${SLURM_ARRAY_TASK_ID} ${variable} ${season}
 
 # End the script
-echo "Finished processing anomalies for  ${model} ${variable} ${region} \
-${forecast_range} ${season} ${pressure_level}"
+echo "Finished processing anomalies for  ${model} ${variable} ${season} and year ${SLURM_ARRAY_TASK_ID}"
