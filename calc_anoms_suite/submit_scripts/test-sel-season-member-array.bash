@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=short-serial
-#SBATCH --mem=5000
+#SBATCH --mem=10000
 #SBATCH --job-name=ben-array-sel-season-test-members
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.err
