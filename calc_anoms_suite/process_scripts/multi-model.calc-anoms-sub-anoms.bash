@@ -7,10 +7,10 @@
 # For example: multi-model.calc-anoms-sub-anoms.bash HadGEM3-GC31-MM 1960 psl north-atlantic 2-5 DJF 92500
 
 # Set the usage message
-USAGE_MESSAGE="Usage: multi-model.calc-anoms-sub-anoms.bash <model> <initialization-year> <variable> <region> <forecast-range> <season> <pressure-level>"
+USAGE_MESSAGE="Usage: multi-model.calc-anoms-sub-anoms.bash <model> <initialization-year> <variable> <season>"
 
 # Check that the correct number of arguments have been passed
-if [ $# -ne 7 ]; then
+if [ $# -ne 4 ]; then
     echo "$USAGE_MESSAGE"
     exit 1
 fi
@@ -20,10 +20,7 @@ fi
 model=$1
 year=$2
 variable=$3
-region=$4
-forecast_range=$5
-season=$6
-pressure_level=$7
+season=$4
 
 # Load cdo
 module load jaspy
@@ -31,10 +28,12 @@ module load jaspy
 # Set the base directory
 # Set up the base directory
 if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
-    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/plev_${pressure_level}/outputs"
+    # base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/plev_${pressure_level}/outputs"
+    echo "ERROR: pressure level not set up for ua and va"
+    exit 1
 else
     # Base directory
-    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs"
+    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/global/all_forecast_years/${season}/outputs"
 fi
 
 OUTPUT_DIR="${base_dir}/anoms"
@@ -47,10 +46,12 @@ calculate_anoms() {
 
     if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
         # Set up the input file path
-        INPUT_FILES="$base_dir/mean-years-${forecast_range}-${season}-${region}-plev-${variable}_?mon_${model}_dcppA-hindcast_s${year}-r*${init_scheme}*.nc"
+        # INPUT_FILES="$base_dir/mean-years-${forecast_range}-${season}-${region}-plev-${variable}_?mon_${model}_dcppA-hindcast_s${year}-r*${init_scheme}*.nc"
+        echo "ERROR: pressure level not set up for ua and va"
+        exit 1
     else
         # Set up the input file path
-        INPUT_FILES="$base_dir/mean-years-${forecast_range}-${season}-${region}-${variable}_?mon_${model}_dcppA-hindcast_s${year}-r*${init_scheme}*.nc"
+        INPUT_FILES="$base_dir/all-years-${season}-global-${variable}_?mon_${model}_dcppA-hindcast_s${year}-r*${init_scheme}*.nc"
     fi
 
     # Set up the model mean state file path
@@ -89,8 +90,11 @@ calculate_anoms() {
             rm -f $OUTPUT_FILE
         fi
 
-        # Calculate the anomalies
-        cdo sub $INPUT_FILE $MODEL_MEAN_STATE $OUTPUT_FILE
+        # Subtract the time average of the model mean state from the input file
+        cdo sub $INPUT_FILE -timavg $MODEL_MEAN_STATE $OUTPUT_FILE
+
+        # # Calculate the anomalies
+        # cdo sub $INPUT_FILE $MODEL_MEAN_STATE $OUTPUT_FILE
     done
 }
 
@@ -131,7 +135,7 @@ else
     esac
 fi
 
-echo "Anomalies calculated for year ${year}, model $model, variable $variable, region $region, forecast range $forecast_range, season $season and saved to $OUTPUT_DIR"
+echo "Anomalies calculated for year ${year}, model $model, variable $variable, region global, season $season and saved to $OUTPUT_DIR"
 
 # End of script
 exit 0
