@@ -4,7 +4,7 @@
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.err
 #SBATCH --time=60:00
-#SBATCH --array=1-5
+#SBATCH --array=7-10
 
 # TODO: Modify sbtach array and partition after testing
 
@@ -155,9 +155,36 @@ echo "Processing init year: $init_year"
 # Echo the ensemble member which we are processing
 echo "Processing ensemble member: $SLURM_ARRAY_TASK_ID"
 
-# Run the process script as an array job
-# For the specific model, init year and ensemble member
-bash $process_script ${model} ${init_year} ${SLURM_ARRAY_TASK_ID} ${variable} ${season} ${experiment}
+# If the model is not EC-Earth3 or NorCPM1
+if [ $model != "EC-Earth3" ] && [ $model != "NorCPM1" ]; then
+    
+    # Echo that there is only one initilaisation scheme
+    echo "Only one initialisation scheme for $model"]
+
+    # set up the init_scheme
+    init_scheme="1"
+
+    # Run the process script as an array job
+    # For the specific model, init year and ensemble member
+    bash $process_script ${model} ${init_year} ${SLURM_ARRAY_TASK_ID} ${variable} ${season} ${experiment} ${init_scheme}
+
+# If the model is EC-Earth3 or NorCPM1
+else
+
+    # Echo the model
+    echo "Model is: $model"
+    echo "Model has two initialisation schemes"
+
+    # Set up the init_scheme
+    init_scheme_1="1"
+    init_scheme_2="2"
+
+    # Run the process script as an array job
+    # For the specific model, init year and ensemble member
+    bash $process_script ${model} ${init_year} ${SLURM_ARRAY_TASK_ID} ${variable} ${season} ${experiment} ${init_scheme_1}
+    bash $process_script ${model} ${init_year} ${SLURM_ARRAY_TASK_ID} ${variable} ${season} ${experiment} ${init_scheme_2}
+
+fi
 
 # End of script
 echo "Finished processing model $model, init year $init_year and ensemble member $SLURM_ARRAY_TASK_ID for variable $variable, season $season and experiment $experiment"
