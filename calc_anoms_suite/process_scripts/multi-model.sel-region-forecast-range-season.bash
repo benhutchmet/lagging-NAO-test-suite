@@ -2,7 +2,7 @@
 #
 # multi-model.sel-region-forecast-range-season.bash
 #
-# For example: multi-model.sel-region-forecast-range-season.bash BCC-CSM2-MR 1961 1 psl ULG dcppA-hindcast
+# For example: multi-model.sel-region-forecast-range-season.bash BCC-CSM2-MR 1961 1 psl ULG dcppA-hindcast 1
 #
 # NOTE: Seasons should be formatted using: JFMAYULGSOND
 #
@@ -13,12 +13,12 @@ source /home/users/benhutch/skill-maps-rose-suite/dictionaries.bash
 # Print all of the CLI arguments
 echo "CLI arguments: $@"
 echo "Number of CLI arguments: $#"
-echo "Correct number of CLI arguments: 6"
+echo "Correct number of CLI arguments: 7"
 
 
 # check if the correct number of arguments have been passed
-if [ $# -ne 6 ]; then
-    echo "Usage: multi-model.sel-region-forecast-range-season.bash <model> <initialization-year> <run-number> <variable> <season> <experiment>"
+if [ $# -ne 7 ]; then
+    echo "Usage: multi-model.sel-region-forecast-range-season.bash <model> <initialization-year> <run-number> <variable> <season> <experiment> <init_scheme>"
     exit 1
 fi
 
@@ -29,6 +29,7 @@ run=$3
 variable=$4
 season=$5
 experiment=$6
+init_scheme=$7
 
 # Set the region
 # WARNING: Set to global by default
@@ -88,6 +89,8 @@ module load jaspy
 
 # /gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/data/psl/MIROC6
 # psl_Amon_MIROC6_dcppA-hindcast_s2021-r9i1p1f1_gn_202111-203112.nc
+#${init_scheme}
+
 
 # set up the files to be processed
 # if the variable is psl
@@ -95,12 +98,12 @@ if [ "$variable" == "psl" ]; then
     # if the model is BCC-CSM2-MR or MPI-ESM1-2-HR or CanESM5 or CMCC-CM2-SR5
     if [ "$model" == "BCC-CSM2-MR" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
         # set up the input files
-        files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/psl/g?/files/d????????/*.nc"
+        files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/psl/g?/files/d????????/*.nc"
     # for the single file models downloaded from ESGF
     elif [ "$model" == "MPI-ESM1-2-LR" ] || [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "MIROC6" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "CESM1-1-CAM5-CMIP5" ] || [ "$model" == "NorCPM1" ] || [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
         # set up the input files from xfc
         # check that this returns the files
-        files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*_g*_*.nc"
+        files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}_g*_*.nc"
     else
         echo "[ERROR] Model not recognised for variable psl"
         exit 1
@@ -112,20 +115,20 @@ elif [ "$variable" == "tas" ]; then
         # these include NorCPM1, IPSL-CM6A-LR, MIROC6, BCC-CSM2-MR, MPI-ESM1-2-HR, CanESM5, CMCC-CM2-SR5, EC-Earth3, HadGEM3-GC31-MM 
         if [ "$model" == "NorCPM1" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "BCC-CSM2-MR" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
         # set up the input files
-        files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/tas/g?/files/d????????/*.nc"
+        files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/tas/g?/files/d????????/*.nc"
 
     # for the files downloaded from ESGF
     # which includes CESM1-1-CAM5-CMIP5, FGOALS-f3-L, MPI-ESM1-2-LR
     elif [ "$model" == "CESM1-1-CAM5-CMIP5" ] || [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "MPI-ESM1-2-LR" ]; then
 
         # set up the input files from canari
-        files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p*f*_g*_*.nc"
+        files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g*_*.nc"
 
     # if the model is HadGEM3 or EC-Earth3
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
         
         # set up the input files from badc
-        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/tas/g?/files/d????????/*.nc"
+        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/tas/g?/files/d????????/*.nc"
 
         # set up the merged file first
         merged_file_dir=${canari_base_dir}/${experiment}/data/${variable}/${model}/merged_files
@@ -213,7 +216,7 @@ elif [ "$variable" == "tas" ]; then
         fi
 
         # Set up the input files
-        files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p1f1_gr_${start_year}-${end_year}.nc"
+        files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p1f1_gr_${start_year}-${end_year}.nc"
 
     else
         echo "[ERROR] Model not recognised for variable tas"
@@ -226,7 +229,7 @@ elif [ "$variable" == "rsds" ]; then
     if [ "$model" == "NorCPM1" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
         
         # set up the input files
-        files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/rsds/g?/files/d????????/*.nc"
+        files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/rsds/g?/files/d????????/*.nc"
 
     # for the files downloaded from ESGF
     # for models CESM1-1-CAM5-CMIP5, FGOALS-f3-L, BCC-CSM2-MR
@@ -238,7 +241,7 @@ elif [ "$variable" == "rsds" ]; then
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
         
         # set up the input files from badc
-        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/rsds/g?/files/d????????/*.nc"
+        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/rsds/g?/files/d????????/*.nc"
 
         # set up the merged file first
         merged_file_dir=${canari_base_dir}/${experiment}/data/${variable}/${model}/merged_files
@@ -326,7 +329,7 @@ elif [ "$variable" == "rsds" ]; then
         fi
 
         # Set up the input files
-        files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p1f1_gr_${start_year}-${end_year}.nc"
+        files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p1f1_gr_${start_year}-${end_year}.nc"
 
     else
         echo "[ERROR] Model not recognised for variable rsds"
@@ -338,7 +341,7 @@ elif [ "$variable" == "sfcWind" ]; then
     # this includes HadGEM3-GC31-MM, EC-Earth3
     if [ "$model" == "HadGEM3-GC31-MM" ] ; then
         # set up the input files - only one initialization scheme
-        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/sfcWind/g?/files/d????????/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i1p1f2_gn_*.nc"
+        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/sfcWind/g?/files/d????????/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i1p1f2_gn_*.nc"
 
         # merge the *.nc files into one file
         # set up the merged file first
@@ -432,7 +435,7 @@ elif [ "$variable" == "sfcWind" ]; then
         fi
 
         # Set up the input files
-        files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p1f1_gn_${start_year}-${end_year}.nc"
+        files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p1f1_gn_${start_year}-${end_year}.nc"
 
     # elif for CESM and BCC (in a different canari folder)
     elif [ "$model" == "CESM1-1-CAM5-CMIP5" ] || [ "$model" == "BCC-CSM2-MR" ]; then
@@ -444,7 +447,7 @@ elif [ "$variable" == "sfcWind" ]; then
     # these are in a different canari folder
     elif [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ]; then
         # set up the input files from canari
-        files=${canari_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p*f*_g*_*.nc
+        files=${canari_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g*_*.nc
     else
         echo "[ERROR] Model not recognised for variable sfcWind"
         exit 1
@@ -458,7 +461,7 @@ elif [ "$variable" == "tos" ]; then
         # example: /gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/tos/CanESM5/data
         # file example: tos_Omon_MIROC6_dcppA-hindcast_s2021-r9i1p1f1_gn_202111-203112.nc
         # specify a regular grid - gn - for CESM1-1-CAM5-CMIP5 (has both gr and gn)
-        files="${canari_dir}/${experiment}/${variable}/${model}/data/${variable}_Omon_${model}_${experiment}_s${year}-r${run}i*p*f*_gn_*.nc"
+        files="${canari_dir}/${experiment}/${variable}/${model}/data/${variable}_Omon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_gn_*.nc"
     # Set up the multi-file models
     # First the HadGEM case
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
@@ -552,10 +555,10 @@ elif [ "$variable" == "ua" ]; then
         # specify a regular grid - gn - for CESM1-1-CAM5-CMIP5 (has both gr and gn)
         # extract the first three letters from ${year}
         year_prefix=${year:0:3}
-        files="${canari_base_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p*f*_g?_${year_prefix}*.nc"
+        files="${canari_base_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g?_${year_prefix}*.nc"
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
         # Set up the input files from badc
-        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i?p?f?/Amon/ua/g?/files/d????????/*.nc"
+        multi_files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/ua/g?/files/d????????/*.nc"
 
         # set up the merged file first
         merged_file_dir=${canari_base_dir}/${experiment}/data/${variable}/${model}/merged_files
@@ -632,7 +635,7 @@ elif [ "$variable" == "va" ]; then
         # Set up the files from canari
         # extract the first three letters from ${year}
         year_prefix=${year:0:3}
-        files="${canari_base_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p*f*_g?_${year_prefix}*.nc"
+        files="${canari_base_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g?_${year_prefix}*.nc"
     # In the case of HadGEM which must be merged
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
         # Set up the input files from badc
@@ -727,79 +730,95 @@ fi
 #     # Select the specified pressure level
 #     cdo sellevel,$pressure_level $input_file $output_file
 # }
+# Echo the files
+echo "Processing file: $files"
+
+# Check how many files there are
+# If there is more than one file, exit with an error
+# If there is one file, proceed with the script
+# If there are no files, exit with an error
+# Set up the number of files
+nfiles=$(ls -1 $files | wc -l)
+
+# If there are no files, exit with an error
+if [ $nfiles -eq 0 ]; then
+    echo "[ERROR] No files found"
+    exit 1
+# If there is more than one file, exit with an error
+elif [ $nfiles -gt 1 ]; then
+    echo "[ERROR] More than one file found"
+    exit 1
+# If there is one file, proceed with the script
+elif [ $nfiles -eq 1 ]; then
+    echo "[INFO] One file found"
+    echo "[INFO] Proceeding with script"
+fi
+
+# Set up the name for the output directory
+# NOTE: Modified for all forecast years
+OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/all_forecast_years/${season}/outputs"
 
 
-# loop through the files and process them
-for INPUT_FILE in $files; do
+# if the output directory does not exist, create it
+if [ ! -d "$OUTPUT_DIR" ]; then
+    echo "INFO: Output directory does not exist: $OUTPUT_DIR"
+    echo "INFO: Creating output directory"
+    mkdir -p $OUTPUT_DIR
+else
+    echo "INFO: Output directory already exists: $OUTPUT_DIR"
+fi
 
-    # Set up the name for the output directory
-    # NOTE: Modified for all forecast years
-    OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/all_forecast_years/${season}/outputs"
+# set up the output file names
+echo "Processing $INPUT_FILE"
+base_fname=$(basename "$INPUT_FILE")
+season_fname="all-years-${season}-${region}-${base_fname}"
+OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
 
-    
-    # if the output directory does not exist, create it
-    if [ ! -d "$OUTPUT_DIR" ]; then
-        echo "INFO: Output directory does not exist: $OUTPUT_DIR"
-        echo "INFO: Creating output directory"
-        mkdir -p $OUTPUT_DIR
-    else
-        echo "INFO: Output directory already exists: $OUTPUT_DIR"
-    fi
+# If MEAN_FILE already exists, do not overwrite
+if [ -f "$OUTPUT_FILE" ]; then
+    echo "INFO: MEAN_FILE already exists: $OUTPUT_FILE"
+    echo "INFO: Not overwriting $OUTPUT_FILE"
+    echo "INFO: Exiting script"
 
-    # set up the output file names
-    echo "Processing $INPUT_FILE"
-    base_fname=$(basename "$INPUT_FILE")
-    season_fname="all-years-${season}-${region}-${base_fname}"
-    OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
+    # Exit the script
+    exit 1
+else
+    echo "INFO: MEAN_FILE does not exist: $OUTPUT_FILE"
+    echo "INFO: Proceeding with script"
+fi
 
-    # If MEAN_FILE already exists, do not overwrite
-    if [ -f "$OUTPUT_FILE" ]; then
-        echo "INFO: MEAN_FILE already exists: $OUTPUT_FILE"
-        echo "INFO: Not overwriting $OUTPUT_FILE"
-        echo "INFO: Exiting script"
+# convert from JFMAYULGSOND to JFMAMJJASOND format
+# if Y is in the season, replace with M
+if [[ $season == *"Y"* ]]; then
+season=${season//Y/M}
+fi
 
-        # Exit the script
-        exit 1
-    else
-        echo "INFO: MEAN_FILE does not exist: $OUTPUT_FILE"
-        echo "INFO: Proceeding with script"
-    fi
+# if U is in the season, replace with J
+if [[ $season == *"U"* ]]; then
+season=${season//U/J}
+fi
 
-    # convert from JFMAYULGSOND to JFMAMJJASOND format
-    # if Y is in the season, replace with M
-    if [[ $season == *"Y"* ]]; then
-    season=${season//Y/M}
-    fi
+# if L is in the season, replace with J
+if [[ $season == *"L"* ]]; then
+season=${season//L/J}
+fi
 
-    # if U is in the season, replace with J
-    if [[ $season == *"U"* ]]; then
-    season=${season//U/J}
-    fi
+# if G is in the season, replace with A
+if [[ $season == *"G"* ]]; then
+season=${season//G/A}
+fi
 
-    # if L is in the season, replace with J
-    if [[ $season == *"L"* ]]; then
-    season=${season//L/J}
-    fi
+# echo the season
+echo "Season: $season"
 
-    # if G is in the season, replace with A
-    if [[ $season == *"G"* ]]; then
-    season=${season//G/A}
-    fi
+# Echo that we are selecting the season
+echo "[INFO] Selecting the season: $season"
 
-    # echo the season
-    echo "Season: $season"
+# Echo that we are remapping the file
+echo "[INFO] Then remapping the file"
 
-    # Echo that we are selecting the season
-    echo "[INFO] Selecting the season: $season"
+# Operator chaining test
+cdo -remapbil,$grid -select,season=${season} $INPUT_FILE $OUTPUT_FILE
 
-    # Echo that we are remapping the file
-    echo "[INFO] Then remapping the file"
-
-    # Operator chaining test
-    cdo -remapbil,$grid -select,season=${season} $INPUT_FILE $OUTPUT_FILE
-
-    echo "[INFO] Finished processing: $INPUT_FILE"
-    echo "[INFO] Output file: $OUTPUT_FILE"
-
-    # fi
-done
+echo "[INFO] Finished processing: $INPUT_FILE"
+echo "[INFO] Output file: $OUTPUT_FILE"
