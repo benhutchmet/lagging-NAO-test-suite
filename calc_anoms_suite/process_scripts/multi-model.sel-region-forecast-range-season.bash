@@ -820,8 +820,32 @@ echo "[INFO] Selecting the season: $season"
 # Echo that we are remapping the file
 echo "[INFO] Then remapping the file"
 
-# Operator chaining test
-cdo -remapbil,$grid -select,season=${season} $INPUT_FILE $OUTPUT_FILE
+# If the season is NDJFM or DJFM
+if [ "$season" == "NDJFM" ] || [ "$season" == "DJFM" ]; then
+    echo "[INFO] Season is NDJFM or DJFM"
+    echo "[INFO] Shifting the time axis by 3 months"
+    # Select the season, shift the time axis, take the year mean and remap the file
+    cdo -remapbil,$grid -yearmean -shifttime,-3mo -select,season=${season} $INPUT_FILE $OUTPUT_FILE
+# If the season is DJF or NDJF
+elif [ "$season" == "DJF" ] || [ "$season" == "NDJF" ]; then
+    echo "[INFO] Season is DJF or NDJF"
+    echo "[INFO] Shifting the time axis by 2 months"
+    # Select the season, shift the time axis, take the year mean and remap the file
+    cdo -remapbil,$grid -yearmean -shifttime,-2mo -select,season=${season} $INPUT_FILE $OUTPUT_FILE
+# If the season is NDJ or ONDJ
+elif [ "$season" == "NDJ" ] || [ "$season" == "ONDJ" ]; then
+    echo "[INFO] Season is NDJ or ONDJ"
+    echo "[INFO] Shifting the time axis by 1 month"
+    # Select the season, shift the time axis, take the year mean and remap the file
+    cdo -remapbil,$grid -yearmean -shifttime,-1mo -select,season=${season} $INPUT_FILE $OUTPUT_FILE
+# Else no need to shift the time axis
+else
+    echo "[INFO] Season is not NDJFM, DJFM, DJF, NDJF, NDJ or ONDJ"
+    echo "[INFO] Season is $season"
+    echo "[INFO] Not shifting the time axis"
+    # Select the season, take the year mean and remap the file
+    cdo -remapbil,$grid -yearmean -select,season=${season} $INPUT_FILE $OUTPUT_FILE
+fi
 
 echo "[INFO] Finished processing: $INPUT_FILE"
 echo "[INFO] Output file: $OUTPUT_FILE"
