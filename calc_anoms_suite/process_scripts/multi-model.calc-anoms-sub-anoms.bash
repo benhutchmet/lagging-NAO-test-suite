@@ -34,10 +34,10 @@ if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
 else
     # Base directory
     # Example: /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/BCC-CSM2-MR/global/all_forecast_years/DJFM/outputs/
-    base_dir="/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/${variable}/${model}/global/all_forecast_years/${season}/outputs"
+    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/global/all_forecast_years/${season}/outputs"
 fi
 
-OUTPUT_DIR="${base_dir}/anoms"
+OUTPUT_DIR="/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/${variable}/${model}/global/all_forecast_years/${season}/outputs/anoms"
 
 # Function for calculating anomalies
 calculate_anoms() {
