@@ -30,24 +30,19 @@ echo "SLURM_ARRAY_TASK_ID is: ${SLURM_ARRAY_TASK_ID}"
 # Echo trhe CLI's
 echo "CLI arguments are: $@"
 echo "Number of CLI arguments is: $#"
-echo "Desired no. of arguments is: 6"
+echo "Desired no. of arguments is: 3"
 
 # Check if the correct number of arguments were passed
-if [ $# -ne 6 ]; then
-    echo "Usage: sbatch mergetime-array-test.bash <model> <variable> <region> \
-    <forecast-range> <season> <pressure-level>"
-    echo "Example: sbatch mergetime-array-test.bash HadGEM3-GC31-MM psl global \
-    2-9 DJFM 100000"
+if [ $# -ne 3 ]; then
+    echo "Usage: sbatch mergetime-array-test.bash <model> <variable> <season>"
+    echo "Example: sbatch mergetime-array-test.bash HadGEM3-GC31-MM psl DJFM"
     exit 1
 fi
 
 # Extract the model, variable, region, forecast range and season
 model=$1
 variable=$2
-region=$3
-forecast_range=$4
-season=$5
-pressure_level=$6
+season=$3
 
 # Print the model, variable, region, forecast range and season
 echo "Model is: $model"
