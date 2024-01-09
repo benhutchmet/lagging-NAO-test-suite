@@ -18,10 +18,10 @@ source $PWD/dictionaries.bash
 echo "[INFO] models: $models"
 
 # Set the usage message
-USAGE_MESSAGE="Usage: submit-all-multi-model.calc-anoms-model-mean-state.bash <model> <variable> <region> <forecast-range> <season> <pressure-level>"
+USAGE_MESSAGE="Usage: submit-all-multi-model.calc-anoms-model-mean-state.bash <model> <variable> <season>"
 
 # Check that the correct number of arguments have been passed
-if [ $# -ne 6 ]; then
+if [ $# -ne 3 ]; then
     echo "$USAGE_MESSAGE"
     exit 1
 fi
@@ -29,10 +29,7 @@ fi
 # Extract the model, variable, region, forecast range and season
 model=$1
 variable=$2
-region=$3
-forecast_range=$4
-season=$5
-pressure_level=$6
+season=$3
 
 # If model is a number
 # Between 1-12
@@ -55,7 +52,7 @@ if [[ $model =~ ^[0-9]+$ ]]; then
 fi
 
 # Set the extractor script
-EXTRACTOR=$PWD/process_scripts/multi-model.calc-anoms-model-mean-state.bash
+EXTRACTOR="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/process_scripts/multi-model.calc-anoms-model-mean-state.bash"
 
 # Check that the extractor script exists
 # if not exit with an error
@@ -69,6 +66,10 @@ module load jaspy
 
 # If model=all, then run a for loop over all of the models
 if [ "$model" == "all" ]; then
+
+    # exit with an error
+    echo "ERROR: model=all not set up"
+    exit 1
 
     # Set up the model list
     echo "[INFO] Extracting data for all models: $models"
@@ -109,9 +110,9 @@ else
     echo "[INFO] Output directory: $OUTPUT_DIR"
 
     # Echo info for job submission
-    echo "[INFO] Submitting job for model: $model, variable: $variable, region: $region, forecast range: $forecast_range, season: $season"
+    echo "[INFO] Submitting job for model: $model, variable: $variable, region: global, season: $season"
 
     # Submit the job
-    sbatch --partition=short-serial --mem=5000 -t 15 -o $OUTPUT_DIR/${model}.${variable}.${region}.${forecast_range}.${season}-model-mean-state.out -e $OUTPUT_DIR/${model}.${variable}.${region}.${forecast_range}.${season}-model-mean-state.err $EXTRACTOR $model $variable $region $forecast_range $season $pressure_level
+    sbatch --partition=short-serial --mem=5000 -t 15 -o $OUTPUT_DIR/${model}.${variable}.${region}.${forecast_range}.${season}-model-mean-state.out -e $OUTPUT_DIR/${model}.${variable}.${region}.${forecast_range}.${season}-model-mean-state.err $EXTRACTOR $model $variable $season
 
 fi
