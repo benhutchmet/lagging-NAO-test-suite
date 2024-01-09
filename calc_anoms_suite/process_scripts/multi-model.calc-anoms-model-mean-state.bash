@@ -45,14 +45,17 @@ process_files() {
     # If variable is ua or va
     # Then set up the file path differently
     if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
-        files_path="$base_dir/mean-years-${forecast_range}-${season}-${region}-plev-${variable}_?mon_${model}_dcppA-hindcast_s????-r*${init_scheme}*.nc"
+        # files_path="$base_dir/mean-years-${forecast_range}-${season}-${region}-plev-${variable}_?mon_${model}_dcppA-hindcast_s????-r*${init_scheme}*.nc"
+        echo "ERROR: pressure level not set up for ua and va"
+        exit 1
     else
-        files_path="$base_dir/mean-years-${forecast_range}-${season}-${region}-${variable}_?mon_${model}_dcppA-hindcast_s????-r*${init_scheme}*.nc"
+        # Example file path: all-years-DJFM-global-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1975-r8i1p1f1_gn_197501-198412.nc
+        files_path="$base_dir/all-years-${season}-global-${variable}_?mon_${model}_dcppA-hindcast_s????-r*${init_scheme}*.nc"
     fi
 
     # Echo the files to be processed
     echo "Calculating model mean state for: $files_path"
-    echo "Calculating model mean state for model $model, variable $variable, region $region, forecast range $forecast_range, season $season and init scheme $init_scheme"
+    echo "Calculating model mean state for model $model, variable $variable, global region, season $season and init scheme $init_scheme"
 
     # Set up the file name for the model mean state
     temp_model_mean_state="$base_dir/tmp/model_mean_state_${init_scheme}.nc"
@@ -111,9 +114,6 @@ else
             ;;
     esac
 fi
-
-# Clean up temporary files
-rm -f ${base_dir}/tmp/temp-*.nc
 
 echo "Model mean states have been calculated for $model $variable $region $forecast_range $season and saved in $base_dir/tmp"
 
