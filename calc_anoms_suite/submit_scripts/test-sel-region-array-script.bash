@@ -9,7 +9,7 @@
 # FIXME: Replace 1960-1965 with 1960-2018 once tested
 
 # Form the path for the logs folder and make sure it exists
-logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-region-test"
+logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years"
 
 # If the logs directory does not exist
 if [ ! -d $logs_dir ]; then
