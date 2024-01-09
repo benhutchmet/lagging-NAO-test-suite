@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model="BCC-CSM2-MR"
+        model="MIROC6"
         variable="psl"
         season="DJFM"
         experiment="dcppA-hindcast"
@@ -20,7 +20,7 @@
             batch system = slurm
         [[[directives]]]
             --partition = short-serial
-            --mem = 20000
+            --mem = 30000
     [[sel_region<model><variable><season><experiment>]]
         script = """
         module load jaspy
