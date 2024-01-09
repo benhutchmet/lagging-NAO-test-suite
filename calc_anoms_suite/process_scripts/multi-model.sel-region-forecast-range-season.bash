@@ -777,16 +777,19 @@ base_fname=$(basename "$INPUT_FILE")
 season_fname="all-years-${season}-${region}-${base_fname}"
 OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
 
-# If MEAN_FILE already exists, do not overwrite
-if [ -f "$OUTPUT_FILE" ]; then
-    echo "INFO: MEAN_FILE already exists: $OUTPUT_FILE"
-    echo "INFO: Not overwriting $OUTPUT_FILE"
-    echo "INFO: Exiting script"
+# Check the size of the output file
+OUTPUT_FILE_SIZE=$(stat -c%s "$OUTPUT_FILE")
 
-    # Exit the script
-    exit 1
+# If the OUTPUT file already exists and has a file size greater than 10000 bytes, do not overwrite
+if [ -f "$OUTPUT_FILE" ] && [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
+    echo "INFO: Output file already exists: $OUTPUT_FILE"
+    echo "INFO: Not overwriting $OUTPUT_FILE"
+    echo "INFO: Proceeding with script"
 else
-    echo "INFO: MEAN_FILE does not exist: $OUTPUT_FILE"
+    echo "INFO: Output file does not exist: $OUTPUT_FILE or is too small"
+    echo "INFO: removing $OUTPUT_FILE"
+    rm $OUTPUT_FILE
+
     echo "INFO: Proceeding with script"
 fi
 

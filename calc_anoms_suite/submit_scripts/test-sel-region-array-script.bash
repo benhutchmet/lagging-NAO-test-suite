@@ -146,6 +146,9 @@ for run in $(seq 1 $nens); do
     # Echo the ensemble member
     echo "Processing ensemble member: $run"
 
+    # TODO: check whether processed files already exist for run init scheme
+    # TODO: check whether they are all the same size
+
     # If the model is not EC-Earth3 or NorCPM1
     if [ $model != "EC-Earth3" ] && [ $model != "NorCPM1" ]; then
 
