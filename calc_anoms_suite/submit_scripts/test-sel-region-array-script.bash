@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --job-name=ben-array-sel-season-test-years
 #SBATCH --mem=20000
-#SBATCH --partition=short-serial
-#SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/%j.out
-#SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/%j.err
+#SBATCH --partition=high-mem
+#SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.out
+#SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.err
 #SBATCH --time=60:00
-#SBATCH --array=1960-1970%2
+#SBATCH --array=1960-1970%4
 
 # FIXME: Replace 1960-1965 with 1960-2018 once tested
 
