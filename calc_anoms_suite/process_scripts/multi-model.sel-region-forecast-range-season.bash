@@ -759,6 +759,8 @@ fi
 # NOTE: Modified for all forecast years
 OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/all_forecast_years/${season}/outputs"
 
+# Set up the INPUT_FILE
+INPUT_FILE=$(ls $files)
 
 # if the output directory does not exist, create it
 if [ ! -d "$OUTPUT_DIR" ]; then
