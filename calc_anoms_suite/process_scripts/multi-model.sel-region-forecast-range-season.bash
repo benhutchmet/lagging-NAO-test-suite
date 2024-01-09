@@ -19,6 +19,7 @@ echo "Correct number of CLI arguments: 7"
 # check if the correct number of arguments have been passed
 if [ $# -ne 7 ]; then
     echo "Usage: multi-model.sel-region-forecast-range-season.bash <model> <initialization-year> <run-number> <variable> <season> <experiment> <init_scheme>"
+    echo "Example: multi-model.sel-region-forecast-range-season.bash BCC-CSM2-MR 1961 1 psl ULG dcppA-hindcast 1"
     exit 1
 fi
 
