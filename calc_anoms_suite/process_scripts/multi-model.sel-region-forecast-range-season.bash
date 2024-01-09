@@ -749,12 +749,8 @@ for INPUT_FILE in $files; do
     # set up the output file names
     echo "Processing $INPUT_FILE"
     base_fname=$(basename "$INPUT_FILE")
-    regridded_fname="regridded-${base_fname}"
     season_fname="all-years-${season}-${region}-${base_fname}"
-    TEMP_FILE="$OUTPUT_DIR/temp-${base_fname}"
-    REGRIDDED_FILE="$OUTPUT_DIR/${regridded_fname}"
     OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
-    MEAN_FILE="$OUTPUT_DIR/mean-${season_fname}"
 
     # If MEAN_FILE already exists, do not overwrite
     if [ -f "$OUTPUT_FILE" ]; then
@@ -801,9 +797,6 @@ for INPUT_FILE in $files; do
 
     # Operator chaining test
     cdo -remapbil,$grid -select,season=${season} $INPUT_FILE $OUTPUT_FILE
-
-    # Remove the temporary, regridded, and original output files
-    rm $REGRIDDED_FILE
 
     echo "[INFO] Finished processing: $INPUT_FILE"
     echo "[INFO] Output file: $OUTPUT_FILE"
