@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=ben-array-sel-season-test-years
+#SBATCH --mem=20000
 #SBATCH --partition=short-serial
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/%j.err
@@ -61,42 +62,67 @@ echo "Experiment is: $experiment"
 module load jaspy
 
 # Set up the process script
-member_batch_script="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/submit_scripts/test-sel-season-member-array.bash"
+process_script="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/submit_scripts/multi-model.sel-region-forecast-range-season.bash"
 
-#FIXME: NENS extractor not working, but we use this in a different mode
-# If model is all
-if [ $model == "all" ]; then
+# Declare an empty associative array
+declare -A nens_extractor
 
-    # Loop over the models
-    for model in $models; do
+# Extract the models list using a case statement
+case $variable in
+"psl")
+    models=$models
 
-        # Echo the model name
-        echo "Processing model: $model"
-
-        # Declare nameref for the nens extractor
-        nens_extractor_ref=nens_extractor
-
-        # Extract the number of ensemble members
-        nens=${nens_extractor[$model]}
-
-        # Loop over the years
-        for run in $(seq 1 $nens); do
-
-            # Echo the year
-            echo "Processing run: $run"
-
-            # Run the process script as an array job
-            bash $process_script ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${region} ${forecast_range} ${season} ${experiment}
-
-        done
-
+    # Loop over and copy each key-value pair from the psl_models_nens
+    for key in "${!psl_models_nens[@]}"; do
+        nens_extractor[$key]=${psl_models_nens[$key]}
     done
+    ;;
+"sfcWind")
+    models=$sfcWind_models
 
-    # End the script
-    echo "Finished processing ${model} ${variable} ${region} ${forecast_range} ${season} ${experiment} ${start_year} ${end_year}"
-    exit 0
+    # Loop over and copy each key-value pair from the sfcWind_models_nens
+    for key in "${!sfcWind_models_nens[@]}"; do
+        nens_extractor[$key]=${sfcWind_models_nens[$key]}
+    done
+    ;;
+"rsds")
+    models=$rsds_models
 
-fi
+    # Loop over and copy each key-value pair from the rsds_models_nens
+    for key in "${!rsds_models_nens[@]}"; do
+        nens_extractor[$key]=${rsds_models_nens[$key]}
+    done
+    ;;
+"tas")
+    models=$tas_models
+
+    # loop over and copy each key-value pair from the tas_models_nens
+    for key in "${!tas_models_nens[@]}"; do
+        nens_extractor[$key]=${tas_models_nens[$key]}
+    done
+    ;;
+"tos")
+    models=$tos_models
+
+    # Loop over and copy each key-value pair from the tos_models_nens
+    for key in "${!tos_models_nens[@]}"; do
+        nens_extractor[$key]=${tos_models_nens[$key]}
+    done
+    ;;
+*)
+    echo "ERROR: variable not recognized: $variable"
+    exit 1
+    ;;
+esac
+
+# Echo the models
+echo "Models are: $models"
+
+# Echo the values of the nens_extractor
+echo "Values of nens_extractor are: ${nens_extractor[@]}"
+
+# Echo the keys of the nens_extractor
+echo "Keys of nens_extractor are: ${!nens_extractor[@]}"
 
 # In the case of individual models
 echo "Submitting single model: $model"
@@ -104,11 +130,46 @@ echo "Submitting single model: $model"
 # Echo the year which we are processing
 echo "Submitting year: ${SLURM_ARRAY_TASK_ID}"
 
+# Declare the nens extractor
+declare -p nens_extractor
+
+# Extract the number of ensemble members for the model
+nens=${nens_extractor[$model]}
+
 # Echo the model
 echo "Model is: $model"
 
-# Run the batch script for submitting the ensemble member
-sbatch ${member_batch_script} ${model} ${variable} ${season} ${experiment} ${SLURM_ARRAY_TASK_ID}
+# Echo the number of ensemble members
+echo "Number of ensemble members is: $nens"
+
+# Loop over the ensemble members
+for run in $(seq 1 $nens); do
+
+    # Echo the ensemble member
+    echo "Processing ensemble member: $run"
+
+    # If the model is not EC-Earth3 or NorCPM1
+    if [ $model != "EC-Earth3" ] && [ $model != "NorCPM1" ]; then
+
+        echo "Only one init scheme for $model"
+
+        # Set the init scheme
+        init_scheme="1"
+
+        bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
+    else
+        echo "Two init schemes for $model"
+        # Loop over the init schemes
+        for init_scheme in $(seq 1 2); do
+
+            # Echo the init scheme
+            echo "Processing init scheme: $init_scheme"
+
+            # Submit the job
+            bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
+        done
+    fi
+done
 
 # End of script
 echo "Finished processing ${model} ${variable} ${season} ${experiment} ${SLURM_ARRAY_TASK_ID}"
