@@ -1,10 +1,12 @@
 #!/bin/bash
-#SBATCH --partition=short-serial
+#SBATCH --partition=test
 #SBATCH --job-name=ben-array-sel-season-test-members
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members/%j.err
 #SBATCH --time=60:00
-#SBATCH --array=1-40
+#SBATCH --array=1-5
+
+# TODO: Modify sbtach array and partition after testing
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members"
