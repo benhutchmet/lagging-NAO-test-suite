@@ -7,10 +7,10 @@
 # For example: calculate-model-mean-states.bash HadGEM3-GC31-MM psl north-atlantic 2-5 DJF 92500
 
 # Set the usage message
-USAGE_MESSAGE="Usage: multi-model.calc-anoms-model-mean-state.bash <model> <variable> <region> <forecast-range> <season> <pressure-level>"
+USAGE_MESSAGE="Usage: multi-model.calc-anoms-model-mean-state.bash <model> <variable> <season>"
 
 # Check that the correct number of arguments have been passed
-if [ $# -ne 6 ]; then
+if [ $# -ne 3 ]; then
     echo "$USAGE_MESSAGE"
     exit 1
 fi
@@ -18,20 +18,23 @@ fi
 # Extract the model, variable, region, forecast range and season
 model=$1
 variable=$2
-region=$3
-forecast_range=$4
-season=$5
-pressure_level=$6
+season=$3
 
 # Load cdo
 module load jaspy
 
+# Example base directory
+# /work/scratch-nopw2/benhutch/psl/BCC-CSM2-MR/global/all_forecast_years/DJFM/outputs
+
 # Set up the base directory
 if [ "$variable" == "ua" ] || [ "$variable" == "va" ]; then
-    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/plev_${pressure_level}/outputs"
+    # base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/plev_${pressure_level}/outputs"
+    echo "ERROR: pressure level not set up for ua and va"
+    exit 1
 else
     # Base directory
-    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/years_${forecast_range}/${season}/outputs"
+    # NOTE: Global is hardcoded here
+    base_dir="/work/scratch-nopw2/benhutch/${variable}/${model}/global/all_forecast_years/${season}/outputs"
 fi
 
 # Function for processing files

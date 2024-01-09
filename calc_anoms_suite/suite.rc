@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model="MIROC6"
+        model="IPSL-CM6A-LR"
         variable="psl"
         season="DJFM"
         experiment="dcppA-hindcast"
