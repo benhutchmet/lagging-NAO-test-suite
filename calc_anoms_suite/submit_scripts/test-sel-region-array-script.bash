@@ -5,7 +5,7 @@
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/%j.err
 #SBATCH --time=30:00
-#SBATCH --array=1960-1980%4
+#SBATCH --array=1960-1970%2
 
 # FIXME: Replace 1960-1965 with 1960-2018 once tested
 
