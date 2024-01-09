@@ -768,10 +768,6 @@ for INPUT_FILE in $files; do
         echo "INFO: MEAN_FILE does not exist: $OUTPUT_FILE"
         echo "INFO: Proceeding with script"
     fi
-    
-    # Regrid using bilinear interpolation
-    # Selects region (as long as x and y dimensions divide by 2.5)
-    cdo remapbil,$grid $INPUT_FILE $REGRIDDED_FILE
 
     # convert from JFMAYULGSOND to JFMAMJJASOND format
     # if Y is in the season, replace with M
@@ -797,8 +793,14 @@ for INPUT_FILE in $files; do
     # echo the season
     echo "Season: $season"
 
-    # Constrain the input file to the DJFM season
-    cdo select,season=${season} "$REGRIDDED_FILE" "$OUTPUT_FILE"
+    # Echo that we are selecting the season
+    echo "[INFO] Selecting the season: $season"
+
+    # Echo that we are remapping the file
+    echo "[INFO] Then remapping the file"
+
+    # Operator chaining test
+    cdo -remapbil,$grid -select,season=${season} $INPUT_FILE $OUTPUT_FILE
 
     # Remove the temporary, regridded, and original output files
     rm $REGRIDDED_FILE
