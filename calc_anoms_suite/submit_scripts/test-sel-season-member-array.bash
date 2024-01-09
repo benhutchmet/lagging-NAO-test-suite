@@ -179,6 +179,7 @@ else
     init_scheme_1="1"
     init_scheme_2="2"
 
+    # TODO: test that this works
     # Run the process script as an array job
     # For the specific model, init year and ensemble member
     bash $process_script ${model} ${init_year} ${SLURM_ARRAY_TASK_ID} ${variable} ${season} ${experiment} ${init_scheme_1}
