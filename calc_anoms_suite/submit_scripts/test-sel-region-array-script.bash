@@ -62,7 +62,7 @@ echo "Experiment is: $experiment"
 module load jaspy
 
 # Set up the process script
-process_script="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/submit_scripts/multi-model.sel-region-forecast-range-season.bash"
+process_script="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/process_scripts/multi-model.sel-region-forecast-range-season.bash"
 
 # Declare an empty associative array
 declare -A nens_extractor
