@@ -4,8 +4,8 @@
 #SBATCH --mem=30000
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.err
-#SBATCH --time=60:00
-#SBATCH --array=1960-2018%20
+#SBATCH --time=300:00
+#SBATCH --array=1960-2018
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years"
