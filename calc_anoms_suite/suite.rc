@@ -25,7 +25,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch test-sel-region-array-script.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_experiment}
+        sbatch submit_scripts/test-sel-region-array-script.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_experiment}
         """
         [[[job]]]
             execution time limit = PT120M
