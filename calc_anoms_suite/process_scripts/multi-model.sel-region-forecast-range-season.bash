@@ -104,7 +104,7 @@ if [ "$variable" == "psl" ]; then
     elif [ "$model" == "MPI-ESM1-2-LR" ] || [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "MIROC6" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "CESM1-1-CAM5-CMIP5" ] || [ "$model" == "NorCPM1" ] || [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
         # set up the input files from xfc
         # check that this returns the files
-        files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}_g*_*.nc"
+        files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}*g*_*.nc"
     else
         echo "[ERROR] Model not recognised for variable psl"
         exit 1
