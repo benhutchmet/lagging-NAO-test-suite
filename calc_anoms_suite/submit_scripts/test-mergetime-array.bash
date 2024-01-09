@@ -47,16 +47,13 @@ season=$3
 # Print the model, variable, region, forecast range and season
 echo "Model is: $model"
 echo "Variable is: $variable"
-echo "Region is: $region"
-echo "Forecast range is: $forecast_range"
 echo "Season is: $season"
-echo "Pressure level is: $pressure_level"
 
 # Load cdo
 module load jaspy
 
 # Set the process script
-process_script="/home/users/benhutch/skill-maps-rose-suite/process_scripts/multi-model.mergetime.bash"
+process_script="/home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/process_scripts/multi-model.mergetime.bash"
 
 # Check that the process script exists
 if [ ! -f $process_script ]; then
@@ -164,8 +161,7 @@ if [[ $model == "EC-Earth3" ]] || [[ $model == "NorCPM1" ]]; then
         echo "Processing init scheme: $init_scheme"
 
         # Run the process script as an array job
-        bash $process_script ${model} ${variable} ${region} ${forecast_range} \
-             ${season} ${SLURM_ARRAY_TASK_ID} ${init_scheme} ${pressure_level}
+        bash $process_script ${model} ${variable} ${season} ${SLURM_ARRAY_TASK_ID} ${init_scheme}
 
     done
 
@@ -185,10 +181,8 @@ init_scheme=1
 echo "Processing init scheme: $init_scheme for model $model"
 
 # Run the process script as an array job
-bash $process_script ${model} ${variable} ${region} ${forecast_range} \
-     ${season} ${SLURM_ARRAY_TASK_ID} ${init_scheme} ${pressure_level}
+bash $process_script ${model} ${variable} ${season} ${SLURM_ARRAY_TASK_ID} ${init_scheme}
 
 # End of script
-echo "Finished processing model $model, variable $variable, region $region, \
-forecast range $forecast_range, season $season, init scheme $init_scheme and \
+echo "Finished processing model $model, variable $variable, season $season and \
 ensemble member $SLURM_ARRAY_TASK_ID"
