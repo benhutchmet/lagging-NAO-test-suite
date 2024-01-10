@@ -146,8 +146,8 @@ for run in $(seq 1 $nens); do
     # Echo the ensemble member
     echo "Processing ensemble member: $run"
 
-    # TODO: check whether processed files already exist for run init scheme
-    # TODO: check whether they are all the same size
+    # Set up the output directory
+    OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/all_forecast_years/${season}/outputs"
 
     # If the model is not EC-Earth3 or NorCPM1
     if [ $model != "EC-Earth3" ] && [ $model != "NorCPM1" ]; then
@@ -157,6 +157,31 @@ for run in $(seq 1 $nens); do
         # Set the init scheme
         init_scheme="1"
 
+        # Set up the output file name
+        # Example file name = "all-years-DJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1999-r4i1_gn_199911-201003.nc"
+        OUTPUT_FILE="all-years-${season}-global-${variable}_Amon_${model}_${experiment}_s${SLURM_ARRAY_TASK_ID}-r${run}i${init_scheme}_g?_*.nc"
+
+        # Set up the output file path
+        OUTPUT_FILE_PATH="${OUTPUT_DIR}/${OUTPUT_FILE}"
+
+        # If the output file exists
+        if [ -f $OUTPUT_FILE_PATH ]; then
+            echo "Output file exists: $OUTPUT_FILE_PATH"
+            echo "Checking the size of the output file"
+            OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
+
+            # If the output file size is greater than 10000 bytes
+            if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
+                echo "Output file size is greater than 10000 bytes"
+                echo "Skipping this run"
+                continue
+            else
+                echo "Output file size is less than 10000 bytes"
+                echo "Removing the output file and resubmitting the job"
+                rm $OUTPUT_FILE_PATH
+            fi
+        fi
+
         bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
     else
         echo "Two init schemes for $model"
@@ -165,6 +190,31 @@ for run in $(seq 1 $nens); do
 
             # Echo the init scheme
             echo "Processing init scheme: $init_scheme"
+
+            # Set up the output file name
+            # Example file name = "all-years-DJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1999-r4i1_gn_199911-201003.nc"
+            OUTPUT_FILE="all-years-${season}-global-${variable}_Amon_${model}_${experiment}_s${SLURM_ARRAY_TASK_ID}-r${run}i${init_scheme}_g?_*.nc"
+
+            # Set up the output file path
+            OUTPUT_FILE_PATH="${OUTPUT_DIR}/${OUTPUT_FILE}"
+
+            # If the output file exists
+            if [ -f $OUTPUT_FILE_PATH ]; then
+                echo "Output file exists: $OUTPUT_FILE_PATH"
+                echo "Checking the size of the output file"
+                OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
+
+                # If the output file size is greater than 10000 bytes
+                if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
+                    echo "Output file size is greater than 10000 bytes"
+                    echo "Skipping this run"
+                    continue
+                else
+                    echo "Output file size is less than 10000 bytes"
+                    echo "Removing the output file and resubmitting the job"
+                    rm $OUTPUT_FILE_PATH
+                fi
+            fi
 
             # Submit the job
             bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
