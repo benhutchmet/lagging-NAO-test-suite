@@ -164,6 +164,7 @@ for run in $(seq 1 $nens); do
         # Set up the output file path
         OUTPUT_FILE_PATH="${OUTPUT_DIR}/${OUTPUT_FILE}"
 
+        # TODO: Check that this path is correct
         # If the output file exists
         if [ -f $OUTPUT_FILE_PATH ]; then
             echo "Output file exists: $OUTPUT_FILE_PATH"
