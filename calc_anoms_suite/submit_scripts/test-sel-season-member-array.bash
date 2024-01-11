@@ -7,8 +7,6 @@
 #SBATCH --time=30:00
 #SBATCH --array=1-10
 
-# TODO: Modify sbtach array and partition after testing
-
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-members"
 
@@ -180,7 +178,6 @@ else
     init_scheme_1="1"
     init_scheme_2="2"
 
-    # TODO: test that this works
     # Run the process script as an array job
     # For the specific model, init year and ensemble member
     bash $process_script ${model} ${init_year} ${SLURM_ARRAY_TASK_ID} ${variable} ${season} ${experiment} ${init_scheme_1}
