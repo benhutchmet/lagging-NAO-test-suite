@@ -9,7 +9,6 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        sel_region<model><variable><season><experiment> => calc_mms<model><variable><season>
         calc_mms<model><variable><season> => calc_anoms<model><variable><season>
         """
 
@@ -21,14 +20,6 @@
             batch system = slurm
         [[[directives]]]
             --partition = short-serial
-    [[sel_region<model><variable><season><experiment>]]
-        script = """
-        module load jaspy
-        cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch submit_scripts/test-sel-region-array-script.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_experiment}
-        """
-        [[[job]]]
-            execution time limit = PT20M
     [[calc_mms<model><variable><season>]]
         script = """
         module load jaspy
