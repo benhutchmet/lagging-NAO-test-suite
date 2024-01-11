@@ -24,7 +24,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch submit_scripts/submit-all-multi-model.calc-anoms-model-mean-state.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
+        sbatch --begin=now submit_scripts/submit-all-multi-model.calc-anoms-model-mean-state.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
         """
         [[[job]]]
             execution time limit = PT20M
@@ -32,7 +32,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch submit_scripts/test-calc-anoms-sub-anoms-array.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
+        sbatch --begin=now+300 submit_scripts/test-calc-anoms-sub-anoms-array.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
         """
         [[[job]]]
             execution time limit = PT20M
