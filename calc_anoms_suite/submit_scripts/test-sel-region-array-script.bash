@@ -147,7 +147,8 @@ for run in $(seq 1 $nens); do
     echo "Processing ensemble member: $run"
 
     # Set up the output directory
-    OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/${region}/all_forecast_years/${season}/outputs"
+    # Example = /work/scratch-nopw2/benhutch/psl/HadGEM3-GC31-MM/global/all_forecast_years/DJFM/outputs
+    OUTPUT_DIR="/work/scratch-nopw2/benhutch/${variable}/${model}/global/all_forecast_years/${season}/outputs"
 
     # If the model is not EC-Earth3 or NorCPM1
     if [ $model != "EC-Earth3" ] && [ $model != "NorCPM1" ]; then
