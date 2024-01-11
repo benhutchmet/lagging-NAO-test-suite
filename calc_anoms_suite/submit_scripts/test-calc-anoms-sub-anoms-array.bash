@@ -4,9 +4,7 @@
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/calc-anoms-array-test/%j.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/calc-anoms-array-test/%j.err
 #SBATCH --time=10:00
-#SBATCH --array=1970-1975
-
-# TODO: Replace 1970-1975 with 1960-2018 once tested
+#SBATCH --array=1960-2018
 
 # Form the path for the logs folder and make sure it exists
 logs_dir="/gws/nopw/j04/canari/users/benhutch/batch_logs/calc-anoms-array-test"
@@ -32,7 +30,7 @@ echo "SLURM_ARRAY_TASK_ID is: ${SLURM_ARRAY_TASK_ID}"
 # Echo trhe CLI's
 echo "CLI arguments are: $@"
 echo "Number of CLI arguments is: $#"
-echo "Desired no. of arguments is: 3" # FIXME: might need to change this
+echo "Desired no. of arguments is: 3"
 
 # Check if the correct number of arguments were passed
 if [ $# -ne 3 ]; then
