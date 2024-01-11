@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model=HadGEM3-GC31-MM
+        model="EC-Earth3"
         variable="psl"
         season="DJFM"
         experiment="dcppA-hindcast"
