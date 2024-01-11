@@ -61,11 +61,14 @@ calculate_anoms() {
     echo "Calculating anomalies for: $INPUT_FILES"
     echo "Using model mean state file: $MODEL_MEAN_STATE"
 
+    # # Check that the model mean state file exists
+    # if [ ! -f $MODEL_MEAN_STATE ]; then
+    #     echo "ERROR: model mean state file not found ${init_scheme}: ${MODEL_MEAN_STATE}"
+    #     exit 1
+    # fi
+
     # Check that the model mean state file exists
-    if [ ! -f $MODEL_MEAN_STATE ]; then
-        echo "ERROR: model mean state file not found ${init_scheme}: ${MODEL_MEAN_STATE}"
-        exit 1
-    fi
+    
 
     # Calculate the anomalies
     # By looping over the input files
