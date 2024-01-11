@@ -21,7 +21,6 @@
             batch system = slurm
         [[[directives]]]
             --partition = short-serial
-            --mem = 30000
     [[sel_region<model><variable><season><experiment>]]
         script = """
         module load jaspy
