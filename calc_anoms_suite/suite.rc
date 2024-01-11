@@ -9,7 +9,8 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        sel_region<model><variable><season><experiment>
+        sel_region<model><variable><season><experiment> => calc_mms<model><variable><season>
+        calc_mms<model><variable><season> => calc_anoms<model><variable><season>
         """
 
 [runtime]
