@@ -781,17 +781,18 @@ OUTPUT_FILE="$OUTPUT_DIR/${season_fname}"
 OUTPUT_FILE_SIZE=$(stat -c%s "$OUTPUT_FILE")
 
 # If the OUTPUT file already exists and has a file size greater than 10000 bytes, do not overwrite
-if [ -f "$OUTPUT_FILE" ] && [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
-    echo "INFO: Output file already exists: $OUTPUT_FILE"
-    echo "INFO: Not overwriting $OUTPUT_FILE"
-    echo "INFO: Proceeding with script"
-else
-    echo "INFO: Output file does not exist: $OUTPUT_FILE or is too small"
-    echo "INFO: removing $OUTPUT_FILE"
-    rm $OUTPUT_FILE
+# This is done in the other script already
+# if [ -f "$OUTPUT_FILE" ] && [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
+#     echo "INFO: Output file already exists: $OUTPUT_FILE"
+#     echo "INFO: Not overwriting $OUTPUT_FILE"
+#     echo "INFO: Proceeding with script"
+# else
+#     echo "INFO: Output file does not exist: $OUTPUT_FILE or is too small"
+#     echo "INFO: removing $OUTPUT_FILE"
+#     rm $OUTPUT_FILE
 
-    echo "INFO: Proceeding with script"
-fi
+#     echo "INFO: Proceeding with script"
+# fi
 
 # convert from JFMAYULGSOND to JFMAMJJASOND format
 # if Y is in the season, replace with M
