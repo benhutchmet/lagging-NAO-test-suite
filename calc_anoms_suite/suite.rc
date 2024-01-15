@@ -3,7 +3,7 @@
     [[parameters]]
         model=BCC-CSM2-MR,MPI-ESM1-2-HR,CanESM5,CMCC-CM2-SR5,HadGEM3-GC31-MM,EC-Earth3,MPI-ESM1-2-LR,FGOALS-f3-L,MIROC6,IPSL-CM6A-LR,CESM1-1-CAM5-CMIP5,NorCPM1
         variable="psl"
-        season="DJFM"
+        season="ULG"
         experiment="dcppA-hindcast"
 
 [scheduling]
@@ -33,7 +33,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch --begin=now+240 submit_scripts/submit-all-multi-model.calc-anoms-model-mean-state.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
+        sbatch --begin=now+3hours submit_scripts/submit-all-multi-model.calc-anoms-model-mean-state.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
         """
         [[[job]]]
             execution time limit = PT20M
@@ -41,7 +41,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch --begin=now+360 submit_scripts/test-calc-anoms-sub-anoms-array.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
+        sbatch --begin=now+1200 submit_scripts/test-calc-anoms-sub-anoms-array.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season}
         """
         [[[job]]]
             execution time limit = PT20M
