@@ -160,7 +160,6 @@ def load_data(variable: str,
     # Initialise a counter for the ensemble members
     ens_counter = 0
 
-
     # Loop over the models
     for model in models_list:
         print("Extracting data into array for model: ", model)
@@ -179,31 +178,59 @@ def load_data(variable: str,
 
                 # If the model is EC-Earth3 or NorCPM1
                 if model == "EC-Earth3" or model == "NorCPM1":
-                    
+
                     # if j+1 is less than 10
                     if j+1 < 10:
                         print("j+1 is less than 10")
                         print("Extracting data for ensemble member: ", j+1, "for model: ", model)
                         print("for both i1 and i2")
                         # Extract the file containing f"s{year}"
-                        i1_file = [file for file in file_list if f"s{year}" in file and f"r{j+1}i1p1f1" in file][0]
-                        i2_file = [file for file in file_list if f"s{year}" in file and f"r{j+1}i2p1f1" in file][0]
+                        i1_file = [file for file in file_list if f"s{year}" in file and f"r{j+1}i1" in file][0]
+
+                        # If the file exists
+                        i2_files = [file for file in file_list if f"s{year}" in file and f"r{j+1}i2" in file]
 
                         # Load the file using xarray
                         i1_data = xr.open_dataset(i1_file, chunks={'time': 10,
                                                                     'lat': 10,
                                                                     'lon': 10})
-                        i2_data = xr.open_dataset(i2_file, chunks={'time': 10,
+
+                        # Extract the data for the variable
+                        i1_data = i1_data[variable]
+
+                        # If the file exists
+                        if len(i2_files) != 0:
+                            print("i2 file exists for model: ", model, "for year: ", year, "for ensemble member: ", j+1)
+                            i2_file = i2_files[0]
+
+                            # Load the file using xarray
+                            i2_data = xr.open_dataset(i2_file, chunks={'time': 10,
                                                                     'lat': 10,
                                                                     'lon': 10})
                         
-                        # Extract the data for the variable
-                        i1_data = i1_data[variable]
-                        i2_data = i2_data[variable]
+                            # Extract the data for the variable
+                            i2_data = i2_data[variable]
 
-                        # Logging
-                        print("Appending i1 to index ", ens_counter + (2*j))
-                        print("Appending i2 to index ", ens_counter + (2*j + 1))
+                            # Logging
+                            print("Appending i1 to index ", data_counter + ens_counter + (j))
+                            print("Appending i2 to index ", data_counter + ens_counter + (j+1))
+
+                            # Store the data in the array
+                            data[i, data_counter + ens_counter + (j), :, :, :] = i1_data
+
+                            # Store the data in the array
+                            data[i, data_counter + ens_counter + (j+1), :, :, :] = i2_data
+
+                            # Increment the data counte
+                        else:
+                            print("i2 file does not exist for model: ", model, "for year: ", year, "for ensemble member: ", j+1)
+
+                            # Append the data to the array
+                            print("Appending i1 to index ", data_counter + ens_counter + (j))
+
+                            # Store the data in the array
+                            data[i, data_counter + ens_counter + (j), :, :, :] = i1_data
+
 
                         # Store the data in the array
                         data[i, ens_counter + (2*j), :, :, :] = i1_data
@@ -220,10 +247,10 @@ def load_data(variable: str,
                         print("j+1 is greater than 10")
                         print("files should not exist for i1 or i2")
                         # Assert that the file does not exist
-                        assert len([file for file in file_list if f"s{year}" in file and f"r{j+1}i2p1f1" in file]) == 0, f"{model} has files for i2"
+                        assert len([file for file in file_list if f"s{year}" in file and f"r{j+1}i2" in file]) == 0, f"{model} has files for i2"
 
                         # And for i1
-                        assert len([file for file in file_list if f"s{year}" in file and f"r{j+1}i1p1f1" in file]) == 0, f"{model} has files for i1"
+                        assert len([file for file in file_list if f"s{year}" in file and f"r{j+1}i1" in file]) == 0, f"{model} has files for i1"
 
                 else:
                     print("Model is not EC-Earth3 or NorCPM1")
@@ -242,6 +269,7 @@ def load_data(variable: str,
                     # Print the year and the ensemble member
                     print("Year: ", year, "ensemble member: ", j+1)
                     print("ens counter: ", ens_counter)
+                    print("Appending i1 to index ", ens_counter + j)
 
                     # Store the data in the array
                     data[i, ens_counter + j, :, :, :] = i1_data
