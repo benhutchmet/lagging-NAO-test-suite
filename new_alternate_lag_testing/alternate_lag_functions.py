@@ -160,6 +160,9 @@ def load_data(variable: str,
     # Initialise a counter for the ensemble members
     ens_counter = 0
 
+    # Previous step i2 bool
+    prev_step_i2 = False
+
     # Loop over the models
     for model in models_list:
         print("Extracting data into array for model: ", model)
@@ -172,6 +175,15 @@ def load_data(variable: str,
             print("Extracting data for year: ", year, "for model: ", model)
             print("Year index: ", i, "year: ", year)
 
+            # Initialise the previous ensemble member
+            prev_ens_member = 0 + ens_counter
+
+            # Set the previous step to i1
+            prev_step_i2 = False
+
+            # Print
+            print("resetting prev_ens_member from:", prev_ens_member, "to 0")
+
             # Loop over the ensemble members
             for j in range(nens_dict[model]):
                 print("Extracting data for ensemble member: ", j+1, "for model: ", model)
@@ -180,8 +192,8 @@ def load_data(variable: str,
                 if model == "EC-Earth3" or model == "NorCPM1":
 
                     # if j+1 is less than 10
-                    if j+1 < 10:
-                        print("j+1 is less than 10")
+                    if j+1 < 11:
+                        print("j+1 is less than 11")
                         print("Extracting data for ensemble member: ", j+1, "for model: ", model)
                         print("for both i1 and i2")
                         # Extract the file containing f"s{year}"
@@ -211,38 +223,49 @@ def load_data(variable: str,
                             # Extract the data for the variable
                             i2_data = i2_data[variable]
 
-                            # Logging
-                            print("Appending i1 to index ", data_counter + ens_counter + (j))
-                            print("Appending i2 to index ", data_counter + ens_counter + (j+1))
+                            # if the previous step was i2
+                            if prev_step_i2:
+                                # Logging
+                                print("Appending i1 to index ", prev_ens_member + 1)
+                                print("Appending i2 to index ", prev_ens_member + 2)
 
-                            # Store the data in the array
-                            data[i, data_counter + ens_counter + (j), :, :, :] = i1_data
 
-                            # Store the data in the array
-                            data[i, data_counter + ens_counter + (j+1), :, :, :] = i2_data
+                                # Store the data in the array
+                                data[i, prev_ens_member + 1, :, :, :] = i1_data
+                                data[i, prev_ens_member + 2, :, :, :] = i2_data
+
+                                # Set the previous highest step to i2
+                                prev_ens_member = prev_ens_member + 2
+
+                            else:
+                                # Logging
+                                print("Appending i1 to index ", ens_counter + (j))
+                                print("Appending i2 to index ", ens_counter + (j+1))
+
+                                # Store the data in the array
+                                data[i, ens_counter + (j), :, :, :] = i1_data
+
+                                # Store the data in the array
+                                data[i, ens_counter + (j+1), :, :, :] = i2_data
+
+                                # Set the previous highest step to i2
+                                prev_ens_member = ens_counter + (j+1)
+
+                                # Set the previous step to i2
+                                prev_step_i2 = True
 
                             # Increment the data counte
                         else:
                             print("i2 file does not exist for model: ", model, "for year: ", year, "for ensemble member: ", j+1)
 
                             # Append the data to the array
-                            print("Appending i1 to index ", data_counter + ens_counter + (j))
+                            print("Appending i1 to index ", ens_counter + (j))
 
                             # Store the data in the array
-                            data[i, data_counter + ens_counter + (j), :, :, :] = i1_data
+                            data[i, ens_counter + (j), :, :, :] = i1_data
 
-
-                        # Store the data in the array
-                        data[i, ens_counter + (2*j), :, :, :] = i1_data
-
-                        # # Increment the ensemble counter
-                        # ens_counter += 1
-
-                        # Store the data in the array
-                        data[i, ens_counter + (2*j + 1), :, :, :] = i2_data
-
-                        # # Increment the ensemble counter
-                        # ens_counter += 1
+                            # Set the previous highest step to i1
+                            prev_step_i2 = False
                     else:
                         print("j+1 is greater than 10")
                         print("files should not exist for i1 or i2")
