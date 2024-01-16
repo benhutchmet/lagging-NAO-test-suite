@@ -17,7 +17,8 @@ def load_data(variable: str,
               end_year: int = 2018, # Last year of years 2-5
               forecast_range: str = 'all_forecast_years',
               region: str = 'global',
-              base_dir: str = '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data'):
+              base_dir: str = '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data'
+              no_forecast_years: int = 11):
     """
     Functions which loads the processed full period data into an array of shape
     (years, total nens, forecast_years, lats, lons).
@@ -53,6 +54,10 @@ def load_data(variable: str,
     base_dir: str
         The base directory to load the data from.
         Default is '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data'.
+
+    no_forecast_years: int
+        The number of forecast years to load.
+        Default is 11.
 
     Output:
     -------
@@ -107,10 +112,13 @@ def load_data(variable: str,
         print(f"{model}: {len(data.time.dt.year)} years")
 
         # Assert that the length of time is correct - i.e. 11 years
-        assert len(data.time.dt.year) == 11, f"{model} has incorrect length of time."
+        assert len(data.time.dt.year) == no_forecast_years, f"{model} has incorrect length of time."
 
     # Initialise total nens
     total_nens = 0
+
+    # Initialise a dictionary to store the total nens for each model
+    nens_dict = {}
 
     # Count the total nens for each model
     for model in models_list:
@@ -128,6 +136,9 @@ def load_data(variable: str,
         print(f"{model}: {nens_model_start} ensemble members: {start_year}")
         print(f"{model}: {nens_model_end} ensemble members: {end_year}")
 
+        # include in the dictionary
+        nens_dict[model] = nens_model_start
+
         # Assert that these are the same
         assert nens_model_start == nens_model_end, f"{model} has different number of ensemble members for start and end year."
 
@@ -136,3 +147,99 @@ def load_data(variable: str,
 
     # Print the total number of ensemble members
     print(f"Total number of ensemble members: {total_nens}")
+
+    # Extract the lats and lons
+    nlats = data.lat.shape[0] ; nlons = data.lon.shape[0]
+
+    # Initialise the data array
+    data = np.zeros([len(years), total_nens, no_forecast_years, nlats, nlons])
+
+    # print the shape of the data array
+    print(f"Shape of data array: {data.shape}")
+
+    # Initialise a counter for the ensemble members
+    ens_counter = 0
+
+
+    # Loop over the models
+    for model in models_list:
+        print("Extracting data into array for model: ", model)
+
+        # Extract the file list
+        file_list = files_dict[model][0]
+
+        # Loop over the years
+        for i, year in enumerate(years):
+            print("Extracting data for year: ", year, "for model: ", model)
+            print("Year index: ", i, "year: ", year)
+
+            # Loop over the ensemble members
+            for j in range(nens_dict[model]):
+                print("Extracting data for ensemble member: ", j+1, "for model: ", model)
+
+                # If the model is EC-Earth3 or NorCPM1
+                if model == "EC-Earth3" or model == "NorCPM1":
+                    
+                    # if j+1 is less than 10
+                    if j+1 < 10:
+                        print("j+1 is less than 10")
+                        print("Extracting data for ensemble member: ", j+1, "for model: ", model)
+                        print("for both i1 and i2")
+                        # Extract the file containing f"s{year}"
+                        i1_file = [file for file in file_list if f"s{year}" in file and f"r{j+1}i1p1f1" in file][0]
+                        i2_file = [file for file in file_list if f"s{year}" in file and f"r{j+1}i2p1f1" in file][0]
+
+                        # Load the file using xarray
+                        i1_data = xr.open_dataset(i1_file, chunks={'time': 10,
+                                                                    'lat': 10,
+                                                                    'lon': 10})
+                        i2_data = xr.open_dataset(i2_file, chunks={'time': 10,
+                                                                    'lat': 10,
+                                                                    'lon': 10})
+                        
+                        # Extract the data for the variable
+                        i1_data = i1_data[variable]
+                        i2_data = i2_data[variable]
+
+                        # Store the data in the array
+                        data[i, ens_counter, :, :, :] = i1_data
+
+                        # Increment the ensemble counter
+                        ens_counter += 1
+
+                        # Store the data in the array
+                        data[i, ens_counter, :, :, :] = i2_data
+
+                        # Increment the ensemble counter
+                        ens_counter += 1
+                    else:
+                        print("j+1 is greater than 10")
+                        print("files should not exist for i1 or i2")
+                        # Assert that the file does not exist
+                        assert len([file for file in file_list if f"s{year}" in file and f"r{j+1}i2p1f1" in file]) == 0, f"{model} has files for i2"
+
+                        # And for i1
+                        assert len([file for file in file_list if f"s{year}" in file and f"r{j+1}i1p1f1" in file]) == 0, f"{model} has files for i1"
+
+                else:
+                    print("Model is not EC-Earth3 or NorCPM1")
+                    print("Only extracting data for ensemble member: ", j+1, "for model: ", model, "for i1")
+                    # Extract the file containing f"s{year}"
+                    i1_file = [file for file in file_list if f"s{year}" in file and f"r{j+1}i1" in file][0]
+
+                    # Load the file using xarray
+                    i1_data = xr.open_dataset(i1_file, chunks={'time': 10,
+                                                                'lat': 10,
+                                                                'lon': 10})
+                    
+                    # Extract the data for the variable
+                    i1_data = i1_data[variable]
+
+                    # Store the data in the array
+                    data[i, ens_counter, :, :, :] = i1_data
+
+                    # Increment the ensemble counter
+                    ens_counter += 1
+
+    # Print the shape of the data array
+    print("Shape of data array: ", data.shape)
