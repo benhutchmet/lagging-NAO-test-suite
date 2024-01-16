@@ -17,7 +17,7 @@ def load_data(variable: str,
               end_year: int = 2018, # Last year of years 2-5
               forecast_range: str = 'all_forecast_years',
               region: str = 'global',
-              base_dir: str = '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data'
+              base_dir: str = '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data',
               no_forecast_years: int = 11):
     """
     Functions which loads the processed full period data into an array of shape
@@ -234,6 +234,10 @@ def load_data(variable: str,
                     
                     # Extract the data for the variable
                     i1_data = i1_data[variable]
+
+                    # Print the year and the ensemble member
+                    print("Year: ", year, "ensemble member: ", j+1)
+                    print("ens counter: ", ens_counter)
 
                     # Store the data in the array
                     data[i, ens_counter, :, :, :] = i1_data
