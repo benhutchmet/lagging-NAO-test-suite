@@ -67,6 +67,7 @@ Outputs:
 import sys
 import os
 import argparse
+from time import time
 
 # Import third-party modules
 import numpy as np
@@ -477,6 +478,14 @@ def alternate_lag(data: np.array,
 # Define the main function
 def main():
 
+    # Define the hardcoded variables
+    save_dir = "/gws/nopw/j04/canari/users/benhutch/alternate-lag-processed-data"
+
+    # If the save directory does not exist
+    if not os.path.isdir(save_dir):
+        # Create the directory
+        os.mkdir(save_dir)
+
     # Set up the parser for the CLAs
     parser = argparse.ArgumentParser()
 
@@ -518,9 +527,52 @@ def main():
     print("lag: ", lag)
 
     # Extract the models for the given variable
+    if variable == "tas":
+        models_list = dicts.tas_models
+    elif variable == "sfcWind":
+        models_list = dicts.sfcWind_models
+    elif variable == "psl":
+        models_list = dicts.psl_models
+    elif variable == "rsds":
+        models_list = dicts.rsds_models
+    else:
+        raise ValueError("variable not recognised")
 
     # Run the function to load the data
-    data = load_data(variable=variable,)
+    data = load_data(variable=variable,
+                     models_list=models_list,
+                     season=season,
+                     start_year=start_year,
+                     end_year=end_year,
+                     region=region)
+    
+    # Extract the current time
+    current_time = time()
+
+    # Set up the filename for saving the array
+    filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}.npy"
+
+    # Set up the full path for saving the array
+    save_path = os.path.join(save_dir, filename)
+
+    # Save the array
+    np.save(save_path, data)
+
+    # Now process the alternate lag data
+    data_alternate_lag = alternate_lag(data=data,
+                                       forecast_range=forecast_range,
+                                       years=np.arange(start_year, end_year+1),
+                                       lag=lag)
+    
+    # Set up the filename for saving the array
+    filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
+
+    # Set up the full path for saving the array
+    save_path = os.path.join(save_dir, filename)
+
+    # Save the array
+    np.save(save_path, data_alternate_lag)
+
 
 if __name__ == "__main__":
     # Execute the main function
