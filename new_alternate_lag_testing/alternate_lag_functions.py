@@ -1,13 +1,84 @@
+#!/usr/bin/env python
+
+
+"""
+alternate_lag_functions.py
+==========================
+
+A script which processes the alternate lag data from the processed data (which
+contains all forecast years). Loads all of the data into one large array with 
+dimensions: (years, total nens, forecast_years, lats, lons). Then calculates
+the alternate lag for each forecast range and lag.
+
+Author: Ben Hutchins
+Date: January 2024
+
+Usage:
+------
+
+    $ python alternate_lag_functions.py <variable> <season> <region>
+        <start_year> <end_year> <forecast_range> <lag>
+
+    $ python alternate_lag_functions.py tas DJFM global 1961 2014 2-5 4
+
+Parameters:
+-----------
+
+    variable: str
+        The variable to load.
+        E.g. "tas", "pr", "psl", "rsds"
+
+    season: str
+        The season to load.
+        E.g. "DJFM", "SON", "JJA", "MAM"
+
+    region: str
+        The region to load.
+        Default is "global".
+
+    start_year: int
+        The start year of the period to load.
+        Default is 1961.
+
+    end_year: int
+        The end year of the period to load.
+        Default is 2014.
+
+    forecast_range: str
+        The forecast range to take the alternate lag for.
+        E.g. "1-5", "2-6", "3-6"
+
+    lag: int
+        The lag to take the alternate lag for.
+        Default is 4.
+
+Outputs:
+--------
+
+    A .npy file containing the full period array with dimensions:
+    (years, total nens, forecast_years, lats, lons).
+
+    A .npy file containing the lagged correlation array with dimensions:
+    (years, total nens, lats, lons).
+"""
+
 # Functions for processing alternate lag data
 # Import local modules
 import sys
 import os
+import argparse
 
 # Import third-party modules
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import xarray as xr
+
+# Import local modules
+sys.path.append("/home/users/benhutch/skill-maps")
+
+# Import dictionaries
+import dictionaries as dicts
 
 # Define a function which loads the data
 def load_data(variable: str,
@@ -402,3 +473,55 @@ def alternate_lag(data: np.array,
 
     # Return the lagged correlation
     return lagged_correlation
+
+# Define the main function
+def main():
+
+    # Set up the parser for the CLAs
+    parser = argparse.ArgumentParser()
+
+    # Add the arguments
+    parser.add_argument("variable", type=str,
+                        help="The variable to load.")
+    parser.add_argument("season", type=str,
+                        help="The season to load.")
+    parser.add_argument("region", type=str,
+                        help="The region to load.",
+                        default="global")
+    parser.add_argument("start_year", type=int,
+                        help="The start year of the period to load.",
+                        default=1961)
+    parser.add_argument("end_year", type=int,
+                        help="The end year of the period to load.",
+                        default=2014)
+    parser.add_argument("forecast_range", type=str,
+                        help="The forecast range to take the alternate lag for.")
+    parser.add_argument("lag", type=int,
+                        help="The lag to take the alternate lag for.",
+                        default=4)
+    
+    # Extract the CLAs
+    args = parser.parse_args()
+
+    # Extract the variables
+    variable = args.variable ; season = args.season ; region = args.region
+    start_year = args.start_year ; end_year = args.end_year
+    forecast_range = args.forecast_range ; lag = args.lag
+
+    # Print the variables
+    print("variable: ", variable)
+    print("season: ", season)
+    print("region: ", region)
+    print("start_year: ", start_year)
+    print("end_year: ", end_year)
+    print("forecast_range: ", forecast_range)
+    print("lag: ", lag)
+
+    # Extract the models for the given variable
+
+    # Run the function to load the data
+    data = load_data(variable=variable,)
+
+if __name__ == "__main__":
+    # Execute the main function
+    main()
