@@ -301,6 +301,104 @@ def load_data(variable: str,
         # For the model
         ens_counter += nens_dict[model]
 
-
     # Print the shape of the data array
     print("Shape of data array: ", data.shape)
+
+    # Return the data array
+    return data
+
+# Write a function to calculate the lagged correlation
+def alternate_lag(data: np.array,
+                  forecast_range: str,
+                  years: np.array,
+                  lag: int = 4) -> np.array:
+    """
+    Calculate the lagged correlation for a given forecast range and lag.
+
+    Parameters
+    ----------
+    data : np.array
+        Array of data to calculate the lagged correlation for.
+        Should have dimensions (num_years, nens, no_forecast_years, no_lats, no_lons).
+    forecast_range : str
+        The forecast range to calculate the lagged correlation for.
+        This should be in the format "x-y" where x and y are integers.
+    years : np.array
+        Array of years to calculate the lagged correlation for.
+        Should have dimensions (num_years,).
+    lag : int
+        The lag to calculate the lagged correlation for.
+        The default is 4.
+
+    Returns
+    -------
+    lagged_correlation : np.array
+        Array of lagged correlation values with dimensions (num_years, nens, no_lats, no_lons).
+    """
+
+    # Assert that the forecast range is in the correct format
+    assert "-" in forecast_range, "forecast_range should be in the format 'x-y' where x and y are integers"
+
+    # Extract the forecast range
+    forecast_range_list = forecast_range.split("-")
+
+    # Extract the start and end years
+    start_year = int(forecast_range_list[0]) ; end_year = int(forecast_range_list[1])
+
+    # Assert that end year is 6 or less than start year
+    assert end_year <= 6, "end_year should be 6 or less to be valid for four year lagged correlation"
+
+    # Assert that end year is greater than start year
+    assert end_year > start_year, "end_year should be greater than start_year"
+
+    # Set up the number of lagged years
+    no_lagged_years = data.shape[0] - lag + 1
+
+    print("no_lagged_years: ", no_lagged_years)
+
+    # Extract the lagged years
+    lagged_years = years[lag-1:]
+
+    # Print the first and last year of the lagged years
+    print("First lagged year: ", lagged_years[0])
+    print("Last lagged year: ", lagged_years[-1])
+
+    # Create an empty array to store the lagged correlation
+    lagged_correlation = np.zeros([no_lagged_years, data.shape[1] * lag, data.shape[3], data.shape[4]])
+
+    # Loop over the years
+    for i in range(no_lagged_years):
+        print("Processing data for lag year index: ", i)
+        # Loop over the lag
+        for j in range(lag):
+            print("Processing data for lag index: ", j)
+            # Extract the data for the lagged year
+            lagged_year_data = data[i + (lag - 1) - j, :, :, :, :]
+
+            # Print which data we are extracting
+            print("Extracting data for year index: ", (lag - 1) - j)
+            print("Extracting data for year: ", years[i + (lag - 1) - j])
+            print("For lag index: ", j)
+
+            # Loop over the ensemble members
+            for k in range(data.shape[1]):
+                # Extract the data for the ensemble member
+                ensemble_member_data = lagged_year_data[k, :, :, :]
+
+                # print the years which we are taking the mean over
+                print("start year: ", start_year + j, " end year: ", end_year + j)
+
+                # Take the mean over the forecast years
+                ensemble_member_data_mean = np.mean(ensemble_member_data[start_year + j:end_year + j, :, :], axis=0)
+
+                # Print the year index, ensemble member index and lag index
+                print("year index: ", i, " ensemble member index: ", k, " lag index: ", j)
+
+                # Print which we are appending to
+                print("Appending to: year index: ", i, " ensemble member index: ", j + k * lag)
+
+                # Append the data to the array
+                lagged_correlation[i, j + k * lag, :, :] = ensemble_member_data_mean
+
+    # Return the lagged correlation
+    return lagged_correlation
