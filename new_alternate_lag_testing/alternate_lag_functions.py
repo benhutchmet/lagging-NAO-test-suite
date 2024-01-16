@@ -68,8 +68,8 @@ def load_data(variable: str,
     # Initialise a dictionary to store the list of files for each model
     files_dict = {}
     
-    # Create empty lists for each model
-    files_dict[model for model in models_list] = []
+    # Create a dictionary with model keys
+    files_dict = {model: [] for model in models_list}
 
     # Loop over the models
     for model in models_list:
@@ -81,11 +81,11 @@ def load_data(variable: str,
         # Asser that the directory exists
         assert os.path.isdir(dir_path), f"{dir_path} does not exist."
 
-        # Get the list of files ending in *.nc
-        files_list = [file for file in os.listdir(dir_path) if file.endswith(".nc")]
+        # Get the full path of each file in the directory
+        file_path_list = [os.path.join(dir_path, file) for file in os.listdir(dir_path) if file.endswith(".nc")]
 
         # Append the list of files to the dictionary
-        files_dict[model].append(files_list)
+        files_dict[model].append(file_path_list)
 
     # Extract a single file from each files list for each model
     # and check the length of time
@@ -93,8 +93,13 @@ def load_data(variable: str,
         # Extract a single file
         file = files_dict[model][0][0]
 
+        # Modify the file path
+        file_path = os.path.join(base_dir, variable, model, region,
+                                forecast_range, season,
+                                "outputs", "anoms", file)
+
         # Load in the file
-        data = xr.open_dataset(os.path.join(dir_path, file), chunks={'time': 10,
+        data = xr.open_dataset(file_path, chunks={'time': 10,
                                                                      'lat': 10,
                                                                     'lon': 10})
         
