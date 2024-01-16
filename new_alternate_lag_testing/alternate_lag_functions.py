@@ -201,17 +201,21 @@ def load_data(variable: str,
                         i1_data = i1_data[variable]
                         i2_data = i2_data[variable]
 
-                        # Store the data in the array
-                        data[i, ens_counter, :, :, :] = i1_data
-
-                        # Increment the ensemble counter
-                        ens_counter += 1
+                        # Logging
+                        print("Appending i1 to index ", ens_counter + (2*j))
+                        print("Appending i2 to index ", ens_counter + (2*j + 1))
 
                         # Store the data in the array
-                        data[i, ens_counter, :, :, :] = i2_data
+                        data[i, ens_counter + (2*j), :, :, :] = i1_data
 
-                        # Increment the ensemble counter
-                        ens_counter += 1
+                        # # Increment the ensemble counter
+                        # ens_counter += 1
+
+                        # Store the data in the array
+                        data[i, ens_counter + (2*j + 1), :, :, :] = i2_data
+
+                        # # Increment the ensemble counter
+                        # ens_counter += 1
                     else:
                         print("j+1 is greater than 10")
                         print("files should not exist for i1 or i2")
@@ -240,10 +244,12 @@ def load_data(variable: str,
                     print("ens counter: ", ens_counter)
 
                     # Store the data in the array
-                    data[i, ens_counter, :, :, :] = i1_data
+                    data[i, ens_counter + j, :, :, :] = i1_data
 
-                    # Increment the ensemble counter
-                    ens_counter += 1
+        # Increment the ensemble counter with the number of ensemble members
+        # For the model
+        ens_counter += nens_dict[model]
+
 
     # Print the shape of the data array
     print("Shape of data array: ", data.shape)
