@@ -8,3 +8,7 @@ __pycache__/*.pyc
 .ipynb_checkpoints/*
 saved_data/*
 new_workflow/*.drawio
+
+# Ignore any of the saved *.npy files
+*.npy
+saved_arrays/*.npy
