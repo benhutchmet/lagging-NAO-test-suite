@@ -109,4 +109,30 @@ def load_data(variable: str,
         # Assert that the length of time is correct - i.e. 11 years
         assert len(data.time.dt.year) == 11, f"{model} has incorrect length of time."
 
-    
+    # Initialise total nens
+    total_nens = 0
+
+    # Count the total nens for each model
+    for model in models_list:
+        # Extract the file list
+        file_list = files_dict[model][0]
+
+        # Find all of the files containing f"s{start_year}" and f"s{end_year}"
+        # and add the length of the list to total_nens
+        nens_model_start = len([file for file in file_list if f"s{start_year}" in file])
+
+        # and for the end year
+        nens_model_end = len([file for file in file_list if f"s{end_year}" in file])
+
+        # Print the model and the number of ensemble members
+        print(f"{model}: {nens_model_start} ensemble members: {start_year}")
+        print(f"{model}: {nens_model_end} ensemble members: {end_year}")
+
+        # Assert that these are the same
+        assert nens_model_start == nens_model_end, f"{model} has different number of ensemble members for start and end year."
+
+        # Add to total_nens
+        total_nens += nens_model_start
+
+    # Print the total number of ensemble members
+    print(f"Total number of ensemble members: {total_nens}")
