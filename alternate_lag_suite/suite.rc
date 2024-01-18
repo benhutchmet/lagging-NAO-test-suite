@@ -2,7 +2,7 @@
     UTC mode = True # Ignore DST
     [[parameters]]
         variable="tas"
-        season="DJF"
+        season="DJFM"
         region="global"
         start_year="1961"
         end_year="2014"
