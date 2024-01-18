@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable="tas"
+        variable="psl"
         season="DJFM"
         region="global"
         start_year="1961"
