@@ -198,7 +198,7 @@ def check_files_exist(
 
 
 # Define a function to calculate and remove the model climatology
-def remove_model_clim(
+def extract_model_years(
     files: list,
     season: str,
     forecast_range: str,
@@ -268,6 +268,16 @@ def remove_model_clim(
     # Within ens_list, split by "-" and find all of the unique combinations
     ens_list = np.unique([ens.split("-")[1] for ens in ens_list])
 
+    # Form the path
+    path = os.path.join(
+        output_dir,
+        variable,
+        model,
+        region,
+        forecast_range,
+        season,
+        "outputs")
+
     # Extract the forecast range
     forecast_range = forecast_range.split("-")
 
@@ -280,40 +290,59 @@ def remove_model_clim(
 
     # Print the list
     print(f"Ensemble members: {ens_list}")
+    
+    # Print the path
+    print(f"Path: {path}")
 
-    # Set up the full cubes list
-    full_cubes_list = []
+    # if the path does not exist
+    if not os.path.exists(path):
+        # Create the directory
+        os.makedirs(path)
 
-    # for each ensemble member
-    for i, ens in enumerate(ens_list):
-        # Find the files for the ensemble member
-        ens_files = [file for file in files if ens in file]
 
-        # Print the files
-        print(ens_files)
+    # for each file
+    for file in tqdm.tqdm(files):
+        # Load the file
+        ds = xr.open_dataset(file)
 
-        # Loop over the files
-        for file in ens_files:
-            # Load the data
-            ds = xr.open_dataset(file)
+        # Extract the base name
+        base_name = os.path.basename(file)
 
-            # Extract the first year
-            first_year = int(ds.time.dt.year[0])
+        # print the base name
 
-            # Set the start and end years
-            initial_year = first_year + start_year - 1
-            final_year = first_year + end_year - 1
+        # Find the first year
+        init_year = int(ds.time.dt.year.values[0])
 
-            # extract the data for these years
-            ds = ds.sel(time=slice(f"{initial_year}", f"{final_year}"))
+        # Print the initialisation year
+        print(f"Initialisation year: {init_year}")
 
-            # take the mean over the years
-            ds = ds.mean(dim="time")
+        # Set the years to be extracted
+        first_year = init_year + start_year - 1
+        last_year = init_year + end_year - 1
 
-            
+        # Extract the years
+        ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
+
+        # Print the years
+        print(f"First year: {first_year}")
+
+        # Create the file name
+        # cut the final .nc and replace with _years_2-9.nc
+        filename = base_name[:-3] + f"_years_{start_year}-{end_year}.nc"
+
+        # Form the path
+        full_path = os.path.join(path, filename)
+
+        # Save the file
+        ds.to_netcdf(full_path)
+
+        # Close the dataset
+        ds.close()
+
+    # Print
+    print("Finished.")
 
     return None
-
 
 # Define a main function
 def main():
@@ -366,7 +395,7 @@ def main():
     print(files)
 
     # Test the function
-    remove_model_clim(
+    extract_model_years(
         files=files,
         season=season,
         forecast_range=forecast_range,
