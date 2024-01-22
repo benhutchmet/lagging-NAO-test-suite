@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Debug clim script",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/remove_model_clim.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "HadGEM3-GC31-MM",
+                "psl",
+                "DJFM",
+                "1960",
+                "2018",
+                "global",
+                "2-5"
+            ]
+        }
+    ]
+}
