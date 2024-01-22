@@ -16,7 +16,7 @@
                 "psl",
                 "DJFM",
                 "1960",
-                "2018",
+                "1970", // test case with loading fewer files
                 "global",
                 "2-5"
             ]
