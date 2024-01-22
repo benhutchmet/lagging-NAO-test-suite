@@ -68,6 +68,7 @@ import xarray as xr
 import tqdm
 import iris
 import iris.coord_categorisation as icc
+from iris.time import PartialDateTime
 
 
 # Define a function to check whether all of the files exist
@@ -261,31 +262,118 @@ def remove_model_clim(
     assert isinstance(files, list), "files must be a list."
     assert len(files) > 0, "files must not be empty."
 
-    # Print the number of files
-    print(f"Number of files: {len(files)}")
+    # Find all of the unique combinations of "r*i?"
+    ens_list = np.unique([file.split("_")[6] for file in files])
 
-    # Import multiple iris cubes
-    cubes = iris.load(files)
+    # Within ens_list, split by "-" and find all of the unique combinations
+    ens_list = np.unique([ens.split("-")[1] for ens in ens_list])
 
-    # Print the time axis of the first cube
-    print(cubes[0].coord("time"))
+    # Extract the forecast range
+    forecast_range = forecast_range.split("-")
 
-    # Iterate over each cube in the cube list
-    for cube in cubes:
-        # Add the season membership to the cube
-        icc.add_season_membership(cube, "time", f'{season}', name='sel_season')
+    # Extract the start and end years
+    start_year = int(forecast_range[0]) ; end_year = int(forecast_range[1])
 
-    # Create the season constraint
-    season_constraint = iris.Constraint(sel_season=True)
+    # Print the start and end years
+    print(f"Start year: {start_year}")
+    print(f"End year: {end_year}")
 
-    # Apply the constraint to each cube in the cube list
-    cubes = cubes.extract(season_constraint)
+    # Print the list
+    print(f"Ensemble members: {ens_list}")
 
-    # Print the time axis of the first cube
-    print(cubes[0].coord("time"))
+    # Set up the full cubes list
+    full_cubes_list = []
 
-    # print the cubes
-    print(cubes)
+    # for each ensemble member
+    for i, ens in enumerate(ens_list):
+        # Find the files for the ensemble member
+        ens_files = [file for file in files if ens in file]
+
+        # Print the files
+        print(ens_files)
+
+        # Load the files
+        cubes = iris.load(ens_files)
+
+        # Set up the cubes list
+        cubes_list = iris.cube.CubeList()
+
+        # Set up the realisation coordinate
+        # Create the realization coordinate
+        realisation_coord = iris.coords.AuxCoord(np.array([i]), long_name='realization')
+        
+        # Loop over the cubes
+        for i, cube in enumerate(cubes):
+            print(f"Cube {i}")
+
+            # # Print the time axis of the cube
+            # print(cube.coord("time"))
+
+            # Get the first time point
+            first_time_point = cube.coord("time").points[0]
+
+            # Convert the time point to a date object
+            first_date = cube.coord("time").units.num2date(first_time_point)
+
+            # Extract the year as an integer
+            first_year = first_date.year
+
+            print(f"First year: {first_year}")
+
+            # Create PartialDateTime objects for the start and end years
+            start_date = PartialDateTime(year=first_year + start_year - 1)
+            end_date = PartialDateTime(year=first_year + end_year - 1)
+
+            # Create a constraint for the forecast range
+            constraint = iris.Constraint(
+                time=lambda cell: start_date <= cell.point <= end_date
+            )
+
+            # Apply the constraint
+            cube = cube.extract(constraint)
+
+            # Assert that the cube has the correct number of time points
+            assert len(cube.coord("time").points) == len(
+                range(start_year, end_year + 1)
+            ), "The cube does not have the correct number of time points."
+
+            # Take the time mean of the cube
+            cube = cube.collapsed("time", iris.analysis.MEAN)
+
+            # Append the cube to the list
+            cubes_list.append(cube)
+
+        # # unify the time units of all of the cubes
+        # iris.util.unify_time_units(cubes_list)
+            
+        # Equalise the attributes of the cubes
+        iris.util.equalise_attributes(cubes_list)
+
+        # Merge the cubes
+        cube = cubes_list.merge_cube()
+
+        # Add the aux coord to the cube, associating it with the last dimension
+        cube.add_aux_coord(realisation_coord, data_dims=-1)
+
+        # Promote the aux coord to a dimension coord
+        cube = iris.util.promote_aux_coord_to_dim_coord(cube, "realization")
+
+        # Append the cube to the full cubes list
+        full_cubes_list.append(cube)
+
+    # Merge the cubes
+    cube = full_cubes_list.merge_cube()
+
+    # Print the cube
+    print(cube)
+
+    # Calculate the ensemble mean
+    climatology = cube.collapsed(["realization"], iris.analysis.MEAN)
+
+    # Print the climatology
+    print(climatology)
+
+
 
     return None
 
