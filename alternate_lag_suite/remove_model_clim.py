@@ -292,88 +292,25 @@ def remove_model_clim(
         # Print the files
         print(ens_files)
 
-        # Load the files
-        cubes = iris.load(ens_files)
+        # Loop over the files
+        for file in ens_files:
+            # Load the data
+            ds = xr.open_dataset(file)
 
-        # Set up the cubes list
-        cubes_list = iris.cube.CubeList()
+            # Extract the first year
+            first_year = int(ds.time.dt.year[0])
 
-        # Set up the realisation coordinate
-        # Create the realization coordinate
-        realisation_coord = iris.coords.AuxCoord(np.array([i]), long_name='realization')
-        
-        # Loop over the cubes
-        for i, cube in enumerate(cubes):
-            print(f"Cube {i}")
+            # Set the start and end years
+            initial_year = first_year + start_year - 1
+            final_year = first_year + end_year - 1
 
-            # # Print the time axis of the cube
-            # print(cube.coord("time"))
+            # extract the data for these years
+            ds = ds.sel(time=slice(f"{initial_year}", f"{final_year}"))
 
-            # Get the first time point
-            first_time_point = cube.coord("time").points[0]
+            # take the mean over the years
+            ds = ds.mean(dim="time")
 
-            # Convert the time point to a date object
-            first_date = cube.coord("time").units.num2date(first_time_point)
-
-            # Extract the year as an integer
-            first_year = first_date.year
-
-            print(f"First year: {first_year}")
-
-            # Create PartialDateTime objects for the start and end years
-            start_date = PartialDateTime(year=first_year + start_year - 1)
-            end_date = PartialDateTime(year=first_year + end_year - 1)
-
-            # Create a constraint for the forecast range
-            constraint = iris.Constraint(
-                time=lambda cell: start_date <= cell.point <= end_date
-            )
-
-            # Apply the constraint
-            cube = cube.extract(constraint)
-
-            # Assert that the cube has the correct number of time points
-            assert len(cube.coord("time").points) == len(
-                range(start_year, end_year + 1)
-            ), "The cube does not have the correct number of time points."
-
-            # Take the time mean of the cube
-            cube = cube.collapsed("time", iris.analysis.MEAN)
-
-            # Append the cube to the list
-            cubes_list.append(cube)
-
-        # # unify the time units of all of the cubes
-        # iris.util.unify_time_units(cubes_list)
             
-        # Equalise the attributes of the cubes
-        iris.util.equalise_attributes(cubes_list)
-
-        # Merge the cubes
-        cube = cubes_list.merge_cube()
-
-        # Add the aux coord to the cube, associating it with the last dimension
-        cube.add_aux_coord(realisation_coord, data_dims=-1)
-
-        # Promote the aux coord to a dimension coord
-        cube = iris.util.promote_aux_coord_to_dim_coord(cube, "realization")
-
-        # Append the cube to the full cubes list
-        full_cubes_list.append(cube)
-
-    # Merge the cubes
-    cube = full_cubes_list.merge_cube()
-
-    # Print the cube
-    print(cube)
-
-    # Calculate the ensemble mean
-    climatology = cube.collapsed(["realization"], iris.analysis.MEAN)
-
-    # Print the climatology
-    print(climatology)
-
-
 
     return None
 
