@@ -121,7 +121,7 @@ def check_files_exist(model: str,
         files = []
 
         # Form the path
-        path = os.join(base_dir, variable, model, region, forecast_range,
+        path = os.path.join(base_dir, variable, model, region, forecast_range,
                        season, "outputs")
         
         # Assert that the path exists
@@ -143,6 +143,12 @@ def check_files_exist(model: str,
 
         # Create a list of the unique combinations of "r*i?"
         ens_list = np.unique([file.split("_")[6] for file in glob.glob(start_year_pattern)])
+
+        # Print the list
+        print(f"Ensemble members: {ens_list}")
+
+        # Split the ens_list by "-"
+        ens_list = [ens.split("-")[1] for ens in ens_list]
 
         # Print the list
         print(f"Ensemble members: {ens_list}")
@@ -174,7 +180,7 @@ def check_files_exist(model: str,
                 assert len(file_path) == 1, "The file does not exist."
 
                 # Append the file to the list
-                files.append(file)
+                files.append(file_path[0])
 
         # Return the list
         return files
@@ -218,7 +224,7 @@ def main():
                               start_year = start_year,
                               end_year = end_year,
                               region = region,
-                              forecast_range = forecast_range)
+                              )
     
     # Print the files
     print(files)
