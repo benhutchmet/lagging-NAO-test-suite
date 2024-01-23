@@ -503,6 +503,7 @@ def remove_model_climatology(
         region: str,
         start_year: int,
         end_year: int,
+        base_dir: str = "/work/scratch-nopw2/benhutch/",
         output_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/",
 ) -> list:
     """
@@ -549,6 +550,10 @@ def remove_model_climatology(
         The end year of the forecast range.
         E.g. 2014
 
+    base_dir : str
+        The base directory in which the model data is stored.
+        E.g. '/work/scratch-nopw2/benhutch/'
+
     output_dir : str
         The directory in which to save the output files.
         E.g. '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/'
@@ -574,19 +579,29 @@ def remove_model_climatology(
     # Assert that the *.nc file is not empty
     assert os.path.getsize(climatology_path) > 0, "The file is empty."
 
+    # split the forecast range
+    forecast_range = forecast_range.split("-")
+
+    # Extract the start and end years
+    first_year = int(forecast_range[0])
+    last_year = int(forecast_range[1])
+
     # Load the climatology
     climatology = xr.open_dataset(climatology_path,
                                   chunks={"lat": 10, "lon": 10})
 
     # Set up the path to the files
     path = os.path.join(
-        output_dir, variable, model, region, forecast_range, season, "outputs"
+        base_dir, variable, model, region, forecast_range, season, "outputs"
     )
+
+    # Assert that the path exists
+    assert os.path.exists(path), "The path does not exist."
 
     # Verify that there are len(ens_list) files for each year
     for year in range(start_year, end_year + 1):
         # Form the pattern
-        pattern = f"{path}/*s{year}*_years_?-?.nc"
+        pattern = f"{path}/*s{year}*"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(pattern))
@@ -601,7 +616,7 @@ def remove_model_climatology(
         ), "The number of files does not match the number of ensemble members."
 
     # Verify that only the files for the years specified exist
-    files = glob.glob(f"{path}/*_years_?-?.nc")
+    files = glob.glob(f"{path}/*.nc")
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
@@ -615,7 +630,7 @@ def remove_model_climatology(
     # Loop over the files
     for file in tqdm.tqdm(files):
         # Load the file
-        ds = xr.open_dataset(file, chunks={"lat": 10, "lon": 10})
+        ds = xr.open_dataset(file, chunks={'time': 10, 'lat': 10, 'lon': 10})
 
         # Extract the base name
         base_name = os.path.basename(file)
@@ -643,7 +658,7 @@ def remove_model_climatology(
 
         # Create the file name
         # cut the final .nc and replace with _anoms.nc
-        filename = base_name[:-3] + "_anoms.nc"
+        filename = base_name[:-3] + f"years_{first_year}-{last_year}_anoms.nc"
 
         # Form the path
         full_path = os.path.join(path, filename)
