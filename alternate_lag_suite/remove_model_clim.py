@@ -495,6 +495,191 @@ def calculate_model_climatology(
 
     return output_path
 
+# Define a function which removes the climatology from the model data
+def remove_model_climatology(
+        climatology_path: str,
+        ens_list: list,
+        season: str,
+        forecast_range: str,
+        variable: str,
+        model: str,
+        region: str,
+        start_year: int,
+        end_year: int,
+        output_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/",
+) -> list:
+    """
+    Removes the model climatology from the model data.
+    NOTE: The climatology must be calculated before this function is called.
+    
+    Parameters:
+    
+    climatology_path : str
+        The path to the model climatology.
+        E.g. '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/
+        psl/BCC-CSM2-MR/global/2-9/DJFM/outputs/model_mean_state/
+        psl_BCC-CSM2-MR_global_DJFM_years_1961-2014_2-9.nc'
+        
+    ens_list : list
+        A list containing the ensemble members for which the model climatology
+        E.g. ["r1i1", "r2i1", "r3i1", "r4i1", "r5i1", "r6i1", "r7i1", "r8i1"]
+
+    season : str
+        The season to be used.
+        E.g. 'DJFM'
+
+    forecast_range : str
+        The forecast range to be used.
+        E.g. '2-9'
+
+    variable : str
+        The name of the variable to be used.
+        E.g. 'psl'
+
+    model : str
+        The name of the model to be used.
+        E.g. 'BCC-CSM2-MR'
+
+    region : str
+        The region to be used.
+        E.g. 'global'
+
+    start_year : int
+        The start year of the forecast range.
+        E.g. 1961
+
+    end_year : int
+        The end year of the forecast range.
+        E.g. 2014
+
+    output_dir : str
+        The directory in which to save the output files.
+        E.g. '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/'
+
+    Returns:
+
+    output_files: list
+        A list containing the paths to the output files.
+    """
+
+    # Set up the years
+    valid_years = [int(year) for year in range(start_year, end_year + 1)]
+
+    # form the path to the climatology
+    climatology_dir = os.path.join(
+        output_dir, variable, model, region, forecast_range, season, "outputs",
+        "model_mean_state"
+    )
+
+    # Assert that the directory exists
+    assert os.path.exists(climatology_dir), "The directory does not exist."
+
+    # Set up the file name for the climatology
+    climatology_fname = (f"{variable}_{model}_{region}_{season}"
+                            f"_years_{start_year}-{end_year}_{forecast_range}.nc")
+    
+    # Form the path
+    climatology_path = os.path.join(climatology_dir, climatology_fname)
+
+    # Assert that the file exists
+    assert os.path.exists(climatology_path), "The file does not exist."
+
+    # Assert that the *.nc file is not empty
+    assert os.path.getsize(climatology_path) > 0, "The file is empty."
+
+    # Load the climatology
+    climatology = xr.open_dataset(climatology_path,
+                                  chunks={"lat": 10, "lon": 10})
+
+    # Set up the path to the files
+    path = os.path.join(
+        output_dir, variable, model, region, forecast_range, season, "outputs"
+    )
+
+    # Verify that there are len(ens_list) files for each year
+    for year in range(start_year, end_year + 1):
+        # Form the pattern
+        pattern = f"{path}/*s{year}*"
+
+        # Find the len of the files which match the pattern
+        year_len = len(glob.glob(pattern))
+
+        # Print
+        print(f"Number of files for s{year}: {year_len}")
+
+        # Assert that the number of files is the same as the number of
+        # ensemble members
+        assert year_len == len(
+            ens_list
+        ), "The number of files does not match the number of ensemble members."
+
+    # Verify that only the files for the years specified exist
+    files = glob.glob(f"{path}/*.nc")
+
+    # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
+    # files
+    assert len(files) == len(ens_list) * len(
+        range(start_year, end_year + 1)
+    ), "The number of files does not match the number of ensemble members."
+
+    # Loop over the files
+    for file in tqdm.tqdm(files):
+        # Load the file
+        ds = xr.open_dataset(file, chunks={"lat": 10, "lon": 10})
+
+        # Extract the base name
+        base_name = os.path.basename(file)
+
+        # Extract the init year *e.g. s2018* from the file name
+        pattern = (base_name.split("_")[4])
+
+        # Print the pattern
+        print(f"Pattern: {pattern}")
+
+        # Extract the init year
+        init_year = int(pattern.split("-")[0][1:])
+
+        # Print the initialisation year
+        print(f"Initialisation year: {init_year}")
+
+        # Verify that this is one of the valid years
+        assert init_year in valid_years, "The initialisation year is not valid."
+
+        # Print the initialisation year
+        print(f"Initialisation year: {init_year}")
+
+        # Remove the climatology
+        ds = ds - climatology
+
+        # Create the file name
+        # cut the final .nc and replace with _anoms.nc
+        filename = base_name[:-3] + "_anoms.nc"
+
+        # Form the path
+        full_path = os.path.join(path, filename)
+
+        # If the file exists
+        if os.path.exists(full_path):
+            # Print
+            print(f"The file {filename} already exists.")
+
+            # Continue
+            continue
+
+        # Save the file
+        ds.to_netcdf(full_path)
+
+        # Remove the previous file
+        os.remove(file)
+
+        # Close the dataset
+        ds.close()
+
+    # Print
+    print("Finished.")
+
+    return files
+
 
 # Define a main function
 def main():
