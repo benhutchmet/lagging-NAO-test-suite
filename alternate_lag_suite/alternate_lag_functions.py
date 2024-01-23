@@ -510,6 +510,7 @@ def main():
         season=season,
         start_year=start_year,
         end_year=end_year,
+        forecast_range=forecast_range,
         region=region,
     )
 
