@@ -70,6 +70,10 @@ import iris
 import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
+# Import CDO
+from cdo import *
+cdo = Cdo()
+
 
 # Define a function to check whether all of the files exist
 def check_files_exist(
@@ -457,11 +461,26 @@ def calculate_model_climatology(
     # Print the paths
     print(paths)
 
-    # Open the files with xarray
-    ds = xr.open_mfdataset(paths, combine="by_coords")
+    # Form the output path
+    output_path = os.path.join(path, "model_mean_state",
+                                 f"{variable}_{model}_{region}_{season}"
+                                 f"_years_{start_year}-{end_year}_{forecast_range}.nc")
+    
+    # If the file exists
+    if os.path.exists(output_path):
+        # Print
+        print(f"The file {output_path} already exists.")
 
-    # Print the dataset
-    print(ds)
+        # Continue
+        return None
+    
+    # Calculate the model climatology
+    cdo.ensmean(input=paths, output=output_path)
+
+    # Print
+    print("Finished.")
+    print(f"Output path: {output_path} for {variable} {model} {region} {season} "
+          f"years {start_year}-{end_year} {forecast_range}.")
 
     return None
 
