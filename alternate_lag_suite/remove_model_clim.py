@@ -433,7 +433,7 @@ def calculate_model_climatology(
     # Verify that there are len(ens_list) files for each year
     for year in range(start_year, end_year + 1):
         # Form the pattern
-        pattern = f"{path}/*s{year}*_years_{start_year}-{end_year}.nc"
+        pattern = f"{path}/*s{year}*_years_?-?.nc"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(pattern))
@@ -448,7 +448,7 @@ def calculate_model_climatology(
         ), "The number of files does not match the number of ensemble members."
 
     # Verify that only the files for the years specified exist
-    files = glob.glob(f"{path}/*.nc")
+    files = glob.glob(f"{path}/*_years_?-?.nc")
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
@@ -478,6 +478,9 @@ def calculate_model_climatology(
 
         # Continue
         return output_path
+    
+    # Set up the paths
+    paths = os.path.join(path, "*_years_?-?.nc")
     
     # Calculate the model climatology
     cdo.ensmean(input=paths, output=output_path)
@@ -583,7 +586,7 @@ def remove_model_climatology(
     # Verify that there are len(ens_list) files for each year
     for year in range(start_year, end_year + 1):
         # Form the pattern
-        pattern = f"{path}/*s{year}*_years_{start_year}-{end_year}.nc"
+        pattern = f"{path}/*s{year}*_years_?-?.nc"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(pattern))
@@ -598,7 +601,7 @@ def remove_model_climatology(
         ), "The number of files does not match the number of ensemble members."
 
     # Verify that only the files for the years specified exist
-    files = glob.glob(f"{path}/*_years_{start_year}-{end_year}.nc")
+    files = glob.glob(f"{path}/*_years_?-?.nc")
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
