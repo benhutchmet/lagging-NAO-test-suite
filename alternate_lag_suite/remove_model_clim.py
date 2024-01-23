@@ -255,7 +255,9 @@ def extract_model_years(
 
     Returns:
 
-    None
+    ens_list : list
+        A list containing the ensemble members for which the model climatology
+        E.g. ["r1i1", "r2i1", "r3i1", "r4i1", "r5i1", "r6i1", "r7i1", "r8i1"]
 
     """
 
@@ -271,19 +273,15 @@ def extract_model_years(
 
     # Form the path
     path = os.path.join(
-        output_dir,
-        variable,
-        model,
-        region,
-        forecast_range,
-        season,
-        "outputs")
+        output_dir, variable, model, region, forecast_range, season, "outputs"
+    )
 
     # Extract the forecast range
     forecast_range = forecast_range.split("-")
 
     # Extract the start and end years
-    start_year = int(forecast_range[0]) ; end_year = int(forecast_range[1])
+    start_year = int(forecast_range[0])
+    end_year = int(forecast_range[1])
 
     # Print the start and end years
     print(f"Start year: {start_year}")
@@ -291,7 +289,7 @@ def extract_model_years(
 
     # Print the list
     print(f"Ensemble members: {ens_list}")
-    
+
     # Print the path
     print(f"Path: {path}")
 
@@ -299,7 +297,6 @@ def extract_model_years(
     if not os.path.exists(path):
         # Create the directory
         os.makedirs(path)
-
 
     # for each file
     for file in tqdm.tqdm(files):
@@ -355,13 +352,119 @@ def extract_model_years(
     # Print
     print("Finished.")
 
-    return None
+    return ens_list
+
 
 # TODO: write a function for calculating the model climatology
 # Probably easiest to do this using CDO in python
 def calculate_model_climatology(
-        
+    ens_list: list,
+    season: str,
+    forecast_range: str,
+    variable: str,
+    model: str,
+    region: str,
+    start_year: int,
+    end_year: int,
+    output_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/",
 ) -> None:
+    """
+    Calculates the model climatology for a given set of files.
+
+    Parameters:
+
+    ens_list : list
+        A list containing the ensemble members for which the model climatology
+
+    season : str
+        The season to be used.
+        E.g. 'DJFM'
+
+    forecast_range : str
+        The forecast range to be used.
+        E.g. '2-9'
+
+    variable : str
+        The name of the variable to be used.
+        E.g. 'psl'
+
+    model : str
+        The name of the model to be used.
+        E.g. 'BCC-CSM2-MR'
+
+    region : str
+        The region to be used.
+        E.g. 'global'
+
+    start_year : int
+        The start year of the forecast range.
+        E.g. 1961
+
+    end_year : int
+        The end year of the forecast range.
+        E.g. 2014
+
+    output_dir : str
+        The directory in which to save the output files.
+        E.g. '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/'
+
+    Returns:
+
+    None
+
+    """
+
+    # Assert that the directory exists
+    assert os.path.exists(output_dir), "The directory does not exist."
+
+    # Set up the path to the files
+    path = os.path.join(
+        output_dir, variable, model, region, forecast_range, season, "outputs"
+    )
+
+    # Assert that the path exists
+    assert os.path.exists(path), "The path does not exist."
+
+    # Verify that there are len(ens_list) files for each year
+    for year in range(start_year, end_year + 1):
+        # Form the pattern
+        pattern = f"{path}/*s{year}*"
+
+        # Find the len of the files which match the pattern
+        year_len = len(glob.glob(pattern))
+
+        # Print
+        print(f"Number of files for s{year}: {year_len}")
+
+        # Assert that the number of files is the same as the number of
+        # ensemble members
+        assert year_len == len(
+            ens_list
+        ), "The number of files does not match the number of ensemble members."
+
+    # Verify that only the files for the years specified exist
+    files = glob.glob(f"{path}/*.nc")
+
+    # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
+    # files
+    assert len(files) == len(ens_list) * len(
+        range(start_year, end_year + 1)
+    ), "The number of files does not match the number of ensemble members."
+
+    # Form the paths
+    paths = f"{path}/*.nc"
+
+    # Print the paths
+    print(paths)
+
+    # Open the files with xarray
+    ds = xr.open_mfdataset(paths, combine="by_coords")
+
+    # Print the dataset
+    print(ds)
+
+    return None
+
 
 # Define a main function
 def main():
@@ -414,8 +517,23 @@ def main():
     print(files)
 
     # Test the function
-    extract_model_years(
+    ens_list = extract_model_years(
         files=files,
+        season=season,
+        forecast_range=forecast_range,
+        variable=variable,
+        model=model,
+        region=region,
+        start_year=start_year,
+        end_year=end_year,
+    )
+
+    # Print the list
+    print(ens_list)
+
+    # Test the function
+    calculate_model_climatology(
+        ens_list=ens_list,
         season=season,
         forecast_range=forecast_range,
         variable=variable,
@@ -427,6 +545,7 @@ def main():
 
     # Print
     print("Finished.")
+
 
 # Define behaviour when called from command line
 if __name__ == "__main__":
