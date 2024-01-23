@@ -333,6 +333,14 @@ def extract_model_years(
         # Form the path
         full_path = os.path.join(path, filename)
 
+        # If the file exists
+        if os.path.exists(full_path):
+            # Print
+            print(f"The file {filename} already exists.")
+
+            # Continue
+            continue
+
         # Save the file
         ds.to_netcdf(full_path)
 
