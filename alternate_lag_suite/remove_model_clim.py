@@ -662,8 +662,8 @@ def remove_model_climatology(
         # Append the file to the list
         output_files.append(full_path)
 
-        # Remove the previous file
-        os.remove(file)
+        # # Remove the previous file
+        # os.remove(file)
 
         # Close the dataset
         ds.close()
