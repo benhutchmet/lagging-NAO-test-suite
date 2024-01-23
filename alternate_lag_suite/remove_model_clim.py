@@ -657,7 +657,7 @@ def remove_model_climatology(
             print(f"Deleting anoms file: {filename}")
 
             # Remove the file
-            os.remove(filename)
+            os.remove(full_path)
 
         # Save the file
         ds.to_netcdf(full_path)

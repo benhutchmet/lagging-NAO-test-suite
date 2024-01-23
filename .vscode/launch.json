@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Python: Debug clim script",
             "type": "python",
@@ -19,6 +20,24 @@
                 "1970", // test case with loading fewer files
                 "global",
                 "2-5"
+            ]
+        }
+
+        {
+            "name": "Python: Debug alt lag script",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/alternate_lag_functions.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "psl",
+                "DJFM",
+                "global",
+                "1960",
+                "1980", // test case with loading fewer files
+                "2-5",
+                "4" // lag
             ]
         }
     ]
