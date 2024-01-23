@@ -188,13 +188,10 @@ def load_data(
         # Load in the file
         data = xr.open_dataset(file_path, chunks={"time": 10, "lat": 10, "lon": 10})
 
-        # Print the model and the length of time
-        print(f"{model}: {len(data.time.dt.year)} years")
-
-        # Assert that the length of time is correct - i.e. 11 years
+        # Assert that the model only has lon and lat dimensions
         assert (
-            len(data.time.dt.year) == no_forecast_years
-        ), f"{model} has incorrect length of time."
+            len(data.dims) == 2
+        ), f"{model} has more than two dimensions. Check the file: {file_path}"
 
     # Initialise total nens
     total_nens = 0
@@ -237,7 +234,7 @@ def load_data(
     nlons = data.lon.shape[0]
 
     # Initialise the data array
-    data = np.zeros([len(years), total_nens, no_forecast_years, nlats, nlons])
+    data = np.zeros([len(years), total_nens, nlats, nlons])
 
     # print the shape of the data array
     print(f"Shape of data array: {data.shape}")
