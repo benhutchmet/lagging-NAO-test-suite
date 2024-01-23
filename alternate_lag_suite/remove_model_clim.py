@@ -72,7 +72,8 @@ from iris.time import PartialDateTime
 
 # Import CDO
 from cdo import *
-cdo = Cdo()
+
+# cdo = Cdo()
 
 
 # Define a function to check whether all of the files exist
@@ -463,14 +464,16 @@ def calculate_model_climatology(
     if not os.path.exists(output_dir):
         # Create the directory
         os.makedirs(output_dir)
-                               
+
     # Set the output filename
-    output_fname = (f"{variable}_{model}_{region}_{season}"
-                    f"_years_{start_year}-{end_year}_{forecast_range}.nc")
+    output_fname = (
+        f"{variable}_{model}_{region}_{season}"
+        f"_years_{start_year}-{end_year}_{forecast_range}.nc"
+    )
 
     # Form the output path
     output_path = os.path.join(output_dir, output_fname)
-    
+
     # If the file exists
     if os.path.exists(output_path):
         # Print
@@ -478,46 +481,49 @@ def calculate_model_climatology(
 
         # Continue
         return output_path
-    
+
     # Set up the paths
     paths = os.path.join(path, "*_years_?-?.nc")
-    
+
     # Calculate the model climatology
     cdo.ensmean(input=paths, output=output_path)
 
     # Print
     print("Finished.")
-    print(f"Output path: {output_path} for {variable} {model} {region} {season} "
-          f"years {start_year}-{end_year} {forecast_range}.")
+    print(
+        f"Output path: {output_path} for {variable} {model} {region} {season} "
+        f"years {start_year}-{end_year} {forecast_range}."
+    )
 
     return output_path
 
+
 # Define a function which removes the climatology from the model data
 def remove_model_climatology(
-        climatology_path: str,
-        ens_list: list,
-        season: str,
-        forecast_range: str,
-        variable: str,
-        model: str,
-        region: str,
-        start_year: int,
-        end_year: int,
-        base_dir: str = "/work/scratch-nopw2/benhutch/",
-        output_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/",
+    climatology_path: str,
+    ens_list: list,
+    season: str,
+    forecast_range: str,
+    variable: str,
+    model: str,
+    region: str,
+    start_year: int,
+    end_year: int,
+    base_dir: str = "/work/scratch-nopw2/benhutch/",
+    output_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/",
 ) -> list:
     """
     Removes the model climatology from the model data.
     NOTE: The climatology must be calculated before this function is called.
-    
+
     Parameters:
-    
+
     climatology_path : str
         The path to the model climatology.
         E.g. '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/
         psl/BCC-CSM2-MR/global/2-9/DJFM/outputs/model_mean_state/
         psl_BCC-CSM2-MR_global_DJFM_years_1961-2014_2-9.nc'
-        
+
     ens_list : list
         A list containing the ensemble members for which the model climatology
         E.g. ["r1i1", "r2i1", "r3i1", "r4i1", "r5i1", "r6i1", "r7i1", "r8i1"]
@@ -579,20 +585,22 @@ def remove_model_climatology(
     # Assert that the *.nc file is not empty
     assert os.path.getsize(climatology_path) > 0, "The file is empty."
 
+    # Create a copy of the forecast range
+    forecast_range_copy = forecast_range
+
     # split the forecast range
-    forecast_range = forecast_range.split("-")
+    forecast_range_copy = forecast_range_copy.split("-")
 
     # Extract the start and end years
-    first_year = int(forecast_range[0])
-    last_year = int(forecast_range[1])
+    first_year = int(forecast_range_copy[0])
+    last_year = int(forecast_range_copy[1])
 
     # Load the climatology
-    climatology = xr.open_dataset(climatology_path,
-                                  chunks={"lat": 10, "lon": 10})
+    climatology = xr.open_dataset(climatology_path, chunks={"lat": 10, "lon": 10})
 
     # Set up the path to the files
     path = os.path.join(
-        base_dir, variable, model, region, forecast_range, season, "outputs"
+        base_dir, variable, model, region, "all_forecast_years", season, "outputs"
     )
 
     # Assert that the path exists
@@ -615,8 +623,16 @@ def remove_model_climatology(
             ens_list
         ), "The number of files does not match the number of ensemble members."
 
-    # Verify that only the files for the years specified exist
-    files = glob.glob(f"{path}/*.nc")
+    # Set up an empty list of files
+    files = []
+
+    # Loop over the forecast years
+    for year in range(start_year, end_year + 1):
+        # Find the files for the year
+        year_pattern = f"{path}/*s{year}*"
+
+        # Append the files to the list
+        files.extend(glob.glob(year_pattern))
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
@@ -630,13 +646,13 @@ def remove_model_climatology(
     # Loop over the files
     for file in tqdm.tqdm(files):
         # Load the file
-        ds = xr.open_dataset(file, chunks={'time': 10, 'lat': 10, 'lon': 10})
+        ds = xr.open_dataset(file, chunks={"time": 10, "lat": 10, "lon": 10})
 
         # Extract the base name
         base_name = os.path.basename(file)
 
         # Extract the init year *e.g. s2018* from the file name
-        pattern = (base_name.split("_")[4])
+        pattern = base_name.split("_")[4]
 
         # Print the pattern
         print(f"Pattern: {pattern}")
@@ -658,10 +674,23 @@ def remove_model_climatology(
 
         # Create the file name
         # cut the final .nc and replace with _anoms.nc
-        filename = base_name[:-3] + f"years_{first_year}-{last_year}_anoms.nc"
+        filename = base_name[:-3] + f"_years_{first_year}-{last_year}_anoms.nc"
 
         # Form the path
-        full_path = os.path.join(path, filename)
+        # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-5/DJFM/outputs
+        full_path = os.path.join(
+            output_dir,
+            variable,
+            model,
+            region,
+            forecast_range,
+            season,
+            "outputs",
+            filename,
+        )
+
+        # Print the climatology filename
+        print(f"Removing climatology: {climatology_path}")
 
         # If the file exists
         if os.path.exists(full_path):
