@@ -324,8 +324,12 @@ def extract_model_years(
         # Extract the years
         ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
 
+        # Take the time mean
+        ds = ds.mean(dim="time")
+
         # Print the years
         print(f"First year: {first_year}")
+        print(f"Last year: {last_year}")
 
         # Create the file name
         # cut the final .nc and replace with _years_2-9.nc
