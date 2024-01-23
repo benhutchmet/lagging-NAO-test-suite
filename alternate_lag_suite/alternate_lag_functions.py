@@ -503,6 +503,10 @@ def main():
     else:
         raise ValueError("variable not recognised")
 
+
+    # Define a test models list
+    models_list = [ "HadGEM3-GC31-MM" ]
+
     # Run the function to load the data
     data = load_data(
         variable=variable,
