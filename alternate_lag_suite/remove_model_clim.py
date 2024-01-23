@@ -462,9 +462,19 @@ def calculate_model_climatology(
     print(paths)
 
     # Form the output path
-    output_path = os.path.join(path, "model_mean_state",
-                                 f"{variable}_{model}_{region}_{season}"
-                                 f"_years_{start_year}-{end_year}_{forecast_range}.nc")
+    output_dir = os.path.join(path, "model_mean_state")
+
+    # If the directory does not exist
+    if not os.path.exists(output_dir):
+        # Create the directory
+        os.makedirs(output_dir)
+                               
+    # Set the output filename
+    output_fname = (f"{variable}_{model}_{region}_{season}"
+                    f"_years_{start_year}-{end_year}_{forecast_range}.nc")
+
+    # Form the output path
+    output_path = os.path.join(output_dir, output_fname)
     
     # If the file exists
     if os.path.exists(output_path):
