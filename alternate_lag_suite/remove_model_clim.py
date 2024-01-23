@@ -566,20 +566,10 @@ def remove_model_climatology(
     valid_years = [int(year) for year in range(start_year, end_year + 1)]
 
     # form the path to the climatology
-    climatology_dir = os.path.join(
-        output_dir, variable, model, region, forecast_range, season, "outputs",
-        "model_mean_state"
-    )
+    climatology_dir = os.path.dirname(climatology_path)
 
     # Assert that the directory exists
     assert os.path.exists(climatology_dir), "The directory does not exist."
-
-    # Set up the file name for the climatology
-    climatology_fname = (f"{variable}_{model}_{region}_{season}"
-                            f"_years_{start_year}-{end_year}_{forecast_range}.nc")
-    
-    # Form the path
-    climatology_path = os.path.join(climatology_dir, climatology_fname)
 
     # Assert that the file exists
     assert os.path.exists(climatology_path), "The file does not exist."
@@ -621,6 +611,9 @@ def remove_model_climatology(
     assert len(files) == len(ens_list) * len(
         range(start_year, end_year + 1)
     ), "The number of files does not match the number of ensemble members."
+
+    # Initialise a list to store the paths to the output files
+    output_files = []
 
     # Loop over the files
     for file in tqdm.tqdm(files):
@@ -669,16 +662,22 @@ def remove_model_climatology(
         # Save the file
         ds.to_netcdf(full_path)
 
+        # Append the file to the list
+        output_files.append(full_path)
+
         # Remove the previous file
         os.remove(file)
 
         # Close the dataset
         ds.close()
 
+    # Print the output files
+    print(output_files)
+
     # Print
     print("Finished.")
 
-    return files
+    return output_files
 
 
 # Define a main function
@@ -747,7 +746,20 @@ def main():
     print(ens_list)
 
     # Test the function
-    calculate_model_climatology(
+    output_path = calculate_model_climatology(
+        ens_list=ens_list,
+        season=season,
+        forecast_range=forecast_range,
+        variable=variable,
+        model=model,
+        region=region,
+        start_year=start_year,
+        end_year=end_year,
+    )
+
+    # Test the function
+    output_files = remove_model_climatology(
+        climatology_path=output_path,
         ens_list=ens_list,
         season=season,
         forecast_range=forecast_range,
