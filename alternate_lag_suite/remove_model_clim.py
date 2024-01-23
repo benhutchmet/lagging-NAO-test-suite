@@ -305,7 +305,7 @@ def extract_model_years(
     # for each file
     for file in tqdm.tqdm(files):
         # Load the file
-        ds = xr.open_dataset(file)
+        ds = xr.open_dataset(file, chunks={"time": 10, "lat": 10, "lon": 10})
 
         # Extract the base name
         base_name = os.path.basename(file)
@@ -433,7 +433,7 @@ def calculate_model_climatology(
     # Verify that there are len(ens_list) files for each year
     for year in range(start_year, end_year + 1):
         # Form the pattern
-        pattern = f"{path}/*s{year}*"
+        pattern = f"{path}/*s{year}*_years_{start_year}-{end_year}.nc"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(pattern))
@@ -455,12 +455,6 @@ def calculate_model_climatology(
     assert len(files) == len(ens_list) * len(
         range(start_year, end_year + 1)
     ), "The number of files does not match the number of ensemble members."
-
-    # Form the paths
-    paths = f"{path}/*.nc"
-
-    # Print the paths
-    print(paths)
 
     # Form the output path
     output_dir = os.path.join(path, "model_mean_state")
@@ -589,7 +583,7 @@ def remove_model_climatology(
     # Verify that there are len(ens_list) files for each year
     for year in range(start_year, end_year + 1):
         # Form the pattern
-        pattern = f"{path}/*s{year}*"
+        pattern = f"{path}/*s{year}*_years_{start_year}-{end_year}.nc"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(pattern))
@@ -604,7 +598,7 @@ def remove_model_climatology(
         ), "The number of files does not match the number of ensemble members."
 
     # Verify that only the files for the years specified exist
-    files = glob.glob(f"{path}/*.nc")
+    files = glob.glob(f"{path}/*_years_{start_year}-{end_year}.nc")
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
@@ -656,8 +650,11 @@ def remove_model_climatology(
             # Print
             print(f"The file {filename} already exists.")
 
-            # Continue
-            continue
+            # Print that we are deleting the file
+            print(f"Deleting anoms file: {filename}")
+
+            # Remove the file
+            os.remove(filename)
 
         # Save the file
         ds.to_netcdf(full_path)
