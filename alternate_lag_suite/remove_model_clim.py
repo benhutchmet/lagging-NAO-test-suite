@@ -198,6 +198,7 @@ def check_files_exist(
 
 
 # Define a function to calculate and remove the model climatology
+# TODO: Would this function be different for JJA/MAM/SON?
 def extract_model_years(
     files: list,
     season: str,
@@ -351,6 +352,12 @@ def extract_model_years(
     print("Finished.")
 
     return None
+
+# TODO: write a function for calculating the model climatology
+# Probably easiest to do this using CDO in python
+def calculate_model_climatology(
+        
+) -> None:
 
 # Define a main function
 def main():
