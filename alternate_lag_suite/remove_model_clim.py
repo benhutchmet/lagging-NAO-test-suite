@@ -414,7 +414,8 @@ def calculate_model_climatology(
 
     Returns:
 
-    None
+    output_path : str
+        The path to the output file.
 
     """
 
@@ -482,7 +483,7 @@ def calculate_model_climatology(
         print(f"The file {output_path} already exists.")
 
         # Continue
-        return None
+        return output_path
     
     # Calculate the model climatology
     cdo.ensmean(input=paths, output=output_path)
@@ -492,7 +493,7 @@ def calculate_model_climatology(
     print(f"Output path: {output_path} for {variable} {model} {region} {season} "
           f"years {start_year}-{end_year} {forecast_range}.")
 
-    return None
+    return output_path
 
 
 # Define a main function
