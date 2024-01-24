@@ -74,6 +74,12 @@ from iris.time import PartialDateTime
 from cdo import *
 cdo = Cdo()
 
+# Import local modules
+sys.path.append("/home/users/benhutch/skill-maps")
+
+# Import dictionaries
+import dictionaries as dicts
+
 
 # Define a function to check whether all of the files exist
 def check_files_exist(
@@ -750,6 +756,37 @@ def main():
     end_year = int(args.end_year)
     region = args.region
     forecast_range = args.forecast_range
+
+    # Extract the models for the given variable
+    if variable == "tas":
+        models_list = dicts.tas_models
+    elif variable == "sfcWind":
+        models_list = dicts.sfcWind_models
+    elif variable == "psl":
+        models_list = dicts.psl_models
+    elif variable == "rsds":
+        models_list = dicts.rsds_models
+    else:
+        raise ValueError("variable not recognised")
+
+    # If the model is an integer
+    if isinstance(model, int):
+        # Print
+        print("The model is an integer.")
+        print(f"Model index: {model}")
+        print("Extracting this model")
+
+        # Verify that the length of the models_list is greater than the model
+        if len(models_list) < model:
+            # Raise an error
+            print(f"The model index is not valid for variable {variable}.")
+        else:
+            # Extract the model
+            model = models_list[model - 1]
+
+    # Print the model
+    print(f"Model: {model}")
+
 
     # Print the arguments
     print(f"Model: {model}")
