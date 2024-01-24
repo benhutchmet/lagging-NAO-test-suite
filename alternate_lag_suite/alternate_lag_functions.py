@@ -190,7 +190,7 @@ def load_data(
 
         # Assert that the model only has lon and lat dimensions
         assert (
-            len(data.dims) == 2
+            len(data.dims) == 3
         ), f"{model} has more than two dimensions. Check the file: {file_path}"
 
         # Assert that the length of time is equal to the number of forecast years
@@ -210,7 +210,7 @@ def load_data(
         file_list = files_dict[model][0]
 
         # Find all of the unique combinations of r and i
-        ens_list_pattern = np.unique([file.split("_")[6] for file in file_list])
+        ens_list_pattern = np.unique([file.split("_")[4] for file in file_list])
 
         # Split by "-" and find all of the unique combinations of r and i
         ens_list = np.unique([ens.split("-")[1] for ens in ens_list_pattern])
@@ -232,17 +232,17 @@ def load_data(
     print(f"Total number of ensemble members: {total_nens}")
 
     # Print the ensemble members for the models
-    print("Ensemble members for EC-Earth3: ", nens_dict["EC-Earth3"])
+    print("Ensemble members for EC-Earth3: ", nens_dict["HadGEM3-GC31-MM"])
 
     # Extract the lats and lons
     nlats = data.lat.shape[0]
     nlons = data.lon.shape[0]
 
     # Initialise the data array
-    data = np.zeros([len(years), total_nens, no_forecast_years, nlats, nlons])
+    data_arr = np.zeros([len(years), total_nens, no_forecast_years, nlats, nlons])
 
     # print the shape of the data array
-    print(f"Shape of data array: {data.shape}")
+    print(f"Shape of data array: {data_arr.shape}")
 
     # Initialise a counter for the ensemble members
     ens_counter = 0
@@ -307,17 +307,17 @@ def load_data(
                 print("Appending i1 to index ", ens_counter + j)
 
                 # Store the data in the array
-                data[i, ens_counter + j, :, :, :] = data
+                data_arr[i, ens_counter + j, :, :, :] = data
 
         # Increment the ensemble counter with the number of ensemble members
         # For the model
-        ens_counter += nens_dict[model]
+        ens_counter += len(nens_dict[model])
 
     # Print the shape of the data array
-    print("Shape of data array: ", data.shape)
+    print("Shape of data array: ", data_arr.shape)
 
     # Return the data array
-    return data
+    return data_arr
 
 
 # Write a function to calculate the lagged correlation
@@ -406,8 +406,8 @@ def alternate_lag(
 
                 # print the years which we are taking the mean over
                 print("start year: ", start_year + j, " end year: ", end_year + j)
-                # print(f"starting at index {start_year + j - 1}"
-                #       f"stoppping at index {end_year + j}")
+                print(f"starting at index {start_year + j - 1}"
+                      f"stoppping at index {end_year + j}")
 
                 # Take the mean over the forecast years
                 ensemble_member_data_mean = np.mean(
@@ -540,8 +540,11 @@ def main():
         lag=lag,
     )
 
+    # Set up the lag start year
+    lag_start_year = start_year + lag - 1
+
     # Set up the filename for saving the array
-    filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
+    filename = f"{variable}_{season}_{region}_{lag_start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
 
     # Set up the full path for saving the array
     save_path = os.path.join(save_dir, filename)
