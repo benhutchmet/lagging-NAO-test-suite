@@ -13,10 +13,10 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "HadGEM3-GC31-MM",
+                "10",
                 "psl",
                 "DJFM",
-                "1960",
+                "1961",
                 "1980", // test case with loading fewer files
                 "global",
                 "2-5"

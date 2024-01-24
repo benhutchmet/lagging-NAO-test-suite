@@ -72,7 +72,7 @@ from iris.time import PartialDateTime
 
 # Import CDO
 from cdo import *
-cdo = Cdo()
+# cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/skill-maps")
@@ -769,10 +769,13 @@ def main():
     else:
         raise ValueError("variable not recognised")
 
-    # If the model is an integer
-    if isinstance(model, int):
-        # Print
+    # if the model is a string containing an integer
+    if model.isdigit():
         print("The model is an integer.")
+
+        # Convert the model to an integer
+        model = int(model)
+
         print(f"Model index: {model}")
         print("Extracting this model")
 
