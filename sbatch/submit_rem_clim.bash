@@ -2,8 +2,6 @@
 #SBATCH --partition=high-mem
 #SBATCH --mem=50000
 #SBATCH --time=60:00
-#SBATCH --array=1-12
-# TODO: Submit this as an array job for the 12 different models
 
 # Check the number of command line arguments
 if [ "$#" -ne 7 ]; then
