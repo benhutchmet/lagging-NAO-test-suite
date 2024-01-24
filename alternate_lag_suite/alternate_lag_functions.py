@@ -193,6 +193,11 @@ def load_data(
             len(data.dims) == 2
         ), f"{model} has more than two dimensions. Check the file: {file_path}"
 
+        # Assert that the length of time is equal to the number of forecast years
+        assert (
+            len(data.time) == no_forecast_years
+        ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
+
     # Initialise total nens
     total_nens = 0
 
@@ -234,7 +239,7 @@ def load_data(
     nlons = data.lon.shape[0]
 
     # Initialise the data array
-    data = np.zeros([len(years), total_nens, nlats, nlons])
+    data = np.zeros([len(years), total_nens, no_forecast_years, nlats, nlons])
 
     # print the shape of the data array
     print(f"Shape of data array: {data.shape}")
