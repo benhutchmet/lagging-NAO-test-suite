@@ -72,8 +72,7 @@ from iris.time import PartialDateTime
 
 # Import CDO
 from cdo import *
-
-# cdo = Cdo()
+cdo = Cdo()
 
 
 # Define a function to check whether all of the files exist
