@@ -1,0 +1,1 @@
+sbatch --partition=high-mem --mem=50000 --time=00:30:00 /home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/remove_model_clim.py "HadGEM3-GC31-MM" "psl" "DJFM" "1960" "2018" "global" "2-5"
