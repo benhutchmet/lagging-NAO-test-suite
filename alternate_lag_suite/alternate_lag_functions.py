@@ -142,6 +142,9 @@ def load_data(
         With shape (years, total nens, forecast_years, lats, lons).
     """
 
+    # Hard code full forecast range
+    full_forecast_years = 11
+
     # Generate the years array
     years = np.arange(start_year, end_year + 1)
 
@@ -167,7 +170,7 @@ def load_data(
         file_path_list = [
             os.path.join(dir_path, file)
             for file in os.listdir(dir_path)
-            if file.endswith(f"*_start_{start_year}_end_{end_year}_anoms.nc")
+            if file.endswith(f"_start_{start_year}_end_{end_year}_anoms.nc")
         ]
 
         # Append the list of files to the dictionary
@@ -196,7 +199,7 @@ def load_data(
 
         # Assert that the length of time is equal to the number of forecast years
         assert (
-            len(data.time) == no_forecast_years
+            len(data.time) == full_forecast_years
         ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
 
     # Initialise total nens
@@ -311,8 +314,11 @@ def load_data(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
 
+                # Set up the final_init_year
+                final_init_year = init_year + no_forecast_years - 1
+
                 # Constrain the data from init-year-01-01 to init-year+10-12-31
-                data = data.sel(time=slice(f"{init_year}-01-01", f"{init_year+10}-12-31"))
+                data = data.sel(time=slice(f"{init_year}-01-01", f"{final_init_year}-12-30"))
 
                 # Extract the data for the variable
                 data = data[variable]
@@ -534,6 +540,7 @@ def main():
         end_year=end_year,
         forecast_range=forecast_range,
         region=region,
+        no_forecast_years=10,
     )
 
     # Extract the current time

@@ -19,3 +19,6 @@ saved_arrays/*.npy
 # Ignore any of the output or error files in logs
 logs/*.out
 logs/*.err
+
+# Ignore the launch files
+.vscode/launch.json
