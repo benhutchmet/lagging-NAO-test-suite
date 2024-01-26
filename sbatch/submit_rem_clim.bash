@@ -6,6 +6,8 @@
 #SBATCH --array=1
 #SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/logs/rem-clim-%A_%a.out
 #SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/logs/rem-clim-%A_%a.err
+#SBATCH --mail-user=benwhutchins25@gmail.com
+#SBATCH --mail-type=BEGIN,END,FAIL,ARRAY_TASKS
 
 # Check the number of command line arguments
 if [ "$#" -ne 6 ]; then

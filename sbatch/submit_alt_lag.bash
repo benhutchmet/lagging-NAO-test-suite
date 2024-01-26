@@ -5,6 +5,8 @@
 #SBATCH --time=60:00
 #SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/logs/alt-lag-%A_%a.out
 #SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/logs/alt-lag-%A_%a.err
+#SBATCH --mail-user=benwhutchins25@gmail.com
+#SBATCH --mail-type=BEGIN,END,FAIL
 
 # Set up the usage message
 USAGE_MSG="Usage: ${variable} ${season} ${region} ${start_year} ${end_year} ${forecast_range} ${lag}"
