@@ -92,7 +92,7 @@ def load_data(
     forecast_range: str = "all_forecast_years",
     region: str = "global",
     base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
-    no_forecast_years: int = 11,
+    no_forecast_years: int = 10,
 ):
     """
     Functions which loads the processed full period data into an array of shape
@@ -132,7 +132,7 @@ def load_data(
 
     no_forecast_years: int
         The number of forecast years to load.
-        Default is 11.
+        Default is 10.
 
     Output:
     -------
@@ -163,10 +163,11 @@ def load_data(
 
         # Get the full path of each file in the directory
         # Only want to import the anoms files
+        # all-years-DJFM-global-psl_Amon_NorCPM1_dcppA-hindcast_s1961-r1i1p1f1_gn_196110-197112_years_2-5_start_1961_end_2014_anoms.nc
         file_path_list = [
             os.path.join(dir_path, file)
             for file in os.listdir(dir_path)
-            if file.endswith("_anoms.nc")
+            if file.endswith(f"*_start_{start_year}_end_{end_year}_anoms.nc")
         ]
 
         # Append the list of files to the dictionary
@@ -293,10 +294,25 @@ def load_data(
                     if f"s{year}" in file and f"{ens_member}" in file
                 ][0]
 
+                # Extract the base file name
+                base_file = os.path.basename(file)
+
+                # Extract the init year e.g. "s1961" from the file name
+                init_year_pattern = base_file.split("_")[4]
+
+                # Print the init year pattern
+                print("init_year_pattern: ", init_year_pattern)
+
+                # Extract the init year e.g. "1961" from the init year pattern
+                init_year = int(init_year_pattern.split("-")[0][1:])
+
                 # Load the file using xarray
                 data = xr.open_dataset(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
+
+                # Constrain the data from init-year-01-01 to init-year+10-12-31
+                data = data.sel(time=slice(f"{init_year}-01-01", f"{init_year+10}-12-31"))
 
                 # Extract the data for the variable
                 data = data[variable]
