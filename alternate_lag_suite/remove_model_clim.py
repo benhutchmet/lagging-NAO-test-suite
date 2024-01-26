@@ -774,16 +774,16 @@ def remove_model_climatology(
         # Print the climatology filename
         print(f"Removing climatology: {climatology_path}")
 
-        # If the file exists
-        if os.path.exists(full_path):
-            # Print
-            print(f"The file {filename} already exists.")
+        # # If the file exists
+        # if os.path.exists(full_path):
+        #     # Print
+        #     print(f"The file {filename} already exists.")
 
-            # Print that we are deleting the file
-            print(f"Deleting anoms file: {filename}")
+        #     # Print that we are deleting the file
+        #     print(f"Deleting anoms file: {filename}")
 
-            # Remove the file
-            os.remove(full_path)
+        #     # Remove the file
+        #     os.remove(full_path)
 
         # Save the file
         ds.to_netcdf(full_path)
