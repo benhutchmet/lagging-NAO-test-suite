@@ -528,8 +528,9 @@ def main():
         raise ValueError("variable not recognised")
 
 
+    #FIXME: Remove this
     # Define a test models list
-    models_list = [ "HadGEM3-GC31-MM" ]
+    models_list = dicts.psl_models_noCan
 
     # Run the function to load the data
     data = load_data(
