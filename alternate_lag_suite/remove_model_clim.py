@@ -350,6 +350,26 @@ def extract_model_years(
             # Print
             print(f"The file {filename} already exists.")
 
+            # Find the size of the file
+            size = os.path.getsize(full_path)
+
+            # If the size is less than 1000 bytes
+            if size < 1000:
+                # Print that we are deleting the file
+                print(f"Deleting empty file: {filename}")
+
+                # Remove the file
+                os.remove(full_path)
+
+                # Save the file
+                ds.to_netcdf(full_path)
+
+                # Close the dataset
+                ds.close()
+
+                # Continue
+                continue
+
             # Continue
             continue
 
