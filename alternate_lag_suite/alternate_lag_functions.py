@@ -183,8 +183,6 @@ def load_data(
         file = files_dict[model][0][0]
 
         # Modify the file path
-        # TODO: Modify this for new processed data
-        # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-5/DJFM/outputs
         file_path = os.path.join(
             base_dir, variable, model, region, forecast_range, season, "outputs", file
         )
@@ -526,14 +524,6 @@ def main():
         models_list = dicts.rsds_models
     else:
         raise ValueError("variable not recognised")
-
-
-    #FIXME: Remove this
-    # # Define a test models list
-    # models_list = dicts.psl_models_noCan
-
-    # Change back to HadGEM3-GC31-MM for testing
-    models_list = ["HadGEM3-GC31-MM"]
 
     # Run the function to load the data
     data = load_data(
