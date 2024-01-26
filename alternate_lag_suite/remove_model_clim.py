@@ -697,9 +697,42 @@ def remove_model_climatology(
         # Remove the climatology
         ds = ds - climatology
 
+        # Set up the previous filename
+        prev_filename = base_name[:-3] + f"_years_{first_year}-{last_year}_anoms.nc"
+
         # Create the file name
         # cut the final .nc and replace with _anoms.nc
         filename = base_name[:-3] + f"_years_{first_year}-{last_year}_start_{start_year}_end_{end_year}_anoms.nc"
+
+        # Set the path for the files
+        path = os.path.join(
+            output_dir,
+            variable,
+            model,
+            region,
+            forecast_range,
+            season,
+            "outputs",
+            )
+
+        # If the file exists and the model is not HadGEM3-GC31-MM
+        if os.path.exists(os.path.join(path, prev_filename)) and model != "HadGEM3-GC31-MM":
+            print(f"The file {prev_filename} already exists.")
+            print(f"Renaming the file to {filename}.")
+            print(f"As the correct climatology has already been removed.")
+
+            # change the filename of the existing file
+            os.rename(
+                os.path.join(path, prev_filename), os.path.join(path, filename)
+            )
+        elif os.path.exists(os.path.join(path, prev_filename)) and model == "HadGEM3-GC31-MM":
+            print("Deleting the previous file for HadGEM3-GC31-MM.")
+            print(f"Deleting the file {prev_filename}.")
+            print(f"As the incorrect climatology has been removed.")
+
+            # Delete the previous file
+            os.remove(os.path.join(path, prev_filename))
+
 
         # Form the path
         # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-5/DJFM/outputs
