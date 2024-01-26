@@ -10,6 +10,9 @@ if [ "$#" -ne 6 ]; then
     exit
 fi
 
+# Set up the process script
+process_script="/home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/remove_model_clim.py"
+
 # Extract the arguments
 variable=$1
 season=$2
@@ -19,4 +22,4 @@ region=$5
 forecast_range=$6
 
 module load jaspy
-python /home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/remove_model_clim.py ${SLURM_ARRAY_TASK_ID} $variable $season $start_year $end_year $region $forecast_range
+python $process_script ${SLURM_ARRAY_TASK_ID} $variable $season $start_year $end_year $region $forecast_range
