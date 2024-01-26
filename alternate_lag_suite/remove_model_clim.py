@@ -55,6 +55,8 @@ Usage:
     member, containing the model data with the model climatology removed.
     """
 
+# TODO: Fix for JJA/MAM/SON
+
 # Import local modules
 import os
 import sys

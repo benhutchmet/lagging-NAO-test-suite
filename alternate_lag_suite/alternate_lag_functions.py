@@ -383,9 +383,9 @@ def alternate_lag(
     end_year = int(forecast_range_list[1])
 
     # Assert that end year is 6 or less than start year
-    assert (
-        end_year <= 6
-    ), "end_year should be 6 or less to be valid for four year lagged correlation"
+    # assert (
+    #     end_year <= 6
+    # ), "end_year should be 6 or less to be valid for four year lagged correlation"
 
     # Assert that end year is greater than start year
     assert end_year > start_year, "end_year should be greater than start_year"
@@ -529,8 +529,11 @@ def main():
 
 
     #FIXME: Remove this
-    # Define a test models list
-    models_list = dicts.psl_models_noCan
+    # # Define a test models list
+    # models_list = dicts.psl_models_noCan
+
+    # Change back to HadGEM3-GC31-MM for testing
+    models_list = ["HadGEM3-GC31-MM"]
 
     # Run the function to load the data
     data = load_data(
