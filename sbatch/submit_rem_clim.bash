@@ -2,7 +2,7 @@
 #SBATCH --partition=high-mem
 #SBATCH --mem=50000
 #SBATCH --time=60:00
-#SBATCH --array=1-12
+#SBATCH --array=1
 
 # Check the number of command line arguments
 if [ "$#" -ne 6 ]; then
