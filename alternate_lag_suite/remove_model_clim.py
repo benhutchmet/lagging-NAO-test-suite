@@ -699,7 +699,7 @@ def remove_model_climatology(
 
         # Create the file name
         # cut the final .nc and replace with _anoms.nc
-        filename = base_name[:-3] + f"_years_{first_year}-{last_year}_anoms.nc"
+        filename = base_name[:-3] + f"_years_{first_year}-{last_year}_start_{start_year}_end_{end_year}_anoms.nc"
 
         # Form the path
         # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-5/DJFM/outputs
