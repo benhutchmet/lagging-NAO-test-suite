@@ -1,7 +1,10 @@
 #!/bin/bash
+#SBATCH --job-name=sub-alt-lag
 #SBATCH --partition=high-mem
 #SBATCH --mem=50000
 #SBATCH --time=60:00
+#SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/logs/alt-lag-%A_%a.out
+#SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/logs/alt-lag-%A_%a.err
 
 # Set up the usage message
 USAGE_MSG="Usage: ${variable} ${season} ${region} ${start_year} ${end_year} ${forecast_range} ${lag}"

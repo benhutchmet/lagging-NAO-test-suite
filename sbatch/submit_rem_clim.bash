@@ -1,8 +1,11 @@
 #!/bin/bash
+#SBATCH --job-name=sub-rem-clim
 #SBATCH --partition=high-mem
 #SBATCH --mem=50000
 #SBATCH --time=60:00
 #SBATCH --array=1
+#SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/logs/rem-clim-%A_%a.out
+#SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/logs/rem-clim-%A_%a.err
 
 # Check the number of command line arguments
 if [ "$#" -ne 6 ]; then
