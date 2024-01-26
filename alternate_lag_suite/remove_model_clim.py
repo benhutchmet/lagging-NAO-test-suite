@@ -478,9 +478,33 @@ def calculate_model_climatology(
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
-    assert len(files) == len(ens_list) * len(
+    if len(files) != len(ens_list) * len(
         range(start_year, end_year + 1)
-    ), "The number of files does not match the number of ensemble members."
+    ):
+        # Print
+        print("The number of files does not match the number of ensemble members.")
+
+        # Print that we are deleting the files from outside the range
+        print(f"Deleting files from outside the range specified by {start_year} and {end_year}.")
+
+        # Loop over the files
+        for file in files:
+            # Extract the base name
+            base_name = os.path.basename(file)
+
+            # Extract the init year *e.g. s2018* from the file name
+            pattern = base_name.split("_")[4]
+
+            # Extract the init year
+            init_year = int(pattern.split("-")[0][1:])
+
+            # If the init year is not in the range
+            if init_year not in range(start_year, end_year + 1):
+                # Print
+                print(f"Deleting file: {file}")
+
+                # Delete the file
+                os.remove(file)
 
     # Form the output path
     output_dir = os.path.join(path, "model_mean_state")
