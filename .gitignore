@@ -15,3 +15,7 @@ saved_arrays/*.npy
 
 # Ignore any output files
 *.out
+
+# Ignore any of the output or error files in logs
+logs/*.out
+logs/*.err
