@@ -72,7 +72,7 @@ from iris.time import PartialDateTime
 
 # Import CDO
 from cdo import *
-# cdo = Cdo()
+cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/skill-maps")
