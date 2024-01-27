@@ -2,7 +2,7 @@
 #SBATCH --job-name=sub-alt-lag
 #SBATCH --partition=high-mem
 #SBATCH --mem=50000
-#SBATCH --time=180:00
+#SBATCH --time=500:00
 #SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/logs/alt-lag-%A_%a.out
 #SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/logs/alt-lag-%A_%a.err
 #SBATCH --mail-user=benwhutchins25@gmail.com
