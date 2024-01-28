@@ -524,6 +524,10 @@ def main():
         models_list = dicts.rsds_models
     else:
         raise ValueError("variable not recognised")
+    
+    # If the season is ULG, remove the model: MPI-ESM1-2-LR
+    if season == "ULG":
+        models_list.remove("MPI-ESM1-2-LR")
 
     # Run the function to load the data
     data = load_data(
