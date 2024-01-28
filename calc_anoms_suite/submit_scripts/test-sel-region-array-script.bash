@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=ben-array-sel-season-test-years
 #SBATCH --partition=short-serial
-#SBATCH --mem=30000
+#SBATCH --mem=50000
 #SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.out
 #SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.err
 #SBATCH --time=1500:00
