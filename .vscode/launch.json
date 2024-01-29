@@ -13,11 +13,11 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "HadGEM3-GC31-MM",
+                "MPI-ESM1-2-LR",
                 "psl",
-                "DJFM",
+                "ULG",
                 "1961",
-                "1980", // test case with loading fewer files
+                "2014", // test case with loading fewer files
                 "global",
                 "2-9"
             ]

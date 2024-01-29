@@ -2,7 +2,7 @@
 #SBATCH --job-name=sub-rem-clim
 #SBATCH --partition=high-mem
 #SBATCH --mem=50000
-#SBATCH --time=1000:00p
+#SBATCH --time=1000:00
 #SBATCH --array=1-12
 #SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/logs/rem-clim-%A_%a.out
 #SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/logs/rem-clim-%A_%a.err
