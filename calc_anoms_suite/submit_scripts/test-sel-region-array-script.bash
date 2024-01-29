@@ -158,6 +158,15 @@ for run in $(seq 1 $nens); do
         # Set the init scheme
         init_scheme="1"
 
+        # If the model is FGOALS-f3-L and nens is 3
+        if [ $model == "FGOALS-f3-L" ] && [ $nens == 3 ]; then
+            # Add 5 to the run number
+            run=$((run+5))
+
+            # Echo the new run number
+            echo "New run number is: $run for $model"
+        fi
+
         # Set up the output file name
         # Example file name = "all-years-DJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1999-r4i1_gn_199911-201003.nc"
         OUTPUT_FILE="all-years-${season}-global-${variable}_Amon_${model}_${experiment}_s${SLURM_ARRAY_TASK_ID}-r${run}i${init_scheme}_g?_*.nc"
