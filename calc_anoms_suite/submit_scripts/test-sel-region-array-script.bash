@@ -161,7 +161,7 @@ for run in $(seq 1 $nens); do
         # If the model is FGOALS-f3-L and nens is 3
         if [ $model == "FGOALS-f3-L" ] && [ $nens == 3 ]; then
             # Add 5 to the run number
-            run=$((run+5))
+            run=$((run+6))
 
             # Echo the new run number
             echo "New run number is: $run for $model"
