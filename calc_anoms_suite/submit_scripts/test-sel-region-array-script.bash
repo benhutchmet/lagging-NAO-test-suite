@@ -24,7 +24,7 @@ fi
 
 # Source the dictionaries
 # Can be left as is
-source /home/users/benhutch/skill-maps-rose-suite/dictionaries.bash
+source /home/users/benhutch/lagging-NAO-test-suite/calc_anoms_suite/dictionaries.bash
 
 # Echo th task id
 echo "Task id is: ${SLURM_ARRAY_TASK_ID}"
