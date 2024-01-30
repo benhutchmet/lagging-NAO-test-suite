@@ -3,8 +3,19 @@
 # models used
 models = [ "BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
 
+psl_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+
 # models no canesm
 models_no_can = [ "BCC-CSM2-MR", "MPI-ESM1-2-HR", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+
+# Set up the sfcWind models
+#FIXME: update this once models downloaded
+# correct as of 30Jan2024
+sfcWind_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "HadGEM3-GC31-MM", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5"]
+
+# Set up the rsds models
+#FIXME: update this once models downloaded
+rsds_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "HadGEM3-GC31-MM", "EC-Earth3", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
 
 # Models used in Marcheggiani et al. (2023)
 marcheg_models = ['BCC-CSM2-MR', 'MPI-ESM1-2-HR', 'CanESM5', 'CMCC-CM2-SR5', 'HadGEM3-GC31-MM', 'EC-Earth3', 'MIROC6', 'IPSL-CM6A-LR', 'CESM1-1-CAM5-CMIP5', 'NorCPM1']

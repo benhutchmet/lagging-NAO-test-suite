@@ -77,7 +77,7 @@ from cdo import *
 cdo = Cdo()
 
 # Import local modules
-sys.path.append("/home/users/benhutch/skill-maps")
+sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
 
 # Import dictionaries
 import dictionaries as dicts
@@ -838,11 +838,11 @@ def main():
 
     # Extract the models for the given variable
     if variable == "tas":
-        models_list = dicts.tas_models
+        models_list = dicts.models
     elif variable == "sfcWind":
         models_list = dicts.sfcWind_models
     elif variable == "psl":
-        models_list = dicts.psl_models
+        models_list = dicts.models
     elif variable == "rsds":
         models_list = dicts.rsds_models
     else:

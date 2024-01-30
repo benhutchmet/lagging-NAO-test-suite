@@ -91,8 +91,7 @@ def load_data(
     end_year: int = 2018,  # Last year of years 2-5
     forecast_range: str = "all_forecast_years",
     region: str = "global",
-    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
-    no_forecast_years: int = 10,
+    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data"
 ):
     """
     Functions which loads the processed full period data into an array of shape
@@ -142,8 +141,15 @@ def load_data(
         With shape (years, total nens, forecast_years, lats, lons).
     """
 
-    # Hard code full forecast range
-    full_forecast_years = 11
+    if season in ["DJFM", "DJF"]:
+        # Hard code full forecast range
+        full_forecast_years = 11
+    else:
+        # Hard code full forecast range
+        full_forecast_years = 10
+
+    # Set the number of forecast years
+    no_forecast_years = 9
 
     # Generate the years array
     years = np.arange(start_year, end_year + 1)
@@ -197,7 +203,7 @@ def load_data(
 
         # Assert that the length of time is equal to the number of forecast years
         assert (
-            len(data.time) == full_forecast_years
+            len(data.time) >= full_forecast_years
         ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
 
     # Initialise total nens
@@ -312,11 +318,19 @@ def load_data(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
 
-                # Set up the final_init_year
-                final_init_year = init_year + no_forecast_years - 1
+                # Set up the first year
+                first_year = init_year + 1 # e.g. for s1961 would be 1962
+
+                # Set up the last year
+                last_year = init_year + 9 # e.g. for s1961 would be 1970
+
+                # Print the period we are constraining the data to
+                print(
+                    f"Constraining the data from {first_year}-01-01 to {last_year}-12-31"
+                )
 
                 # Constrain the data from init-year-01-01 to init-year+10-12-31
-                data = data.sel(time=slice(f"{init_year}-01-01", f"{final_init_year}-12-30"))
+                data = data.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
 
                 # Extract the data for the variable
                 data = data[variable]
@@ -367,6 +381,9 @@ def alternate_lag(
     lagged_correlation : np.array
         Array of lagged correlation values with dimensions (num_years, nens, no_lats, no_lons).
     """
+
+    # Set up the start index
+    start_index = 2
 
     # Assert that the forecast range is in the correct format
     assert (
@@ -426,12 +443,12 @@ def alternate_lag(
 
                 # print the years which we are taking the mean over
                 print("start year: ", start_year + j, " end year: ", end_year + j)
-                print(f"starting at index {start_year + j - 1}"
-                      f"stoppping at index {end_year + j}")
+                print(f"starting at index {start_year - start_index + j}"
+                      f"stoppping at index {end_year - start_index + j + 1}")
 
                 # Take the mean over the forecast years
                 ensemble_member_data_mean = np.mean(
-                    ensemble_member_data[start_year + j - 1 : end_year + j, :, :],
+                    ensemble_member_data[start_year - start_index + j : end_year - start_index + j + 1, :, :],
                     axis=0,
                 )
 
@@ -524,10 +541,14 @@ def main():
         models_list = dicts.rsds_models
     else:
         raise ValueError("variable not recognised")
-    
+
+
     # If the season is ULG, remove the model: MPI-ESM1-2-LR
     if season == "ULG":
         models_list.remove("MPI-ESM1-2-LR")
+
+    # Create a test list of models
+    models_list = ["HadGEM3-GC31-MM", "BCC-CSM2-MR"]
 
     # Run the function to load the data
     data = load_data(
@@ -537,8 +558,7 @@ def main():
         start_year=start_year,
         end_year=end_year,
         forecast_range=forecast_range,
-        region=region,
-        no_forecast_years=10,
+        region=region
     )
 
     # Extract the current time
