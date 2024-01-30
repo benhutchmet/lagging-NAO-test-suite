@@ -88,6 +88,7 @@ sfcWind_models_nens=(["BCC-CSM2-MR"]=8
     ["FGOALS-f3-L"]=3
     ["IPSL-CM6A-LR"]=10
     ["CESM1-1-CAM5-CMIP5"]=40
+    ["MIROC6"]=10]
 )
 
 # Same for tos

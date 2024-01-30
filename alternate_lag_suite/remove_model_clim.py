@@ -72,10 +72,9 @@ import iris
 import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
-# FIXME: Temporary fix for debugging
 # Import CDO
 from cdo import *
-# cdo = Cdo()
+cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/skill-maps")

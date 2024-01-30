@@ -13,9 +13,9 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "MPI-ESM1-2-LR",
-                "psl",
-                "ULG",
+                "MIROC6",
+                "sfcWind",
+                "DJFM",
                 "1961",
                 "2014", // test case with loading fewer files
                 "global",
