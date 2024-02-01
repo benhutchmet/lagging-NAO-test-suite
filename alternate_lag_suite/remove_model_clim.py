@@ -381,6 +381,79 @@ def extract_model_years(
         # Close the dataset
         ds.close()
 
+    # Loop over the new files
+    # in this format:
+    # filename = base_name[:-3] + f"_years_{start_year}-{end_year}.nc"
+    for file in tqdm.tqdm(glob.glob(f"{path}/*_years_{start_year}-{end_year}.nc")):
+        # Calculate the size of the file
+        size = os.path.getsize(file)
+
+        # Get the base name
+        base_name = os.path.basename(file)
+
+        # Find the pattern
+        pattern = base_name.split("_")[4]
+
+        # Extract the init year
+        init_year = int(pattern.split("-")[0][1:])
+
+        # Extract the variant_label
+        variant_label = pattern.split("-")[1]
+
+        # If the size is less than 10000 bytes
+        if size < 10000:
+            # Print that we are deleting the file
+            print(f"Deleting empty file: {file}")
+
+            # Remove the file
+            os.remove(file)
+
+            # Process this file again
+            print(f"Processing file: {file} again.")
+
+            # Form the path to the original file
+            original_file = os.path.join(
+                output_dir,
+                variable,
+                model,
+                region,
+                forecast_range,
+                season,
+                "outputs",
+                f"*s{init_year}*{variant_label}*"
+            )
+
+            # Make sure that only one file matches the pattern
+            assert len(glob.glob(original_file)) == 1, "The file does not exist."
+
+            # Load the file
+            ds = xr.open_dataset(glob.glob(original_file)[0], chunks={"time": 10, "lat": 10, "lon": 10})
+
+            # Set the years to be extracted
+            first_year = init_year + start_year - 1 ; last_year = init_year + end_year - 1
+
+            # Extract the years
+            ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
+
+            # Take the time mean
+            ds = ds.mean(dim="time")
+
+            # Create the file name
+            # cut the final .nc and replace with _years_2-9.nc
+            filename = base_name[:-3] + f"_years_{start_year}-{end_year}.nc"
+
+            # Form the path
+            full_path = os.path.join(path, filename)
+
+            # Assert that this file does not exist
+            assert not os.path.exists(full_path), "The file already exists."
+
+            # Save the file
+            ds.to_netcdf(full_path)
+
+            # Close the dataset
+            ds.close()
+
     # Print
     print("Finished.")
 
