@@ -401,7 +401,7 @@ def extract_model_years(
         variant_label = pattern.split("-")[1]
 
         # If the size is less than 10000 bytes
-        if size < 10000:
+        if size < 30000:
             # Print that we are deleting the file
             print(f"Deleting empty file: {file}")
 
