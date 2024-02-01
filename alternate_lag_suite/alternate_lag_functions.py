@@ -76,7 +76,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 
 # Import local modules
-sys.path.append("/home/users/benhutch/skill-maps")
+sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
 
 # Import dictionaries
 import dictionaries as dicts
@@ -532,23 +532,23 @@ def main():
 
     # Extract the models for the given variable
     if variable == "tas":
-        models_list = dicts.tas_models
+        models_list = dicts.models
     elif variable == "sfcWind":
         models_list = dicts.sfcWind_models
     elif variable == "psl":
-        models_list = dicts.psl_models
+        models_list = dicts.models
     elif variable == "rsds":
         models_list = dicts.rsds_models
     else:
         raise ValueError("variable not recognised")
 
 
-    # If the season is ULG, remove the model: MPI-ESM1-2-LR
-    if season == "ULG":
-        models_list.remove("MPI-ESM1-2-LR")
+    # # If the season is ULG, remove the model: MPI-ESM1-2-LR
+    # if season == "ULG":
+    #     models_list.remove("MPI-ESM1-2-LR")
 
-    # Create a test list of models
-    models_list = ["HadGEM3-GC31-MM", "BCC-CSM2-MR"]
+    # # Create a test list of models
+    # models_list = ["HadGEM3-GC31-MM", "BCC-CSM2-MR"]
 
     # Run the function to load the data
     data = load_data(
