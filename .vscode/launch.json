@@ -31,8 +31,8 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "psl",
-                "ULG",
+                "tas",
+                "DJFM",
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
