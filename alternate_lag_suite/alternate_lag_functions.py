@@ -593,10 +593,6 @@ def main():
         models_list = dicts.rsds_models
     else:
         raise ValueError("variable not recognised")
-    
-    #FIXME: For testing, fix once debugging is complete
-    # Test just with HadGEM3-GC31-MM for now
-    models_list = ["HadGEM3-GC31-MM", "BCC-CSM2-MR"]
 
     # Run the function to load the data
     data = load_data(
