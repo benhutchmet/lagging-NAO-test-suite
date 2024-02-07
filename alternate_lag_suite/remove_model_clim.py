@@ -728,12 +728,33 @@ def remove_model_climatology(
     # Create a copy of the forecast range
     forecast_range_copy = forecast_range
 
-    # split the forecast range
-    forecast_range_copy = forecast_range_copy.split("-")
+    if "-" in forecast_range:
+        # split the forecast range
+        forecast_range_copy = forecast_range_copy.split("-")
 
-    # Extract the start and end years
-    first_year = int(forecast_range_copy[0])
-    last_year = int(forecast_range_copy[1])
+        # Extract the start and end years
+        first_year = int(forecast_range_copy[0])
+        last_year = int(forecast_range_copy[1])
+    else:
+        # Set the start and end years to be the same
+        first_year = int(forecast_range_copy)
+        last_year = int(forecast_range_copy)
+
+    # Print the start and end years
+    print(f"First year: {first_year}")
+    print(f"Last year: {last_year}")
+
+    # Depending on the season, set the forecast range
+    if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+        # Print the season
+        print(f"The season is {season}.")
+        print(f"Adding 1 to the start and end years.")
+
+        # Add 1 to the start year
+        first_year += 1
+
+        # Add 1 to the end year
+        last_year += 1
 
     # Load the climatology
     climatology = xr.open_dataset(climatology_path, chunks={"lat": 10, "lon": 10})
