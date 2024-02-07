@@ -318,10 +318,41 @@ def load_data(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
 
-                # FIXME: Modify this to work for ULG and first year/second year
+                # FIXME: Temporary fix for year 1 and year 2
+                # If lagging necessary, then will have to modify
+                # If forecast range does not contain a hyphen
+                if forecast_range == 1 and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                    print("forecast range does not contain a hyphen")
+                    print("Extracting first season: ", season)
 
-                # If the season is not in if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]
-                if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                    # Set up the first year
+                    first_year = init_year
+
+                    # Set up the last year
+                    last_year = init_year
+                elif forecast_range == 1 and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+
+                    # Set up the first year
+                    first_year = init_year + 1
+
+                    # Set up the last year
+                    last_year = init_year + 1
+                elif forecast_range == 2 and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                    print("forecast range does not contain a hyphen")
+                    print("Extracting second season: ", season)
+
+                    # Set up the first year
+                    first_year = init_year + 1
+
+                    # Set up the last year
+                    last_year = init_year + 1
+                elif forecast_range == 2 and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                    # Set up the first year
+                    first_year = init_year + 2
+
+                    # Set up the last year
+                    last_year = init_year + 2
+                elif season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     # Set up the first year
                     first_year = init_year + 2 # e.g. for s1961 would be 1963
 
