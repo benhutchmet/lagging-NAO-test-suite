@@ -2,7 +2,7 @@
     UTC mode = True # Ignore DST
     [[parameters]]
         model=BCC-CSM2-MR,MPI-ESM1-2-HR,CanESM5,CMCC-CM2-SR5,HadGEM3-GC31-MM,EC-Earth3,MPI-ESM1-2-LR,FGOALS-f3-L,MIROC6,IPSL-CM6A-LR,CESM1-1-CAM5-CMIP5,NorCPM1
-        variable="psl"
+        variable=psl,tas,rsds,sfcWind
         season=DJFM,ULG
         region="global"
         start_year="1961"
@@ -31,7 +31,7 @@
         python remove_model_clim.py ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range}
         """
         [[[job]]]
-            execution time limit = PT120M
+            execution time limit = PT150M
     [[alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>]]
         script = """
         module load jaspy
@@ -39,4 +39,4 @@
         python alternate_lag_functions.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_lag}
         """
         [[[job]]]
-            execution time limit = PT200M
+            execution time limit = PT300M
