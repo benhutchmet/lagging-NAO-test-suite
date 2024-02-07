@@ -15,7 +15,7 @@
             "args": [
                 "HadGEM3-GC31-MM",
                 "tas",
-                "DJFM",
+                "ULG",
                 "1961",
                 "2014", // test case with loading fewer files
                 "global",

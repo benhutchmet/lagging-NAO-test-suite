@@ -308,6 +308,12 @@ def extract_model_years(
         print("The season is not DJFM.")
         print("Selecting the right years for the season.")
 
+        # Add 1 to the start year
+        start_year += 1
+
+        # Add 1 to the end year
+        end_year += 1
+
     # Print the start and end years
     print(f"Start year: {start_year}")
     print(f"End year: {end_year}")
