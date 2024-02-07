@@ -70,10 +70,9 @@ import iris
 import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
-# FIXME: FIX THIS ONCE DEBUGGING IS DONE
 # Import CDO
 from cdo import *
-# cdo = Cdo()
+cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -209,7 +208,6 @@ def check_files_exist(
 
 
 # Define a function to calculate and remove the model climatology
-# TODO: Would this function be different for JJA/MAM/SON?
 def extract_model_years(
     files: list,
     season: str,
@@ -479,7 +477,6 @@ def extract_model_years(
     return ens_list
 
 
-# TODO: write a function for calculating the model climatology
 # Probably easiest to do this using CDO in python
 def calculate_model_climatology(
     ens_list: list,

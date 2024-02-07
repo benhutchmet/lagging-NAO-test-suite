@@ -318,6 +318,7 @@ def load_data(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
 
+                # FIXME: Modify this to work for ULG
                 # Set up the first year
                 first_year = init_year + 1 # e.g. for s1961 would be 1962
 
@@ -576,6 +577,16 @@ def main():
     # Save the array
     np.save(save_path, data)
 
+    # If the forecas range does not contain a hyphen
+    if "-" not in forecast_range:
+        # Print that we are not calculating the alternate lag
+        print("Not calculating the alternate lag for single year forecast range. Exiting.")
+
+        # Exit the function
+        return
+
+    # TODO: If there is skill in the second year, then we can calculate the alternate lag
+    # For year 1
     # Now process the alternate lag data
     data_alternate_lag = alternate_lag(
         data=data,
