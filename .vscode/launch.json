@@ -13,13 +13,13 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "MIROC6",
+                "HadGEM3-GC31-MM",
                 "tas",
                 "DJFM",
                 "1961",
                 "2014", // test case with loading fewer files
                 "global",
-                "2-9"
+                "1"
             ]
         }
 
@@ -36,7 +36,7 @@
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
-                "2-5",
+                "1",
                 "4" // lag
             ]
         }
