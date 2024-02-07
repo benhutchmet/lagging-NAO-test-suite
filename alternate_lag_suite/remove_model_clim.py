@@ -70,9 +70,10 @@ import iris
 import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
+# FIXME: FIX THIS ONCE DEBUGGING IS DONE
 # Import CDO
 from cdo import *
-cdo = Cdo()
+# cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -301,6 +302,11 @@ def extract_model_years(
         # Set the start and end years to be the same
         start_year = int(forecast_range)
         end_year = int(forecast_range)
+
+    # FIXME: Select the right years for months other than DJFM
+    if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+        print("The season is not DJFM.")
+        print("Selecting the right years for the season.")
 
     # Print the start and end years
     print(f"Start year: {start_year}")
