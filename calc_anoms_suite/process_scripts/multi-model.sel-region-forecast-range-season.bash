@@ -825,13 +825,13 @@ echo "[INFO] Selecting the season: $season"
 echo "[INFO] Then remapping the file"
 
 # If the season is NDJFM or DJFM
-if [ "$season" == "NDJFM" ] || [ "$season" == "DJFM" ]; then
+if [ "$season" == "NDJFM" ] || [ "$season" == "DJFM" ] || [ "$season" == "ONDJFM" ]; then
     echo "[INFO] Season is NDJFM or DJFM"
     echo "[INFO] Shifting the time axis by 3 months"
     # Select the season, shift the time axis, take the year mean and remap the file
     cdo -remapbil,$grid -yearmean -shifttime,-3mo -select,season=${season} $INPUT_FILE $OUTPUT_FILE
 # If the season is DJF or NDJF
-elif [ "$season" == "DJF" ] || [ "$season" == "NDJF" ]; then
+elif [ "$season" == "DJF" ] || [ "$season" == "NDJF" ] || [ "$season" == "ONDJF" ]; then
     echo "[INFO] Season is DJF or NDJF"
     echo "[INFO] Shifting the time axis by 2 months"
     # Select the season, shift the time axis, take the year mean and remap the file
