@@ -31,7 +31,7 @@
         python remove_model_clim.py ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range}
         """
         [[[job]]]
-            execution time limit = PT150M
+            execution time limit = PT200M
     [[alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>]]
         script = """
         module load jaspy
@@ -39,4 +39,4 @@
         python alternate_lag_functions.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_lag}
         """
         [[[job]]]
-            execution time limit = PT300M
+            execution time limit = PT400M
