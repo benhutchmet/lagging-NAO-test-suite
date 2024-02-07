@@ -23,8 +23,7 @@
         [[[job]]]
             batch system = slurm
         [[[directives]]]
-            --partition=high-mem
-            --mem=50000
+            --partition=short-serial
     [[remove_clim<model><variable><season><start_year><end_year><region><forecast_range>]]
         script = """
         module load jaspy
