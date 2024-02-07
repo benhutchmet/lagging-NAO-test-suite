@@ -148,8 +148,12 @@ def load_data(
         # Hard code full forecast range
         full_forecast_years = 10
 
-    # Set the number of forecast years
-    no_forecast_years = 9
+    if forecast_range not in ["1", "2", "3", "4", "5", "6"]:
+        # Set the number of forecast years
+        no_forecast_years = 9
+    else:
+        # Set the number of forecast years
+        no_forecast_years = 1
 
     # Generate the years array
     years = np.arange(start_year, end_year + 1)
@@ -320,7 +324,7 @@ def load_data(
 
                 # If lagging necessary, then will have to modify
                 # If forecast range does not contain a hyphen
-                if forecast_range == 1 and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                if forecast_range == '1' and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     print("forecast range does not contain a hyphen")
                     print("Extracting first season: ", season)
 
@@ -329,14 +333,14 @@ def load_data(
 
                     # Set up the last year
                     last_year = init_year
-                elif forecast_range == 1 and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif forecast_range == '1' and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
 
                     # Set up the first year
                     first_year = init_year + 1
 
                     # Set up the last year
                     last_year = init_year + 1
-                elif forecast_range == 2 and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif forecast_range == '2' and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     print("forecast range does not contain a hyphen")
                     print("Extracting second season: ", season)
 
@@ -345,7 +349,7 @@ def load_data(
 
                     # Set up the last year
                     last_year = init_year + 1
-                elif forecast_range == 2 and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif forecast_range == '2' and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     # Set up the first year
                     first_year = init_year + 2
 
