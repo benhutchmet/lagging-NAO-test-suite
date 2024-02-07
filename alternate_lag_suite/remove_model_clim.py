@@ -55,8 +55,6 @@ Usage:
     member, containing the model data with the model climatology removed.
     """
 
-# TODO: Fix for JJA/MAM/SON
-
 # Import local modules
 import os
 import sys
@@ -288,12 +286,21 @@ def extract_model_years(
         output_dir, variable, model, region, forecast_range, season, "outputs"
     )
 
-    # Extract the forecast range
-    forecast_range = forecast_range.split("-")
+    # If the forecast range contains "-"
+    if "-" in forecast_range:
+        print("The forecast range contains a hyphen.")
+        # Extract the forecast range
+        forecast_range = forecast_range.split("-")
 
-    # Extract the start and end years
-    start_year = int(forecast_range[0])
-    end_year = int(forecast_range[1])
+        # Extract the start and end years
+        start_year = int(forecast_range[0])
+        end_year = int(forecast_range[1])
+    else:
+        print("The forecast range does not contain a hyphen.")
+        print("The forecast range is a single year.")
+        # Set the start and end years to be the same
+        start_year = int(forecast_range)
+        end_year = int(forecast_range)
 
     # Print the start and end years
     print(f"Start year: {start_year}")
