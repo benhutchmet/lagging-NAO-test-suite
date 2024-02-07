@@ -357,7 +357,7 @@ def load_data(
                     first_year = init_year + 2 # e.g. for s1961 would be 1963
 
                     # Set up the last year
-                    last_year = init_year + 10 # e.g. for s1961 would be 1971
+                    last_year = init_year + 9 # e.g. for s1961 would be 1970
                 else:
                     # Set up the first year
                     first_year = init_year + 1 # e.g. for s1961 would be 1962
