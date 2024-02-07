@@ -591,17 +591,6 @@ def main():
     else:
         raise ValueError("variable not recognised")
 
-    # # If the season is DJFM and variable is tas, remove the model: FGOALS-f3-L
-    # if season == "DJFM" and variable == "tas":
-    #     models_list.remove("FGOALS-f3-L")
-
-    # # If the season is ULG, remove the model: MPI-ESM1-2-LR
-    # if season == "ULG":
-    #     models_list.remove("MPI-ESM1-2-LR")
-
-    # # Create a test list of models
-    # models_list = ["HadGEM3-GC31-MM", "BCC-CSM2-MR"]
-
     # Run the function to load the data
     data = load_data(
         variable=variable,
