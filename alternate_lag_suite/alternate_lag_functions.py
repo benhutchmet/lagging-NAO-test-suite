@@ -376,6 +376,13 @@ def load_data(
                 # Extract the data for the variable
                 data = data[variable]
 
+                # If the forecast range does not contain a hyphen
+                if "-" not in forecast_range:
+                    # Assert that there is only one forecast year
+                    assert (
+                        len(data.time) == 1
+                    ), f"forecast range does not contain a hyphen, but there is more than one forecast year for model: {model}, year: {year}, ensemble member: {j+1}"
+
                 # Print the year and the ensemble member
                 print("Year: ", year, "ensemble member: ", j + 1)
                 print("ens counter: ", ens_counter)
