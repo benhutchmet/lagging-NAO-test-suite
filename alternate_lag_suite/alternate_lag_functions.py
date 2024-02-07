@@ -318,12 +318,21 @@ def load_data(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
 
-                # FIXME: Modify this to work for ULG
-                # Set up the first year
-                first_year = init_year + 1 # e.g. for s1961 would be 1962
+                # FIXME: Modify this to work for ULG and first year/second year
 
-                # Set up the last year
-                last_year = init_year + 9 # e.g. for s1961 would be 1970
+                # If the season is not in if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]
+                if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                    # Set up the first year
+                    first_year = init_year + 2 # e.g. for s1961 would be 1963
+
+                    # Set up the last year
+                    last_year = init_year + 10 # e.g. for s1961 would be 1971
+                else:
+                    # Set up the first year
+                    first_year = init_year + 1 # e.g. for s1961 would be 1962
+
+                    # Set up the last year
+                    last_year = init_year + 9 # e.g. for s1961 would be 1970
 
                 # Print the period we are constraining the data to
                 print(
@@ -354,7 +363,8 @@ def load_data(
     # Return the data array
     return data_arr
 
-
+# TODO: Fix this function for the alternate lag 1 and 2 year case
+# If the second year has some skill
 # Write a function to calculate the lagged correlation
 def alternate_lag(
     data: np.array, forecast_range: str, years: np.array, lag: int = 4
