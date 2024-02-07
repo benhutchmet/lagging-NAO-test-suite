@@ -28,7 +28,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        python remove_climatology.py ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range}
+        python remove_model_clim.py ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range}
         """
         [[[job]]]
             execution time limit = PT120M
