@@ -318,7 +318,6 @@ def load_data(
                     file, chunks={"time": 10, "lat": 10, "lon": 10}
                 )
 
-                # FIXME: Temporary fix for year 1 and year 2
                 # If lagging necessary, then will have to modify
                 # If forecast range does not contain a hyphen
                 if forecast_range == 1 and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
@@ -590,6 +589,10 @@ def main():
         models_list = dicts.rsds_models
     else:
         raise ValueError("variable not recognised")
+    
+    #FIXME: For testing, fix once debugging is complete
+    # Test just with HadGEM3-GC31-MM for now
+    models_list = ["HadGEM3-GC31-MM", "BCC-CSM2-MR"]
 
     # Run the function to load the data
     data = load_data(
