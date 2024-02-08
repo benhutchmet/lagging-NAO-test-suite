@@ -68,6 +68,7 @@ import sys
 import os
 import argparse
 from time import time
+import fnmatch
 
 # Import third-party modules
 import numpy as np
@@ -148,7 +149,10 @@ def load_data(
         # Hard code full forecast range
         full_forecast_years = 10
 
-    if forecast_range not in ["1", "2", "3", "4", "5", "6"]:
+    if forecast_range not in ["1", "2", "3", "4", "5", "6"] and season not in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+        # Set the number of forecast years
+        no_forecast_years = 8
+    elif forecast_range not in ["1", "2", "3", "4", "5", "6"] and season in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
         # Set the number of forecast years
         no_forecast_years = 9
     else:
@@ -161,16 +165,16 @@ def load_data(
         forecast_range_list = forecast_range.split("-")
 
         # Extract the start and end years
-        start_year = int(forecast_range_list[0])
-        end_year = int(forecast_range_list[1])
+        first_year = int(forecast_range_list[0])
+        last_year = int(forecast_range_list[1])
 
     # If the season is not NDJFM, DJF, DJFM, ONDJFM
     if season not in ["NDJFM", "DJF", "DJFM", "ONDJFM"]:
         # Modify the start year
-        start_year = start_year + 1
+        first_year = first_year + 1
 
         # Modify the end year
-        end_year = end_year + 1
+        last_year = last_year + 1
 
 
     # Generate the years array
@@ -250,15 +254,10 @@ def load_data(
 
             if "-" in forecast_range:
                 # Assert that files exist for each ensemble member
-                assert (len([file for file in file_list if f"s{year}*_years_{start_year}-{end_year}*_anoms.nc" in file])) == len(
-                    ens_list
-                ), f"{model} does not have files for each ensemble member for year {year}"
+                assert len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc")]) == len(ens_list), f"{model} does not have files for each ensemble member for year {year}"       
             else:
                 # Assert that files exist for each ensemble member
-                assert (len([file for file in file_list if f"s{year}*_years_{forecast_range}_*anoms.nc" in file])) == len(
-                    ens_list
-                ), f"{model} does not have files for each ensemble member for year {year}"
-
+                assert (len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{forecast_range}*_anoms.nc")]) == len(ens_list)), f"{model} does not have files for each ensemble member for year {year}"
         # Append this list to the dictionary
         nens_dict[model] = ens_list
 
