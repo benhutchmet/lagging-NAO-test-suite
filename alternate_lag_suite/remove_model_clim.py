@@ -564,8 +564,19 @@ def calculate_model_climatology(
             ens_list
         ), "The number of files does not match the number of ensemble members."
 
-    # Verify that only the files for the years specified exist
-    files = glob.glob(f"{path}/*_years_?-?.nc")
+    # Extract the years from the forecast range
+    if "-" in forecast_range:
+        # extract the first year
+        first_year = int(forecast_range.split("-")[0])
+
+        # extract the last year
+        last_year = int(forecast_range.split("-")[1])
+
+        # Verify that only the files for the years specified exist
+        files = glob.glob(f"{path}/*years_{first_year}-{last_year}.nc")
+    else:
+        # Verify that only the files for the year specified exist
+        files = glob.glob(f"{path}/*years_?.nc")
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
