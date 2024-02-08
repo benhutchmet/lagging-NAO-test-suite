@@ -73,7 +73,7 @@ from iris.time import PartialDateTime
 # FIXME: Testing for
 # Import CDO
 from cdo import *
-# cdo = Cdo()
+cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
