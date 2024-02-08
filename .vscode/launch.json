@@ -13,8 +13,8 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "BCC-CSM2-MR",
-                "psl",
+                "NorCPM1",
+                "tas",
                 "ULG",
                 "1961",
                 "2014", // test case with loading fewer files

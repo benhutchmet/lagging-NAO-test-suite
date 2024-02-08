@@ -429,17 +429,30 @@ def extract_model_years(
             # Process this file again
             print(f"Processing file: {file} again.")
 
+            # Print the types of the inputs
+            print(f"Type of output_dir: {type(output_dir)}")
+            print(f"Type of variable: {type(variable)}")
+            print(f"Type of model: {type(model)}")
+            print(f"Type of region: {type(region)}")
+            print(f"Type of forecast_range: {type(forecast_range)}")
+            print(f"Type of season: {type(season)}")
+            print(f"Type of init_year: {type(init_year)}")
+            print(f"Type of variant_label: {type(variant_label)}")
+
             # Form the path to the original file
-            original_file = os.path.join(
-                output_dir,
-                variable,
-                model,
-                region,
-                forecast_range,
-                season,
-                "outputs",
-                f"*s{init_year}*{variant_label}*"
-            )
+            # original_file = os.path.join(
+            #     output_dir,
+            #     variable,
+            #     model,
+            #     region,
+            #     forecast_range,
+            #     season,
+            #     "outputs",
+            #     f"*s{init_year}*{variant_label}*"
+            # )
+
+            # form the original file path
+            original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*"
 
             # Make sure that only one file matches the pattern
             assert len(glob.glob(original_file)) == 1, "The file does not exist."
