@@ -474,11 +474,11 @@ def extract_model_years(
             #     f"*s{init_year}*{variant_label}*"
             # )
 
+            # form the original file path
+            original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*_years_?_?.nc"
+
             # Print the original file
             print(f"Original file: {original_file}")
-
-            # form the original file path
-            original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*"
 
             # Make sure that only one file matches the pattern
             assert len(glob.glob(original_file)) == 1, "The file does not exist."
