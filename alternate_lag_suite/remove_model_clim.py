@@ -442,6 +442,16 @@ def extract_model_years(
             print(f"Type of init_year: {type(init_year)}")
             print(f"Type of variant_label: {type(variant_label)}")
 
+            # Print the inputs
+            print(f"output_dir: {output_dir}")
+            print(f"variable: {variable}")
+            print(f"model: {model}")
+            print(f"region: {region}")
+            print(f"forecast_range: {forecast_range}")
+            print(f"season: {season}")
+            print(f"init_year: {init_year}")
+            print(f"variant_label: {variant_label}")
+
             # Assert that these are not a list
             assert not isinstance(output_dir, list), "output_dir is a list."
             assert not isinstance(variable, list), "variable is a list."
@@ -463,6 +473,9 @@ def extract_model_years(
             #     "outputs",
             #     f"*s{init_year}*{variant_label}*"
             # )
+
+            # Print the original file
+            print(f"Original file: {original_file}")
 
             # form the original file path
             original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*"
