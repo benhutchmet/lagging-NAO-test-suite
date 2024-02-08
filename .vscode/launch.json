@@ -31,12 +31,12 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "tas",
+                "psl",
                 "ULG",
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
-                "1",
+                "2-5",
                 "4" // lag
             ]
         }

@@ -475,7 +475,7 @@ def extract_model_years(
             # )
 
             # form the original file path
-            original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*_years_?_?.nc"
+            original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*_years_?-?.nc"
 
             # Print the original file
             print(f"Original file: {original_file}")
