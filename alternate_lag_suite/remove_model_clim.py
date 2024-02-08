@@ -290,11 +290,11 @@ def extract_model_years(
     if "-" in forecast_range:
         print("The forecast range contains a hyphen.")
         # Extract the forecast range
-        forecast_range = forecast_range.split("-")
+        forecast_range_split = forecast_range.split("-")
 
         # Extract the start and end years
-        start_year = int(forecast_range[0])
-        end_year = int(forecast_range[1])
+        start_year = int(forecast_range_split[0])
+        end_year = int(forecast_range_split[1])
     else:
         print("The forecast range does not contain a hyphen.")
         print("The forecast range is a single year.")
@@ -429,15 +429,28 @@ def extract_model_years(
             # Process this file again
             print(f"Processing file: {file} again.")
 
+            # Convert init_year to a string
+            init_year = str(init_year)
+
             # Print the types of the inputs
             print(f"Type of output_dir: {type(output_dir)}")
             print(f"Type of variable: {type(variable)}")
             print(f"Type of model: {type(model)}")
             print(f"Type of region: {type(region)}")
-            print(f"Type of forecast_range: {type(forecast_range)}")
+            print(f"Type of forecast_range: {type(forecast_range)}") # forecast range is a list?
             print(f"Type of season: {type(season)}")
             print(f"Type of init_year: {type(init_year)}")
             print(f"Type of variant_label: {type(variant_label)}")
+
+            # Assert that these are not a list
+            assert not isinstance(output_dir, list), "output_dir is a list."
+            assert not isinstance(variable, list), "variable is a list."
+            assert not isinstance(model, list), "model is a list."
+            assert not isinstance(region, list), "region is a list."
+            assert not isinstance(forecast_range, list), "forecast_range is a list."
+            assert not isinstance(season, list), "season is a list."
+            assert not isinstance(init_year, list), "init_year is a list."
+            assert not isinstance(variant_label, list), "variant_label is a list."
 
             # Form the path to the original file
             # original_file = os.path.join(
