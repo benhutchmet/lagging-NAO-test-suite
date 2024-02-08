@@ -70,6 +70,7 @@ import iris
 import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
+# FIXME: Testing for
 # Import CDO
 from cdo import *
 cdo = Cdo()
