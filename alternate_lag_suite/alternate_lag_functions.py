@@ -155,6 +155,24 @@ def load_data(
         # Set the number of forecast years
         no_forecast_years = 1
 
+    # extract the forecast range
+    if "-" in forecast_range:
+        # Extract the forecast range
+        forecast_range_list = forecast_range.split("-")
+
+        # Extract the start and end years
+        start_year = int(forecast_range_list[0])
+        end_year = int(forecast_range_list[1])
+
+    # If the season is not NDJFM, DJF, DJFM, ONDJFM
+    if season not in ["NDJFM", "DJF", "DJFM", "ONDJFM"]:
+        # Modify the start year
+        start_year = start_year + 1
+
+        # Modify the end year
+        end_year = end_year + 1
+
+
     # Generate the years array
     years = np.arange(start_year, end_year + 1)
 
@@ -229,10 +247,17 @@ def load_data(
 
         # Loop over the years
         for year in years:
-            # Assert that files exist for each ensemble member
-            assert (len([file for file in file_list if f"s{year}" in file])) == len(
-                ens_list
-            ), f"{model} does not have files for each ensemble member for year {year}"  
+
+            if "-" in forecast_range:
+                # Assert that files exist for each ensemble member
+                assert (len([file for file in file_list if f"s{year}*_years_{start_year}-{end_year}*_anoms.nc" in file])) == len(
+                    ens_list
+                ), f"{model} does not have files for each ensemble member for year {year}"
+            else:
+                # Assert that files exist for each ensemble member
+                assert (len([file for file in file_list if f"s{year}*_years_{forecast_range}_*anoms.nc" in file])) == len(
+                    ens_list
+                ), f"{model} does not have files for each ensemble member for year {year}"
 
         # Append this list to the dictionary
         nens_dict[model] = ens_list
