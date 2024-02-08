@@ -73,7 +73,7 @@ from iris.time import PartialDateTime
 # FIXME: Testing for
 # Import CDO
 from cdo import *
-cdo = Cdo()
+# cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -545,13 +545,19 @@ def calculate_model_climatology(
         output_dir, variable, model, region, forecast_range, season, "outputs"
     )
 
+    # extract the first year
+    first_year = int(forecast_range.split("-")[0])
+
+    # extract the last year
+    last_year = int(forecast_range.split("-")[1])
+
     # Assert that the path exists
     assert os.path.exists(path), "The path does not exist."
 
     # Verify that there are len(ens_list) files for each year
     for year in range(start_year, end_year + 1):
         # Form the pattern
-        pattern = f"{path}/*s{year}*_years_?-?.nc"
+        pattern = f"{path}/*s{year}*_years_{first_year}-{last_year}.nc"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(pattern))
@@ -567,12 +573,6 @@ def calculate_model_climatology(
 
     # Extract the years from the forecast range
     if "-" in forecast_range:
-        # extract the first year
-        first_year = int(forecast_range.split("-")[0])
-
-        # extract the last year
-        last_year = int(forecast_range.split("-")[1])
-
         # Verify that only the files for the years specified exist
         files = glob.glob(f"{path}/*years_{first_year}-{last_year}.nc")
     else:

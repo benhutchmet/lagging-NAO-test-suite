@@ -13,13 +13,13 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "HadGEM3-GC31-MM",
-                "tas",
+                "BCC-CSM2-MR",
+                "psl",
                 "ULG",
                 "1961",
                 "2014", // test case with loading fewer files
                 "global",
-                "1"
+                "2-3"
             ]
         }
 
