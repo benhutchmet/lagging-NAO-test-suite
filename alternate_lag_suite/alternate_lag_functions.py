@@ -522,11 +522,18 @@ def alternate_lag(
                 print(f"starting at index {start_year - start_index + j}"
                       f"stoppping at index {end_year - start_index + j + 1}")
 
-                # Take the mean over the forecast years
-                ensemble_member_data_mean = np.mean(
-                    ensemble_member_data[start_year - start_index + j : end_year - start_index + j + 1, :, :],
-                    axis=0,
-                )
+                if forecast_range != "2-9":
+                    # Take the mean over the forecast years
+                    ensemble_member_data_mean = np.mean(
+                        ensemble_member_data[start_year - start_index + j : end_year - start_index + j + 1, :, :],
+                        axis=0,
+                    )
+                else:
+                    # Take the mean over the forecast years
+                    ensemble_member_data_mean = np.mean(
+                        ensemble_member_data[start_year - start_index : end_year - start_index + 1, :, :],
+                        axis=0,
+                    )
 
                 # Print the year index, ensemble member index and lag index
                 print(
