@@ -595,6 +595,18 @@ def calculate_model_climatology(
         first_year = int(forecast_range)
         last_year = int(forecast_range)
 
+    # if the season is not DJFM, DJF, NDJFM, or ONDJFM
+    if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+        # Print the season
+        print(f"The season is {season}.")
+        print(f"Adding 1 to the start and end years.")
+
+        # Add 1 to the start year
+        first_year += 1
+
+        # Add 1 to the end year
+        last_year += 1
+
     # Assert that the path exists
     assert os.path.exists(path), "The path does not exist."
 
