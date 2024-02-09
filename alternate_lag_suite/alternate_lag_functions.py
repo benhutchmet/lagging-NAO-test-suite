@@ -167,6 +167,12 @@ def load_data(
         # Extract the start and end years
         first_year = int(forecast_range_list[0])
         last_year = int(forecast_range_list[1])
+    else:
+        # Set the first and last year to the start year
+        first_year = int(forecast_range)
+
+        # Set the last year to the end year
+        last_year = int(forecast_range)
 
     # If the season is not NDJFM, DJF, DJFM, ONDJFM
     if season not in ["NDJFM", "DJF", "DJFM", "ONDJFM"]:
@@ -257,7 +263,7 @@ def load_data(
                 assert len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc")]) == len(ens_list), f"{model} does not have files for each ensemble member for year {year}"       
             else:
                 # Assert that files exist for each ensemble member
-                assert (len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{forecast_range}*_anoms.nc")]) == len(ens_list)), f"{model} does not have files for each ensemble member for year {year}"
+                assert (len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc")]) == len(ens_list)), f"{model} does not have files for each ensemble member for year {year}"
         # Append this list to the dictionary
         nens_dict[model] = ens_list
 
