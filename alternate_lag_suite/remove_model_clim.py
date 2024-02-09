@@ -584,11 +584,16 @@ def calculate_model_climatology(
         output_dir, variable, model, region, forecast_range, season, "outputs"
     )
 
-    # extract the first year
-    first_year = int(forecast_range.split("-")[0])
+    if "-" in forecast_range:
+        # extract the first year
+        first_year = int(forecast_range.split("-")[0])
 
-    # extract the last year
-    last_year = int(forecast_range.split("-")[1])
+        # extract the last year
+        last_year = int(forecast_range.split("-")[1])
+    else:
+        # Set the first and last years to be the same
+        first_year = int(forecast_range)
+        last_year = int(forecast_range)
 
     # Assert that the path exists
     assert os.path.exists(path), "The path does not exist."
@@ -610,13 +615,8 @@ def calculate_model_climatology(
             ens_list
         ), "The number of files does not match the number of ensemble members."
 
-    # Extract the years from the forecast range
-    if "-" in forecast_range:
-        # Verify that only the files for the years specified exist
-        files = glob.glob(f"{path}/*years_{first_year}-{last_year}.nc")
-    else:
-        # Verify that only the files for the year specified exist
-        files = glob.glob(f"{path}/*years_?.nc")
+    # Verify that only the files for the years specified exist
+    files = glob.glob(f"{path}/*years_{first_year}-{last_year}.nc")
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
@@ -665,13 +665,13 @@ def calculate_model_climatology(
     # Form the output path
     output_path = os.path.join(output_dir, output_fname)
 
-    # If the file exists
-    if os.path.exists(output_path):
-        # Print
-        print(f"The file {output_path} already exists.")
+    # # If the file exists
+    # if os.path.exists(output_path):
+    #     # Print
+    #     print(f"The file {output_path} already exists.")
 
-        # Continue
-        return output_path
+    #     # Continue
+    #     return output_path
 
     # Set up the paths
     paths = os.path.join(path, "*_years_?-?.nc")

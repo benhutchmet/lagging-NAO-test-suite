@@ -13,13 +13,13 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "NorCPM1",
-                "tas",
-                "ULG",
+                "CESM1-1-CAM5-CMIP6",
+                "sfcWind",
+                "DJFM",
                 "1961",
                 "2014", // test case with loading fewer files
                 "global",
-                "2-3"
+                "1"
             ]
         }
 
