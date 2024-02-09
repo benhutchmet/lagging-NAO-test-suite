@@ -12,7 +12,7 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        remove_clim<model><variable><season><start_year><end_year><region><forecast_range>
+        alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>
         """
 
 [runtime]
