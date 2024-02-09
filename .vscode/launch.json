@@ -31,13 +31,13 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "psl",
+                "sfcWind",
                 "ULG",
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
-                "2-5",
-                "4" // lag
+                "1",
+                "0" // lag
             ]
         }
     ]
