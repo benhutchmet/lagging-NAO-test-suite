@@ -13,6 +13,9 @@ new_workflow/*.drawio
 *.npy
 saved_arrays/*.npy
 
+# Ignore any .csv files
+*.csv
+
 # Ignore any output files
 *.out
 
