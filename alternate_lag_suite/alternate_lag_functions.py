@@ -620,20 +620,19 @@ def main():
     print("lag: ", lag)
 
     # Extract the models for the given variable
-    # FIXME: Testing for years 2 psl - nov init models only
     # Assuming that models initialised in November are the same for all variables
     if variable == "tas":
-        # models_list = dicts.models
-        models_list = dicts.nov_init_models_tas
+        models_list = dicts.models
+        # models_list = dicts.nov_init_models_tas
     elif variable == "sfcWind":
-        # models_list = dicts.sfcWind_models
-        models_list = dicts.nov_init_models_sfcWind
+        models_list = dicts.sfcWind_models
+        # models_list = dicts.nov_init_models_sfcWind
     elif variable == "psl":
-        # models_list = dicts.models
-        models_list = dicts.nov_init_models_psl
+        models_list = dicts.models
+        # models_list = dicts.nov_init_models_psl
     elif variable == "rsds":
-        # models_list = dicts.rsds_models
-        models_list = dicts.nov_init_models_rsds
+        models_list = dicts.rsds_models
+        # models_list = dicts.nov_init_models_rsds
     else:
         raise ValueError("variable not recognised")
 
