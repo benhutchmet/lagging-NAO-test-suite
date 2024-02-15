@@ -714,8 +714,8 @@ elif [ "$variable" == "va" ]; then
         echo "[ERROR] Model not recognised for variable va"
         exit 1
     fi
-# Elif the variable is pr
-elif [ "${variable}" == "pr"]; then
+# if the variable is pr
+elif [ "${variable}" == "pr" ]; then
     # Set up the single file models which already exist on JASMIN
     if [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ] || [ "$model" == "BCC-CSM2-MR" ]; then
         # Set up the input files from badc
@@ -819,6 +819,11 @@ elif [ "${variable}" == "pr"]; then
 
         # Set up the input files
         files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p1f1_gr_${start_year}-${end_year}.nc"
+
+    else
+        echo "[ERROR] Model not recognised for variable pr"
+        exit 1
+    fi
 
 else
     echo "[ERROR] Variable not recognised"
