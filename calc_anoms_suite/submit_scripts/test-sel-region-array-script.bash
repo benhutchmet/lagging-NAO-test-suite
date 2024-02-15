@@ -107,6 +107,14 @@ case $variable in
         nens_extractor[$key]=${tos_models_nens[$key]}
     done
     ;;
+"pr")
+    models=$pr_models
+
+    # Loop over and copy each key-value pair from the pr_models_nens
+    for key in "${!pr_models_nens[@]}"; do
+        nens_extractor[$key]=${pr_models_nens[$key]}
+    done
+    ;;
 *)
     echo "ERROR: variable not recognized: $variable"
     exit 1

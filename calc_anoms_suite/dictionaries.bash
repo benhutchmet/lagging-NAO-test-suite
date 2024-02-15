@@ -44,6 +44,23 @@ declare -A psl_models_nens=(["BCC-CSM2-MR"]=8
     ["NorCPM1"]=10
 )
 
+# Declare an associative array for the models - pr
+# more of these will need to be downloaded
+declare -A pr_models_nens
+pr_models_nens=(["BCC-CSM2-MR"]=8
+    ["MPI-ESM1-2-HR"]=10
+    ["CanESM5"]=40
+    ["CMCC-CM2-SR5"]=10
+    ["HadGEM3-GC31-MM"]=10
+    ["EC-Earth3"]=10
+    ["MPI-ESM1-2-LR"]=16
+    ["FGOALS-f3-L"]=9
+    ["MIROC6"]=10
+    ["IPSL-CM6A-LR"]=10
+    ["CESM1-1-CAM5-CMIP5"]=40
+    ["NorCPM1"]=10
+)
+
 # Create an associative array for the models - tas
 declare -A tas_models_nens
 tas_models_nens=(["BCC-CSM2-MR"]=8
@@ -135,6 +152,8 @@ tas_models_numbers=1,2,3,4,5,6,8,9,10,11,12
 tas_models="BCC-CSM2-MR MPI-ESM1-2-HR CanESM5 CMCC-CM2-SR5 HadGEM3-GC31-MM EC-Earth3 FGOALS-f3-L MIROC6 IPSL-CM6A-LR CESM1-1-CAM5-CMIP5 NorCPM1"
 
 psl_models_numbers=1,2,3,4,5,6,8,9,10,11,12
+
+pr_models="BCC-CSM2-MR MPI-ESM1-2-HR CanESM5 CMCC-CM2-SR5 HadGEM3-GC31-MM EC-Earth3"
 
 # set up the psl models list
 # this is the list of models that have psl data available in my case
