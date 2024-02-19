@@ -337,9 +337,15 @@ def extract_model_years(
         base_name = os.path.basename(file)
 
         # print the base name
+        # all-years-ONDJFM-global-psl_Amon_BCC-CSM2-MR_dcppA-hindcast_s1961-r1i1p1f1_gn_196101-197012.nc
+        # Split by "_" and extract the 4th element
+        print(f"Base name: {base_name.split('_')[4]}")
 
-        # Find the first year
-        init_year = int(ds.time.dt.year.values[0])
+        # Find the pattern
+        pattern = base_name.split("_")[4]
+
+        # Extract the init year
+        init_year = int(pattern.split("-")[0][1:])
 
         # Print the initialisation year
         print(f"Initialisation year: {init_year}")

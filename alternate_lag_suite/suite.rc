@@ -1,7 +1,8 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable=psl,tas,sfcWind,rsds
+        model=BCC-CSM2-MR,MPI-ESM1-2-HR,CanESM5,HadGEM3-GC31-MM,FGOALS-f3-L,MIROC6,IPSL-CM6A-LR,CESM1-1-CAM5-CMIP5
+        variable=sfcWind
         season=ULG,DJFM
         region="global"
         start_year="1961"
@@ -12,7 +13,7 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>
+        remove_clim<model><variable><season><start_year><end_year><region><forecast_range> => alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>
         """
 
 [runtime]
@@ -21,6 +22,16 @@
         pre-script="""set -eu"""
         [[[job]]]
             batch system = slurm
+    [[remove_clim<model><variable><season><start_year><end_year><region><forecast_range>]]
+        script = """
+        module load jaspy
+        cd ${CYLC_SUITE_RUN_DIR}/
+        python remove_model_clim.py ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range}
+        """
+        [[[job]]]
+            execution time limit = PT200M
+        [[[directives]]]
+            --partition=short-serial
     [[alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>]]
         script = """
         module load jaspy
