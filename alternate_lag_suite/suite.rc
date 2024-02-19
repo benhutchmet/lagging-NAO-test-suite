@@ -31,7 +31,8 @@
         [[[job]]]
             execution time limit = PT300M
         [[[directives]]]
-            --partition=short-serial
+            --partition=high-mem
+            --mem=25000
     [[alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag>]]
         script = """
         module load jaspy

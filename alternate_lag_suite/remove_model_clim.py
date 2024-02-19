@@ -691,14 +691,15 @@ def calculate_model_climatology(
     #     # Continue
     #     return output_path
 
-    if forecast_range != "2-9" and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
-        # Set up the paths
-        paths = os.path.join(path, "*_years_?-?.nc")
-    elif forecast_range == "2-9" and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+    # Set up the paths
+    if forecast_range == "2-9" and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
         # Set up the paths
         paths = os.path.join(path, "*_years_?-??.nc")
+    else:
+        # Set up the paths
+        paths = os.path.join(path, "*_years_?-?.nc")
 
-        
+
     # Calculate the model climatology
     cdo.ensmean(input=paths, output=output_path)
 
