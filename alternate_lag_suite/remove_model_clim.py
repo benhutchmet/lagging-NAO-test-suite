@@ -484,16 +484,16 @@ def extract_model_years(
             # )
 
             # form the original file path
+            # /work/scratch-nopw2/benhutch/tas/EC-Earth3/global/all_forecast_years/AYULGS/outputs/all-years-AYULGS-global-tas_Amon_EC-Earth3_dcppA-hindcast_s2003*r4i1*
             original_file = (
-                output_dir
-                + "/"
+                "/work/scratch-nopw2/benhutch/"
                 + variable
                 + "/"
                 + model
                 + "/"
                 + region
                 + "/"
-                + forecast_range
+                + "all_forecast_years"
                 + "/"
                 + season
                 + "/outputs/"
