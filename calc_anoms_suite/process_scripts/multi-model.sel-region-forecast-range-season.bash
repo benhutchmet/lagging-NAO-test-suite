@@ -728,6 +728,11 @@ elif [ "${variable}" == "pr" ]; then
         # Set up the input files from badc
         files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/pr/g?/files/d????????/*.nc"
 
+    # Set up the single file models which have been downloaded to canari
+    elif [ "$model" == "MPI-ESM1-2-LR" ] || [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "NorCPM1" ]; then
+        # Set up the input files from canari
+        files="${canari_base_dir}/${experiment}/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g*_*.nc"
+
     # Set up the multi-file models
     # First the HadGEM case
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
