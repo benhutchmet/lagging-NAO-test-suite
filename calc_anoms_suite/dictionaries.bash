@@ -82,7 +82,7 @@ declare -A rsds_models_nens
 rsds_models_nens=(["BCC-CSM2-MR"]=8
     ["MPI-ESM1-2-HR"]=10
     ["CanESM5"]=20
-    ["CMCC-CM2-SR5"]=10
+    ["CMCC-CM2-SR5"]=20
     ["HadGEM3-GC31-MM"]=10
     ["EC-Earth3"]=10
     ["MPI-ESM1-2-LR"]=16
