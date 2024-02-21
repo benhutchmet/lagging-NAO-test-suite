@@ -92,7 +92,7 @@ def load_data(
     end_year: int = 2018,  # Last year of years 2-5
     forecast_range: str = "all_forecast_years",
     region: str = "global",
-    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data"
+    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
 ):
     """
     Functions which loads the processed full period data into an array of shape
@@ -149,10 +149,20 @@ def load_data(
         # Hard code full forecast range
         full_forecast_years = 10
 
-    if forecast_range not in ["1", "2", "3", "4", "5", "6"] and season not in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+    if forecast_range not in ["1", "2", "3", "4", "5", "6"] and season not in [
+        "DJFM",
+        "DJF",
+        "ONDJFM",
+        "NDJFM",
+    ]:
         # Set the number of forecast years
         no_forecast_years = 8
-    elif forecast_range not in ["1", "2", "3", "4", "5", "6"] and season in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+    elif forecast_range not in ["1", "2", "3", "4", "5", "6"] and season in [
+        "DJFM",
+        "DJF",
+        "ONDJFM",
+        "NDJFM",
+    ]:
         # Set the number of forecast years
         no_forecast_years = 9
     else:
@@ -181,7 +191,6 @@ def load_data(
 
         # Modify the end year
         last_year = last_year + 1
-
 
     # Generate the years array
     years = np.arange(start_year, end_year + 1)
@@ -260,10 +269,30 @@ def load_data(
 
             if "-" in forecast_range:
                 # Assert that files exist for each ensemble member
-                assert len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc")]) == len(ens_list), f"{model} does not have files for each ensemble member for year {year}"       
+                assert len(
+                    [
+                        file
+                        for file in file_list
+                        if fnmatch.fnmatch(
+                            file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc"
+                        )
+                    ]
+                ) == len(
+                    ens_list
+                ), f"{model} does not have files for each ensemble member for year {year}"
             else:
                 # Assert that files exist for each ensemble member
-                assert (len([file for file in file_list if fnmatch.fnmatch(file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc")]) == len(ens_list)), f"{model} does not have files for each ensemble member for year {year}"
+                assert len(
+                    [
+                        file
+                        for file in file_list
+                        if fnmatch.fnmatch(
+                            file, f"*s{year}*_years_{first_year}-{last_year}*_anoms.nc"
+                        )
+                    ]
+                ) == len(
+                    ens_list
+                ), f"{model} does not have files for each ensemble member for year {year}"
         # Append this list to the dictionary
         nens_dict[model] = ens_list
 
@@ -348,13 +377,16 @@ def load_data(
                 init_year = int(init_year_pattern.split("-")[0][1:])
 
                 # Load the file using xarray
-                data = xr.open_dataset(
-                    file, chunks={"time": 10, "lat": 10, "lon": 10}
-                )
+                data = xr.open_dataset(file, chunks={"time": 10, "lat": 10, "lon": 10})
 
                 # If lagging necessary, then will have to modify
                 # If forecast range does not contain a hyphen
-                if forecast_range == '1' and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                if forecast_range == "1" and season in [
+                    "DJFM",
+                    "DJF",
+                    "NDJFM",
+                    "ONDJFM",
+                ]:
                     print("forecast range does not contain a hyphen")
                     print("Extracting first season: ", season)
 
@@ -363,14 +395,24 @@ def load_data(
 
                     # Set up the last year
                     last_year = init_year
-                elif forecast_range == '1' and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif forecast_range == "1" and season not in [
+                    "DJFM",
+                    "DJF",
+                    "NDJFM",
+                    "ONDJFM",
+                ]:
 
                     # Set up the first year
                     first_year = init_year + 1
 
                     # Set up the last year
                     last_year = init_year + 1
-                elif forecast_range == '2' and season in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif forecast_range == "2" and season in [
+                    "DJFM",
+                    "DJF",
+                    "NDJFM",
+                    "ONDJFM",
+                ]:
                     print("forecast range does not contain a hyphen")
                     print("Extracting second season: ", season)
 
@@ -379,7 +421,12 @@ def load_data(
 
                     # Set up the last year
                     last_year = init_year + 1
-                elif forecast_range == '2' and season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif forecast_range == "2" and season not in [
+                    "DJFM",
+                    "DJF",
+                    "NDJFM",
+                    "ONDJFM",
+                ]:
                     # Set up the first year
                     first_year = init_year + 2
 
@@ -387,16 +434,16 @@ def load_data(
                     last_year = init_year + 2
                 elif season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     # Set up the first year
-                    first_year = init_year + 2 # e.g. for s1961 would be 1963
+                    first_year = init_year + 2  # e.g. for s1961 would be 1963
 
                     # Set up the last year
-                    last_year = init_year + 9 # e.g. for s1961 would be 1970
+                    last_year = init_year + 9  # e.g. for s1961 would be 1970
                 else:
                     # Set up the first year
-                    first_year = init_year + 1 # e.g. for s1961 would be 1962
+                    first_year = init_year + 1  # e.g. for s1961 would be 1962
 
                     # Set up the last year
-                    last_year = init_year + 9 # e.g. for s1961 would be 1970
+                    last_year = init_year + 9  # e.g. for s1961 would be 1970
 
                 # Print the period we are constraining the data to
                 print(
@@ -433,6 +480,7 @@ def load_data(
 
     # Return the data array
     return data_arr
+
 
 # TODO: Fix this function for the alternate lag 1 and 2 year case
 # If the second year has some skill
@@ -525,19 +573,32 @@ def alternate_lag(
 
                 # print the years which we are taking the mean over
                 print("start year: ", start_year + j, " end year: ", end_year + j)
-                print(f"starting at index {start_year - start_index + j}"
-                      f"stoppping at index {end_year - start_index + j + 1}")
+                print(
+                    f"starting at index {start_year - start_index + j}"
+                    f"stoppping at index {end_year - start_index + j + 1}"
+                )
 
                 if forecast_range != "2-9":
                     # Take the mean over the forecast years
                     ensemble_member_data_mean = np.mean(
-                        ensemble_member_data[start_year - start_index + j : end_year - start_index + j + 1, :, :],
+                        ensemble_member_data[
+                            start_year
+                            - start_index
+                            + j : end_year
+                            - start_index
+                            + j
+                            + 1,
+                            :,
+                            :,
+                        ],
                         axis=0,
                     )
                 else:
                     # Take the mean over the forecast years
                     ensemble_member_data_mean = np.mean(
-                        ensemble_member_data[start_year - start_index : end_year - start_index + 1, :, :],
+                        ensemble_member_data[
+                            start_year - start_index : end_year - start_index + 1, :, :
+                        ],
                         axis=0,
                     )
 
@@ -633,6 +694,8 @@ def main():
     elif variable == "rsds":
         models_list = dicts.rsds_models
         # models_list = dicts.nov_init_models_rsds
+    elif variable == "pr":
+        models_list = dicts.pr_models
     else:
         raise ValueError("variable not recognised")
 
@@ -644,7 +707,7 @@ def main():
         start_year=start_year,
         end_year=end_year,
         forecast_range=forecast_range,
-        region=region
+        region=region,
     )
 
     # Extract the current time
@@ -662,7 +725,9 @@ def main():
     # If the forecas range does not contain a hyphen
     if "-" not in forecast_range:
         # Print that we are not calculating the alternate lag
-        print("Not calculating the alternate lag for single year forecast range. Exiting.")
+        print(
+            "Not calculating the alternate lag for single year forecast range. Exiting."
+        )
 
         # Exit the function
         return

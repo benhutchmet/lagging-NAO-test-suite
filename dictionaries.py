@@ -1,41 +1,158 @@
 # Dictionaries used for the python stage of the processing
 
 # models used
-models = [ "BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+models = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CanESM5",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MPI-ESM1-2-LR",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 
 # Models initialized in November (October NorCPM1) for psl
-nov_init_models_psl = [ "MPI-ESM1-2-HR", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+nov_init_models_psl = [
+    "MPI-ESM1-2-HR",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MPI-ESM1-2-LR",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 
 # nov init models tas
-nov_init_models_tas = ["MPI-ESM1-2-HR", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+nov_init_models_tas = [
+    "MPI-ESM1-2-HR",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MPI-ESM1-2-LR",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 
 # Models initilialized in January for psl
-jan_init_models_psl = [ "BCC-CSM2-MR", "CanESM5", "IPSL-CM6A-LR"]
+jan_init_models_psl = ["BCC-CSM2-MR", "CanESM5", "IPSL-CM6A-LR"]
 
-psl_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+psl_models = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CanESM5",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MPI-ESM1-2-LR",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
+
+pr_models = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CanESM5",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MPI-ESM1-2-LR",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "NorCPM1",
+]
 
 # models no canesm
-models_no_can = [ "BCC-CSM2-MR", "MPI-ESM1-2-HR", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+models_no_can = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MPI-ESM1-2-LR",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 # Set up the sfcWind models
-#FIXME: update this once models downloaded
+# FIXME: update this once models downloaded
 # correct as of 30Jan2024
-sfcWind_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "HadGEM3-GC31-MM", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5"]
+sfcWind_models = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CMCC-CM2-SR5",
+    "CanESM5",
+    "HadGEM3-GC31-MM",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+]
 
 # Nov init models for sfcWind
-nov_init_models_sfcWind = [model for model in sfcWind_models if model not in jan_init_models_psl]
+nov_init_models_sfcWind = [
+    model for model in sfcWind_models if model not in jan_init_models_psl
+]
 
 # Set up the rsds models
-#FIXME: update this once models downloaded
-rsds_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "HadGEM3-GC31-MM", "EC-Earth3", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+# FIXME: update this once models downloaded
+rsds_models = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "HadGEM3-GC31-MM",
+    "CanESM5",
+    "CMCC-CM2-SR5",
+    "EC-Earth3",
+    "FGOALS-f3-L",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 
 # Nov init models for rsds
-nov_init_models_rsds = [model for model in rsds_models if model not in jan_init_models_psl]
+nov_init_models_rsds = [
+    model for model in rsds_models if model not in jan_init_models_psl
+]
 
 # Models used in Marcheggiani et al. (2023)
-marcheg_models = ['BCC-CSM2-MR', 'MPI-ESM1-2-HR', 'CanESM5', 'CMCC-CM2-SR5', 'HadGEM3-GC31-MM', 'EC-Earth3', 'MIROC6', 'IPSL-CM6A-LR', 'CESM1-1-CAM5-CMIP5', 'NorCPM1']
+marcheg_models = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CanESM5",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 
 # CMIP6 models used in Smith et al. (2020)
-smith_cmip6_models = [ 'MPI-ESM1-2-HR', 'HadGEM3-GC31-MM', 'EC-Earth3', 'MIROC6', 'IPSL-CM6A-LR', 'CESM1-1-CAM5-CMIP5', 'NorCPM1']
+smith_cmip6_models = [
+    "MPI-ESM1-2-HR",
+    "HadGEM3-GC31-MM",
+    "EC-Earth3",
+    "MIROC6",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+    "NorCPM1",
+]
 
 # File path for the observations from ERA5
 # Processed using CDO manipulation
@@ -54,10 +171,14 @@ full_era5 = "/home/users/benhutch/ERA5/adaptor.mars.internal-1691509121.3261805-
 base_directory = "/home/users/benhutch/alternate-lag-processed-data"
 
 # Define the path to the processed azores data file
-azores_data_path = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_azores.nc"
+azores_data_path = (
+    "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_azores.nc"
+)
 
 # Define the path to the processed iceland data file
-iceland_data_path = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_iceland.nc"
+iceland_data_path = (
+    "/home/users/benhutch/lagging-NAO-test-suite/saved_data/processed_data_iceland.nc"
+)
 
 # saved data dir
 saved_data_dir = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/"

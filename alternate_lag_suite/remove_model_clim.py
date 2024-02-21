@@ -73,6 +73,7 @@ from iris.time import PartialDateTime
 # FIXME: Testing for
 # Import CDO
 from cdo import *
+
 cdo = Cdo()
 
 # Import local modules
@@ -443,7 +444,9 @@ def extract_model_years(
             print(f"Type of variable: {type(variable)}")
             print(f"Type of model: {type(model)}")
             print(f"Type of region: {type(region)}")
-            print(f"Type of forecast_range: {type(forecast_range)}") # forecast range is a list?
+            print(
+                f"Type of forecast_range: {type(forecast_range)}"
+            )  # forecast range is a list?
             print(f"Type of season: {type(season)}")
             print(f"Type of init_year: {type(init_year)}")
             print(f"Type of variant_label: {type(variant_label)}")
@@ -481,7 +484,21 @@ def extract_model_years(
             # )
 
             # form the original file path
-            original_file = output_dir + "/" + variable + "/" + model + "/" + region + "/" + forecast_range + "/" + season + "/outputs/" + f"*s{init_year}*{variant_label}*_years_?-?.nc"
+            original_file = (
+                output_dir
+                + "/"
+                + variable
+                + "/"
+                + model
+                + "/"
+                + region
+                + "/"
+                + forecast_range
+                + "/"
+                + season
+                + "/outputs/"
+                + f"*s{init_year}*{variant_label}*_years_?-?.nc"
+            )
 
             # Print the original file
             print(f"Original file: {original_file}")
@@ -490,10 +507,13 @@ def extract_model_years(
             assert len(glob.glob(original_file)) == 1, "The file does not exist."
 
             # Load the file
-            ds = xr.open_dataset(glob.glob(original_file)[0], chunks={"time": 10, "lat": 10, "lon": 10})
+            ds = xr.open_dataset(
+                glob.glob(original_file)[0], chunks={"time": 10, "lat": 10, "lon": 10}
+            )
 
             # Set the years to be extracted
-            first_year = init_year + start_year - 1 ; last_year = init_year + end_year - 1
+            first_year = init_year + start_year - 1
+            last_year = init_year + end_year - 1
 
             # Extract the years
             ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
@@ -638,14 +658,14 @@ def calculate_model_climatology(
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
-    if len(files) != len(ens_list) * len(
-        range(start_year, end_year + 1)
-    ):
+    if len(files) != len(ens_list) * len(range(start_year, end_year + 1)):
         # Print
         print("The number of files does not match the number of ensemble members.")
 
         # Print that we are deleting the files from outside the range
-        print(f"Deleting files from outside the range specified by {start_year} and {end_year}.")
+        print(
+            f"Deleting files from outside the range specified by {start_year} and {end_year}."
+        )
 
         # Loop over the files
         for file in files:
@@ -698,7 +718,6 @@ def calculate_model_climatology(
     else:
         # Set up the paths
         paths = os.path.join(path, "*_years_?-?.nc")
-
 
     # Calculate the model climatology
     cdo.ensmean(input=paths, output=output_path)
@@ -913,7 +932,10 @@ def remove_model_climatology(
 
         # Create the file name
         # cut the final .nc and replace with _anoms.nc
-        filename = base_name[:-3] + f"_years_{first_year}-{last_year}_start_{start_year}_end_{end_year}_anoms.nc"
+        filename = (
+            base_name[:-3]
+            + f"_years_{first_year}-{last_year}_start_{start_year}_end_{end_year}_anoms.nc"
+        )
 
         # Set the path for the files
         path = os.path.join(
@@ -924,26 +946,29 @@ def remove_model_climatology(
             forecast_range,
             season,
             "outputs",
-            )
+        )
 
         # If the file exists and the model is not HadGEM3-GC31-MM
-        if os.path.exists(os.path.join(path, prev_filename)) and model != "HadGEM3-GC31-MM":
+        if (
+            os.path.exists(os.path.join(path, prev_filename))
+            and model != "HadGEM3-GC31-MM"
+        ):
             print(f"The file {prev_filename} already exists.")
             print(f"Renaming the file to {filename}.")
             print(f"As the correct climatology has already been removed.")
 
             # change the filename of the existing file
-            os.rename(
-                os.path.join(path, prev_filename), os.path.join(path, filename)
-            )
-        elif os.path.exists(os.path.join(path, prev_filename)) and model == "HadGEM3-GC31-MM":
+            os.rename(os.path.join(path, prev_filename), os.path.join(path, filename))
+        elif (
+            os.path.exists(os.path.join(path, prev_filename))
+            and model == "HadGEM3-GC31-MM"
+        ):
             print("Deleting the previous file for HadGEM3-GC31-MM.")
             print(f"Deleting the file {prev_filename}.")
             print(f"As the incorrect climatology has been removed.")
 
             # Delete the previous file
             os.remove(os.path.join(path, prev_filename))
-
 
         # Form the path
         # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-5/DJFM/outputs
@@ -1030,6 +1055,8 @@ def main():
         models_list = dicts.models
     elif variable == "rsds":
         models_list = dicts.rsds_models
+    elif variable == "pr":
+        models_list = dicts.pr_models
     else:
         raise ValueError("variable not recognised")
 
@@ -1053,7 +1080,6 @@ def main():
 
     # Print the model
     print(f"Model: {model}")
-
 
     # Print the arguments
     print(f"Model: {model}")
