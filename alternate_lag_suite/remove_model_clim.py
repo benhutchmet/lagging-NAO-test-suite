@@ -497,7 +497,7 @@ def extract_model_years(
                 + "/"
                 + season
                 + "/outputs/"
-                + f"*s{init_year}*{variant_label}*_years_?-?.nc"
+                + f"*s{init_year}*{variant_label}*.nc"
             )
 
             # Print the original file
