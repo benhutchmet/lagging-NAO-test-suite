@@ -453,9 +453,16 @@ elif [ "$variable" == "sfcWind" ]; then
     # set up the remaining models downloaded from ESGF
     # this includes FGOALS-f3-L, IPSL-CM6A-LR, MIROC6, MPI-ESM1-2-HR, CanESM5, CMCC-CM2-SR5
     # these are in a different canari folder
-    elif [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
+    elif [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ]; then
         # set up the input files from canari
         files=${canari_dir}/${experiment}/${variable}/${model}/data/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g*_*.nc
+
+    # Elif the model is CMCC-CM2-SR5
+    elif [ "$model" == "CMCC-CM2-SR5" ]; then
+
+        # Set up the input files from canari
+        files=${canari_dir}/${experiment}/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p*f*_g*_*.nc
+        
     else
         echo "[ERROR] Model not recognised for variable sfcWind"
         exit 1
