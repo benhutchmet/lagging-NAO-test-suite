@@ -512,8 +512,8 @@ def extract_model_years(
             )
 
             # Set the years to be extracted
-            first_year = init_year + start_year - 1
-            last_year = init_year + end_year - 1
+            first_year = int(init_year) + int(start_year) - 1
+            last_year = int(init_year) + int(end_year) - 1
 
             # Extract the years
             ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
