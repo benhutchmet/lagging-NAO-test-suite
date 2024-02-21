@@ -183,22 +183,22 @@ for run in $(seq 1 $nens); do
         OUTPUT_FILE_PATH="${OUTPUT_DIR}/${OUTPUT_FILE}"
 
         # If the output file exists
-        if [ -f $OUTPUT_FILE_PATH ]; then
-            echo "Output file exists: $OUTPUT_FILE_PATH"
-            echo "Checking the size of the output file"
-            OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
+        # if [ -f $OUTPUT_FILE_PATH ]; then
+        #     echo "Output file exists: $OUTPUT_FILE_PATH"
+        #     echo "Checking the size of the output file"
+        #     OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
 
-            # If the output file size is greater than 10000 bytes
-            if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
-                echo "Output file size is greater than 10000 bytes"
-                echo "Skipping this run"
-                continue
-            else
-                echo "Output file size is less than 10000 bytes"
-                echo "Removing the output file and resubmitting the job"
-                rm $OUTPUT_FILE_PATH
-            fi
-        fi
+        #     # If the output file size is greater than 10000 bytes
+        #     if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
+        #         echo "Output file size is greater than 10000 bytes"
+        #         echo "Skipping this run"
+        #         continue
+        #     else
+        #         echo "Output file size is less than 10000 bytes"
+        #         echo "Removing the output file and resubmitting the job"
+        #         rm $OUTPUT_FILE_PATH
+        #     fi
+        # fi
 
         bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
     else
@@ -216,23 +216,23 @@ for run in $(seq 1 $nens); do
             # Set up the output file path
             OUTPUT_FILE_PATH="${OUTPUT_DIR}/${OUTPUT_FILE}"
 
-            # If the output file exists
-            if [ -f $OUTPUT_FILE_PATH ]; then
-                echo "Output file exists: $OUTPUT_FILE_PATH"
-                echo "Checking the size of the output file"
-                OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
+            # # If the output file exists
+            # if [ -f $OUTPUT_FILE_PATH ]; then
+            #     echo "Output file exists: $OUTPUT_FILE_PATH"
+            #     echo "Checking the size of the output file"
+            #     OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
 
-                # If the output file size is greater than 10000 bytes
-                if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
-                    echo "Output file size is greater than 10000 bytes"
-                    echo "Skipping this run"
-                    continue
-                else
-                    echo "Output file size is less than 10000 bytes"
-                    echo "Removing the output file and resubmitting the job"
-                    rm $OUTPUT_FILE_PATH
-                fi
-            fi
+            #     # If the output file size is greater than 10000 bytes
+            #     if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
+            #         echo "Output file size is greater than 10000 bytes"
+            #         echo "Skipping this run"
+            #         continue
+            #     else
+            #         echo "Output file size is less than 10000 bytes"
+            #         echo "Removing the output file and resubmitting the job"
+            #         rm $OUTPUT_FILE_PATH
+            #     fi
+            # fi
 
             # Submit the job
             bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
