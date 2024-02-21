@@ -100,7 +100,7 @@ declare -A sfcWind_models_nens
 sfcWind_models_nens=(["BCC-CSM2-MR"]=8
     ["MPI-ESM1-2-HR"]=10
     ["CanESM5"]=20
-    ["CMCC-CM2-SR5"]=10
+    ["CMCC-CM2-SR5"]=20
     ["HadGEM3-GC31-MM"]=10
     ["FGOALS-f3-L"]=3
     ["IPSL-CM6A-LR"]=10
@@ -129,7 +129,7 @@ single_file_models="BCC-CSM2-MR MPI-ESM1-2-HR CanESM5 CMCC-CM2-SR5 MRI-ESM2-0 MP
 
 multi_file_models="HadGEM3-GC31-MM EC-Earth3 EC-Earth3-HR"
 
-sfcWind_models="BCC-CSM2-MR MPI-ESM1-2-HR CanESM5 CESM1-1-CAM5-CMIP5 EC-Earth3 FGOALS-f3-L MIROC6 IPSL-CM6A-LR HadGEM3-GC31-MM"
+sfcWind_models="BCC-CSM2-MR MPI-ESM1-2-HR CanESM5 CESM1-1-CAM5-CMIP5 EC-Earth3 FGOALS-f3-L MIROC6 IPSL-CM6A-LR HadGEM3-GC31-MM CMCC-CM2-SR5"
 
 # sfcwind missing CMCC-CM2-SR5, MPI-ESM1-2-LR, NorCPM1
 sfcWind_models_numbers=1,2,3,5,6,8,9,10,11
