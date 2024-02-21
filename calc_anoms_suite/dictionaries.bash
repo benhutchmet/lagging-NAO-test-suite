@@ -49,7 +49,7 @@ declare -A psl_models_nens=(["BCC-CSM2-MR"]=8
 declare -A pr_models_nens
 pr_models_nens=(["BCC-CSM2-MR"]=8
     ["MPI-ESM1-2-HR"]=10
-    ["CanESM5"]=40
+    ["CanESM5"]=20
     ["CMCC-CM2-SR5"]=10
     ["HadGEM3-GC31-MM"]=10
     ["EC-Earth3"]=10

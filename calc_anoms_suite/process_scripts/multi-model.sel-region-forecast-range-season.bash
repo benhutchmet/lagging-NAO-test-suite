@@ -811,7 +811,11 @@ elif [ "${variable}" == "pr" ]; then
         # If the merged file already exists, do not overwrite
         if [ -f "$i1_merged_file_path" ]; then
             echo "INFO: Merged file already exists: $i1_merged_file_path"
-            echo "INFO: Not overwriting $i1_merged_file_path"
+            echo "INFO: removing merged file"
+            rm $i1_merged_file_path
+
+            # Merge the files
+            cdo mergetime $i1_multi_files $i1_merged_file_path
         else
             echo "INFO: Merged file does not exist: $i1_merged_file_path"
             echo "INFO: Proceeding with script"
@@ -825,7 +829,13 @@ elif [ "${variable}" == "pr" ]; then
         # If the merged file already exists, do not overwrite
         if [ -f "$i2_merged_file_path" ]; then
             echo "INFO: Merged file already exists: $i2_merged_file_path"
-            echo "INFO: Not overwriting $i2_merged_file_path"
+            echo "Removing merged file"
+
+            # Remove the merged file
+            rm $i2_merged_file_path
+
+            # Merge the files
+            cdo mergetime $i2_multi_files $i2_merged_file_path
         else
             echo "INFO: Merged file does not exist: $i2_merged_file_path"
             echo "INFO: Proceeding with script"
@@ -838,6 +848,9 @@ elif [ "${variable}" == "pr" ]; then
 
         # Set up the input files
         files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p1f1_gr_${start_year}-${end_year}.nc"
+
+        # /gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/data/pr/EC-Earth3/merged_files/pr_Amon_EC-Earth3_dcppA-hindcast_s1993-r10i1p1f1_gr_199311-200410.nc
+        # /gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/data/pr/EC-Earth3/merged_files/pr_Amon_EC-Earth3_dcppA-hindcast_s1993-r10i2p1f1_gr_199311-200410.nc
 
     else
         echo "[ERROR] Model not recognised for variable pr"

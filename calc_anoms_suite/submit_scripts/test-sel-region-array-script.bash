@@ -203,40 +203,23 @@ for run in $(seq 1 $nens); do
         bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
     else
         echo "Two init schemes for $model"
-        # Loop over the init schemes
-        for init_scheme in $(seq 1 2); do
 
-            # Echo the init scheme
-            echo "Processing init scheme: $init_scheme"
+        init_scheme_1 = "1"
+        init_scheme_2 = "2"
 
-            # Set up the output file name
-            # Example file name = "all-years-DJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1999-r4i1_gn_199911-201003.nc"
-            OUTPUT_FILE="all-years-${season}-global-${variable}_Amon_${model}_${experiment}_s${SLURM_ARRAY_TASK_ID}-r${run}i${init_scheme}_g?_*.nc"
+        # Set up the output file name
+        # Example file name = "all-years-DJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1999-r4i1_gn_199911-201003.nc"
+        OUTPUT_FILE_1="all-years-${season}-global-${variable}_Amon_${model}_${experiment}_s${SLURM_ARRAY_TASK_ID}-r${run}i${init_scheme_1}_g?_*.nc"
+        OUTPUT_FILE_2="all-years-${season}-global-${variable}_Amon_${model}_${experiment}_s${SLURM_ARRAY_TASK_ID}-r${run}i${init_scheme_2}_g?_*.nc"
 
-            # Set up the output file path
-            OUTPUT_FILE_PATH="${OUTPUT_DIR}/${OUTPUT_FILE}"
+        # Set up the output file path
+        OUTPUT_FILE_PATH_1="${OUTPUT_DIR}/${OUTPUT_FILE_1}"
+        OUTPUT_FILE_PATH_2="${OUTPUT_DIR}/${OUTPUT_FILE_2}"
 
-            # # If the output file exists
-            # if [ -f $OUTPUT_FILE_PATH ]; then
-            #     echo "Output file exists: $OUTPUT_FILE_PATH"
-            #     echo "Checking the size of the output file"
-            #     OUTPUT_FILE_SIZE=$(stat -c%s $OUTPUT_FILE_PATH)
+        # Submit the jobs for both init schemes
+        bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme_1}
 
-            #     # If the output file size is greater than 10000 bytes
-            #     if [ $OUTPUT_FILE_SIZE -gt 10000 ]; then
-            #         echo "Output file size is greater than 10000 bytes"
-            #         echo "Skipping this run"
-            #         continue
-            #     else
-            #         echo "Output file size is less than 10000 bytes"
-            #         echo "Removing the output file and resubmitting the job"
-            #         rm $OUTPUT_FILE_PATH
-            #     fi
-            # fi
-
-            # Submit the job
-            bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme}
-        done
+        bash ${process_script} ${model} ${SLURM_ARRAY_TASK_ID} ${run} ${variable} ${season} ${experiment} ${init_scheme_2}
     fi
 done
 
