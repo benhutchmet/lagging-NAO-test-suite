@@ -227,7 +227,7 @@ elif [ "$variable" == "tas" ]; then
 elif [ "$variable" == "rsds" ]; then
     # set up the models that have rsds on JASMIN
     # thes incldue NorCPM1, IPSL-CM6A-LR, MIROC6, MPI-ESM1-2-HR, CanESM5, CMCC-CM2-SR5
-    if [ "$model" == "NorCPM1" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ] || [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
+    if [ "$model" == "NorCPM1" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "MIROC6" ] || [ "$model" == "MPI-ESM1-2-HR" ]; then
         
         # set up the input files
         files="/badc/cmip6/data/CMIP6/DCPP/$model_group/$model/${experiment}/s${year}-r${run}i${init_scheme}p?f?/Amon/rsds/g?/files/d????????/*.nc"
@@ -238,6 +238,13 @@ elif [ "$variable" == "rsds" ]; then
     
         # set up the input files from canari
         files="${canari_base_dir}/${experiment}/data/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p*f*_g*_*.nc"
+
+    # For the new files downloaded to canari
+    # for models CanESM5 and CMCC-CM2-SR5
+    elif [ "$model" == "CanESM5" ] || [ "$model" == "CMCC-CM2-SR5" ]; then
+
+        # set up the input files from canari
+        files="${canari_base_dir}/${experiment}/${variable}/${model}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i*p*f*_g*_*.nc"
 
     elif [ "$model" == "HadGEM3-GC31-MM" ]; then
         
