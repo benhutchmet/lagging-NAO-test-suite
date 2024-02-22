@@ -1,5 +1,44 @@
 """
 Functions for selecting the season, taking the annual means and regridding the data in python.
+
+Author: Ben Hutchins
+Date: February 2024
+
+Usage:
+    python sel_reg_fcst_seasons_functions.py <model> <variable> <season> <experiment> <region> <start_year> <end_year> <init_year>
+
+Example:
+    python sel_reg_fcst_seasons_functions.py MPI-ESM1-2-LR psl DJF dcppA-hindcast global 1961 2014 1970
+
+Arguments:
+
+    model : str
+        The model of interest.
+
+    variable : str
+        The variable of interest.
+
+    season : str
+        The season of interest.
+
+    experiment : str
+        The experiment of interest.
+
+    region : str
+        The region of interest.
+
+    start_year : int
+        The start year of the time period.
+
+    end_year : int
+        The end year of the time period.
+
+    init_year : int
+        The initialisation year to be processed and regridded
+
+Returns:
+    The regridded files for the given model, variable, season, experiment, start year, end year and initialisation year.
+
 """
 
 # Import local modules
@@ -7,6 +46,7 @@ import sys
 import os
 import glob
 import re
+import argparse
 
 # Import third-party modules
 import numpy as np
@@ -108,6 +148,16 @@ def load_model_data(
         print("The unique members are: ", unique_members)
         print("The length of the unique members is: ", len(unique_members))
 
+        # If the model is CanESM5
+        if model == "CanESM5":
+            # Limit the unique members to those from r1-r20 inclusive
+            valid_r_numbers = [re.compile(f"r{i}i.*p.*f.*") for i in range(1, 21)]
+            unique_members = [
+                member
+                for member in unique_members
+                if any(r.match(member) for r in valid_r_numbers)
+            ]
+
         # Loop over the years
         for year in tqdm(range(start_year, end_year + 1)):
             # Loop over the unique members
@@ -147,6 +197,16 @@ def load_model_data(
 
         # Find the unique elements
         unique_members = list(set(model_folders_split))
+
+        # If the model is CanESM5
+        if model == "CanESM5":
+            # Limit the unique members to those from r1-r20 inclusive
+            valid_r_numbers = [re.compile(f"r{i}i.*p.*f.*") for i in range(1, 21)]
+            unique_members = [
+                member
+                for member in unique_members
+                if any(r.match(member) for r in valid_r_numbers)
+            ]
 
         # Print the unique members
         print("The unique members are: ", unique_members)
@@ -515,6 +575,9 @@ def check_regrid_files_exist(
     # Set up the file_sizes
     file_sizes = []
 
+    # File exists
+    file_exists = []
+
     # Set up the directory in which the data are stored
     files_dir = (
         f"{files_dir}/{variable}/{model}/{region}/all_forecast_years/{season}/outputs"
@@ -534,6 +597,16 @@ def check_regrid_files_exist(
 
     # Find the unique elements
     unique_members = list(set(model_files_split))
+
+    # If the model is CanESM5
+    if model == "CanESM5":
+        # Limit the unique members to those from r1-r20 inclusive
+        valid_r_numbers = [re.compile(f"r{i}i.*p.*f.*") for i in range(1, 21)]
+        unique_members = [
+            member
+            for member in unique_members
+            if any(r.match(member) for r in valid_r_numbers)
+        ]
 
     # Print the unique members
     print("The unique members are: ", unique_members)
@@ -555,6 +628,15 @@ def check_regrid_files_exist(
                 os.path.getsize(glob.glob(file_path)[0]) > 10000
             ), "The file path is empty."
 
+            # If the file path exists and has a file size greater than 10000 bytes,set file_exists to True
+            if (
+                os.path.exists(glob.glob(file_path)[0])
+                and os.path.getsize(glob.glob(file_path)[0]) > 10000
+            ):
+                file_exists.append(True)
+            else:
+                file_exists.append(False)
+
             # Append the file path to the list
             file_paths.append(glob.glob(file_path)[0])
 
@@ -570,8 +652,111 @@ def check_regrid_files_exist(
             "file name": filenames,
             "file path": file_paths,
             "file size": file_sizes,
+            "file exists": file_exists,
         }
     )
 
     # Return the dataframe
     return files
+
+
+def main():
+    # Set up the argument parser
+    parser = argparse.ArgumentParser(
+        description="Select the season, take the annual means and regrid the data."
+    )
+
+    # Add the positional arguments
+    parser.add_argument("model", type=str, help="The model of interest.")
+    parser.add_argument("variable", type=str, help="The variable of interest.")
+    parser.add_argument("season", type=str, help="The season of interest.")
+    parser.add_argument("experiment", type=str, help="The experiment of interest.")
+    parser.add_argument("region", type=str, help="The region of interest.")
+    parser.add_argument(
+        "start_year", type=int, help="The start year of the time period."
+    )
+    parser.add_argument("end_year", type=int, help="The end year of the time period.")
+    parser.add_argument(
+        "init_year",
+        type=int,
+        help="The initialisation year to be processed and regridded.",
+    )
+
+    # Check that the correct number of arguments have been passed
+    if len(sys.argv) != 9:
+        print("The number of arguments is not equal to 9.")
+        sys.exit()
+
+    # Parse the arguments
+    args = parser.parse_args()
+
+    # Print the arguments
+    print("The model is: ", args.model)
+    print("The variable is: ", args.variable)
+    print("The season is: ", args.season)
+    print("The experiment is: ", args.experiment)
+    print("The region is: ", args.region)
+    print("The start year is: ", args.start_year)
+    print("The end year is: ", args.end_year)
+    print("The initialisation year is: ", args.init_year)
+
+    # First check that the output files do not already exist
+    files_df = check_regrid_files_exist(
+        variable=args.variable,
+        model=args.model,
+        season=args.season,
+        experiment=args.experiment,
+        region=args.region,
+        start_year=args.start_year,
+        end_year=args.end_year,
+    )
+
+    # If all of the file exists columns are True, print a message and exit
+    if all(files_df["file exists"] == True):
+        print("All of the output files already exist.")
+        sys.exit()
+
+    # Check that the input files exist
+    file_paths = load_model_data(
+        variable=args.variable,
+        model=args.model,
+        experiment=args.experiment,
+        start_year=args.start_year,
+        end_year=args.end_year,
+    )
+
+    # DO the intermediate file processing
+    int_file_paths = sel_season_shift(
+        file_paths=file_paths,
+        year=args.init_year,
+        season=args.season,
+        variable=args.variable,
+        model=args.model,
+    )
+
+    # Do the regridding
+    regrid_file_paths = regrid_int_files(
+        int_file_paths=int_file_paths,
+        variable=args.variable,
+        model=args.model,
+        season=args.season,
+        region=args.region,
+    )
+
+    # Print the length of the regridded file paths
+    print("The length of the regridded file paths is: ", len(regrid_file_paths))
+
+    # Print the first 5 regridded file paths
+    print("The first 5 regridded file paths are: ", regrid_file_paths[:5])
+
+    # Do some logging of the year, season, model, variable, experiment and region, that has been processed
+    print(
+        f"The year, season, model, variable, experiment and region that has been processed is: {args.init_year}, {args.season}, {args.model}, {args.variable}, {args.experiment}, {args.region}"
+    )
+
+    # Print a message to say that the script has finished
+    print("The script has finished.")
+
+
+if __name__ == "__main__":
+    main()
