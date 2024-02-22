@@ -59,6 +59,7 @@ Usage:
 import os
 import sys
 import argparse
+import re
 import glob
 
 # Import third-party modules
@@ -159,6 +160,12 @@ def check_files_exist(
         np.unique([file.split("_")[6] for file in glob.glob(start_year_pattern)])
     )
 
+    # If the model is CanESM5
+    if model == "CanESM5":
+        # Limit the unique members to those from r1-r20 inclusive
+        # Hardcoded for now
+        no_ens = 20
+
     # Print the number of ensemble members
     print(f"Number of ensemble members: {no_ens}")
 
@@ -174,6 +181,19 @@ def check_files_exist(
     # Print the list
     print(f"Ensemble members: {ens_list}")
 
+    # If the model is CanESM5
+    if model == "CanESM5":
+        # Limit the unique members to those from r1-r20 inclusive
+        valid_r_numbers = [re.compile(f"r{i}i.*p.*f.*") for i in range(1, 21)]
+        ens_list = [
+            member
+            for member in ens_list
+            if any(r.match(member) for r in valid_r_numbers)
+        ]
+
+    # Print the length of the ens_list
+    print(f"Length of ens_list: {len(ens_list)}")
+
     # Loop over the forecast years
     for year in range(start_year, end_year + 1):
         # Find the files for the year
@@ -188,7 +208,7 @@ def check_files_exist(
         # Assert that the number of files is the same as the number of
         # ensemble members
         assert (
-            year_len == no_ens
+            len(ens_list) <= year_len
         ), "The number of files does not match the number of ensemble members."
 
         # Loop over the ensemble members
@@ -520,6 +540,17 @@ def extract_model_years(
 
             # Take the time mean
             ds = ds.mean(dim="time")
+
+            # Set up the base name
+            base_name = os.path.basename(glob.glob(original_file)[0])
+
+            # If the original file still exists
+            if os.path.exists(glob.glob(original_file)[0]):
+                # Print that we are deleting the file
+                print(f"Deleting original file: {glob.glob(original_file)[0]}")
+
+                # Remove the original file
+                os.remove(glob.glob(original_file)[0])
 
             # Create the file name
             # cut the final .nc and replace with _years_2-9.nc
