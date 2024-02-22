@@ -568,6 +568,17 @@ def extract_model_years(
             # Close the dataset
             ds.close()
 
+    # Find files which end with years_3-6_years_3-6.nc
+    # and delete them
+    for file in glob.glob(
+        f"{path}/*years_{start_year}-{end_year}_years_{start_year}-{end_year}.nc"
+    ):
+        # Print that we are deleting the file
+        print(f"Deleting file: {file}")
+
+        # Remove the file
+        os.remove(file)
+
     # Print
     print("Finished.")
 
