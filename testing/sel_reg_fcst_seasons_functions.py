@@ -268,7 +268,7 @@ def sel_season_shift(
     for file in tqdm(file_paths):
 
         # Load the data
-        data = xr.open_dataset(file, chunks={"time": 1000, "lat": 91, "lon": 180})
+        data = xr.open_dataset(file)
 
         # # Print the data
         # print("The data is: ", data)
@@ -305,6 +305,17 @@ def sel_season_shift(
 
         # Set up the output file path
         output_file_path = f"{output_file_dir}/{new_file_name}"
+
+        # if the output file path exists and has a file size greater than 10000 bytes, do not save the data
+        if (
+            os.path.exists(output_file_path)
+            and os.path.getsize(output_file_path) > 10000
+        ):
+            print(
+                f"The file {output_file_path} already exists and has a file size greater than 10000 bytes."
+            )
+            int_file_paths.append(output_file_path)
+            continue
 
         # Save the data
         data.to_netcdf(output_file_path)
@@ -444,3 +455,123 @@ def regrid_int_files(
 
     # Return the regridded file paths
     return regrid_file_paths
+
+
+# Define a function to check whether the output files exist already
+def check_regrid_files_exist(
+    variable: str,
+    model: str,
+    season: str,
+    experiment: str,
+    region: str,
+    start_year: int,
+    end_year: int,
+    files_dir: str = "/work/scratch-nopw2/benhutch",
+):
+    """
+    A function to check whether all of the regridded file already exist.
+
+    Parameters
+
+    variable : str
+        The variable of interest.
+
+    model : str
+        The model of interest.
+
+    season : str
+        The season of interest.
+
+    experiment : str
+        The experiment of interest.
+
+    region : str
+        The region of interest.
+
+    start_year : int
+        The start year of the time period.
+
+    end_year : int
+        The end year of the time period.
+
+    files_dir : str
+        The directory containing the files.
+        Default is /work/scratch-nopw2/benhutch.
+
+    Returns
+    -------
+
+    files: dataframe
+        A dataframe containing the file names, paths and sizes.
+
+    """
+
+    # Set up an empty list for the file paths
+    file_paths = []
+
+    # Filenames
+    filenames = []
+
+    # Set up the file_sizes
+    file_sizes = []
+
+    # Set up the directory in which the data are stored
+    files_dir = (
+        f"{files_dir}/{variable}/{model}/{region}/all_forecast_years/{season}/outputs"
+    )
+
+    # List the files at this location
+    model_files = os.listdir(files_dir)
+
+    # Split the files by the "/" character
+    model_files_split = [file.split("/")[-1] for file in model_files]
+
+    # Split the filenames by the "_" character
+    model_files_split = [file.split("_")[4] for file in model_files_split]
+
+    # Split by the "-" character and extact the 1th element
+    model_files_split = [file.split("-")[1] for file in model_files_split]
+
+    # Find the unique elements
+    unique_members = list(set(model_files_split))
+
+    # Print the unique members
+    print("The unique members are: ", unique_members)
+    print("The length of the unique members is: ", len(unique_members))
+
+    # Loop over the years
+    for year in tqdm(range(start_year, end_year + 1)):
+        for member in unique_members:
+            # Create the file path
+            file_path = f"{files_dir}/all-years-{season}-{region}-{variable}_?mon_{model}_{experiment}_s{year}-{member}_g?_*-*.nc"
+
+            # Assert that the file path exists
+            assert (
+                len(glob.glob(file_path)) > 0
+            ), f"The file path does not exist for year: {year} and member: {member}"
+
+            # Assert that the filesize is greater than 10000 bytes
+            assert (
+                os.path.getsize(glob.glob(file_path)[0]) > 10000
+            ), "The file path is empty."
+
+            # Append the file path to the list
+            file_paths.append(glob.glob(file_path)[0])
+
+            # Append the filename to the list
+            filenames.append(glob.glob(file_path)[0].split("/")[-1])
+
+            # Append the file size to the list
+            file_sizes.append(os.path.getsize(glob.glob(file_path)[0]))
+
+    # Create a dataframe
+    files = pd.DataFrame(
+        {
+            "file name": filenames,
+            "file path": file_paths,
+            "file size": file_sizes,
+        }
+    )
+
+    # Return the dataframe
+    return files
