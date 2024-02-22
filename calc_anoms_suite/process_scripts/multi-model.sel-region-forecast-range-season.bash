@@ -846,6 +846,8 @@ elif [ "${variable}" == "pr" ]; then
             echo "[INFO] Finished merging files for $model"
         fi
 
+        # TODO: Problem is here - merged files are generated but not followed through
+
         # Set up the input files
         files="${merged_file_dir}/${variable}_Amon_${model}_${experiment}_s${year}-r${run}i${init_scheme}p1f1_gr_${start_year}-${end_year}.nc"
 

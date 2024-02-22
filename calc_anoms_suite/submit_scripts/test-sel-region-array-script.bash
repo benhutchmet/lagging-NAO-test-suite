@@ -204,8 +204,8 @@ for run in $(seq 1 $nens); do
     else
         echo "Two init schemes for $model"
 
-        init_scheme_1 = "1"
-        init_scheme_2 = "2"
+        init_scheme_1="1"
+        init_scheme_2="2"
 
         # Set up the output file name
         # Example file name = "all-years-DJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1999-r4i1_gn_199911-201003.nc"
