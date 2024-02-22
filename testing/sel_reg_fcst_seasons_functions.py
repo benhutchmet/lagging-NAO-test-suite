@@ -6,6 +6,7 @@ Functions for selecting the season, taking the annual means and regridding the d
 import sys
 import os
 import glob
+import re
 
 # Import third-party modules
 import numpy as np
@@ -13,6 +14,11 @@ import xarray as xr
 import pandas as pd
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+
+# Import cdo
+from cdo import *
+
+cdo = Cdo()
 
 
 # Define a function for loading the model data
@@ -187,6 +193,7 @@ def sel_season_shift(
     year: int,
     season: str,
     variable: str,
+    model: str,
     output_dir: str = "/work/scratch-nopw2/benhutch",
 ):
     """
@@ -203,6 +210,12 @@ def sel_season_shift(
 
     season : str
         The season of interest.
+
+    variable : str
+        The variable of interest.
+
+    model : str
+        The model of interest.
 
     output_dir : str
         The output directory.
@@ -257,8 +270,8 @@ def sel_season_shift(
         # Load the data
         data = xr.open_dataset(file, chunks={"time": 1000, "lat": 91, "lon": 180})
 
-        # Print the data
-        print("The data is: ", data)
+        # # Print the data
+        # print("The data is: ", data)
 
         # Select the months
         data = data.sel(time=data["time.month"].isin(months))
@@ -278,7 +291,7 @@ def sel_season_shift(
         data = data.resample(time="Y").mean("time")
 
         # Set up the output file dir
-        output_file_dir = f"{output_dir}/{variable}/{season}/{year}/tmp"
+        output_file_dir = f"{output_dir}/{variable}/{model}/{season}/{year}/tmp"
 
         # If the output file dir does not exist, create it
         if not os.path.exists(output_file_dir):
@@ -306,3 +319,128 @@ def sel_season_shift(
 
     # Return the intermediate file paths
     return int_file_paths
+
+
+# Write a function to perform the regridding on the intermediate files
+def regrid_int_files(
+    int_file_paths: list,
+    variable: str,
+    model: str,
+    season: str,
+    region: str,
+    gridspec_file: str = "/home/users/benhutch/gridspec/gridspec-global.txt",
+    output_dir: str = "/work/scratch-nopw2/benhutch",
+):
+    """
+    Regrid the intermediate files and save them to /work/scratch-nopw2/benhutch.
+
+    Parameters
+    ----------
+
+    int_file_paths : list
+        The list of intermediate file paths.
+
+    variable : str
+        The variable of interest.
+
+    model : str
+        The model of interest.
+
+    season : str
+        The season of interest.
+
+    region : str
+        The region of interest.
+
+    gridspec_file : str
+        The gridspec file.
+
+    output_dir : str
+        The output directory.
+
+    Returns
+    -------
+
+    regrid_file_paths : list
+        The list of regridded file paths. To be moved into gws/nopw/canari.
+    """
+
+    # Assert that the intermediate file paths is not empty
+    assert len(int_file_paths) > 0, "The intermediate file paths list is empty."
+
+    # Set up an empty list for the regridded file paths
+    regrid_file_paths = []
+
+    # Loop over the intermediate file paths
+    for file in tqdm(int_file_paths):
+
+        # Set up the output file dir
+        output_file_dir = f"{output_dir}/{variable}/{model}/{region}/all_forecast_years/{season}/outputs"
+
+        # Set up the output file name
+        # extract the base file name
+        base_file_name = file.split("/")[-1]
+
+        # Replace the extension _{season}_????_tmp.nc
+        # with .nc
+        pattern = f"_{season}_...._tmp.nc"
+        new_file_name = re.sub(pattern, ".nc", base_file_name)
+
+        # Set up the output file name
+        output_file_name = f"all-years-{season}-{region}-{new_file_name}"
+
+        # Set up the output file path
+        output_file_path = f"{output_file_dir}/{output_file_name}"
+
+        # If the output file dir does not exist, create it
+        if not os.path.exists(output_file_dir):
+            os.makedirs(output_file_dir)
+
+        # If the output file path exists and has a file size greater than 10000 bytes, do not regrid the file
+        if (
+            os.path.exists(output_file_path)
+            and os.path.getsize(output_file_path) > 10000
+        ):
+            print(
+                f"The file {output_file_path} already exists and has a file size greater than 10000 bytes."
+            )
+            regrid_file_paths.append(output_file_path)
+            continue
+        elif (
+            os.path.exists(output_file_path)
+            and os.path.getsize(output_file_path) < 10000
+        ):
+            print(
+                f"The file {output_file_path} already exists but has a file size less than 10000 bytes."
+            )
+            os.remove(output_file_path)
+
+            # Try regriding the file
+            try:
+                # Regrid the file
+                cdo.remapbil(gridspec_file, input=file, output=output_file_path)
+            except:
+                print(f"The file {file} could not be regridded.")
+                continue
+
+        elif not os.path.exists(output_file_path):
+            print(f"The file {output_file_path} does not exist.")
+
+            # Try regriding the file
+            try:
+                # Regrid the file
+                cdo.remapbil(gridspec_file, input=file, output=output_file_path)
+            except:
+                print(f"The file {file} could not be regridded.")
+                continue
+
+        # Append the output file path to the list
+        regrid_file_paths.append(output_file_path)
+
+    # Assert that the length of the regridded file paths is the same as the length of the intermediate file paths
+    assert len(regrid_file_paths) == len(
+        int_file_paths
+    ), "The length of the regridded file paths is not the same as the length of the intermediate file paths."
+
+    # Return the regridded file paths
+    return regrid_file_paths
