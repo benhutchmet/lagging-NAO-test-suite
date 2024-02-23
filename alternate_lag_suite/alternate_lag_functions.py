@@ -459,7 +459,7 @@ def load_data(
 
                 # Constrain the data from init-year-01-01 to init-year+10-12-31
                 data = data.sel(
-                    time=slice(f"{first_year}-01-01", f"{last_year + 1}-01-31")
+                    time=slice(f"{first_year}-01-01", f"{last_year + 1}-01-01")
                 )
 
                 # Extract the data for the variable
