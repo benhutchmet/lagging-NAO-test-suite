@@ -58,6 +58,7 @@ psl_models = [
     "IPSL-CM6A-LR",
     "CESM1-1-CAM5-CMIP5",
     "NorCPM1",
+    "MRI-ESM2-0",
 ]
 
 pr_models = [

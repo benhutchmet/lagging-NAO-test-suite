@@ -556,6 +556,9 @@ def extract_model_years(
             # cut the final .nc and replace with _years_2-9.nc
             filename = base_name[:-3] + f"_years_{start_year}-{end_year}.nc"
 
+            # Print the filename
+            print(f"Creating new file: {filename}")
+
             # Form the path
             full_path = os.path.join(path, filename)
 
