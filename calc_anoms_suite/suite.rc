@@ -1,8 +1,8 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model=MRI-ESM2-0
-        variable=psl
+        model=EC-Earth3
+        variable=pr
         season=ONDJFM,AYULGS
         experiment="dcppA-hindcast"
         region="global"

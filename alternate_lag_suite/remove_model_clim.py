@@ -926,10 +926,10 @@ def remove_model_climatology(
     # Set up an empty list of files
     files = []
 
-    # Create a list of the unique combinations of "r*i?"
-    ens_list = np.unique(
-        [file.split("_")[6] for file in glob.glob(f"{path}/*s{start_year}*")]
-    )
+    # # Create a list of the unique combinations of "r*i?"
+    # ens_list = np.unique(
+    #     [file.split("_")[6] for file in glob.glob(f"{path}/*s{start_year}*")]
+    # )
 
     # If the model is CanESM5
     if model == "CanESM5":

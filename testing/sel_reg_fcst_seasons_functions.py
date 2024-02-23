@@ -170,15 +170,62 @@ def load_model_data(
                 # # Print the file path
                 # print("The file path is: ", file_path)
 
-                # Assert that the file path exists
-                assert (
-                    len(glob.glob(file_path)) > 0
-                ), f"The file path does not exist for year: {year} and member: {member}"
+                # if the file path does not exist, or the size of the file path is less than 100000 bytes, continue
+                if (
+                    not os.path.exists(glob.glob(file_path)[0])
+                    or os.path.getsize(glob.glob(file_path)[0]) < 100000
+                ):
+                    print(
+                        f"The file path {file_path} does not exist or has a file size less than 100000 bytes."
+                    )
+                    # Find the final folder in model_path
+                    final_folder = model_path.split("/")[-1]
 
-                # Assert that the size of the file path is greater than 100000 bytes
-                assert (
-                    os.path.getsize(glob.glob(file_path)[0]) > 100000
-                ), "The file path is empty."
+                    # Print the final folder
+                    print("The final folder is: ", final_folder)
+
+                    # If the final folder is not "merged_files"
+                    # exit with an error message
+                    if final_folder != "merged_files":
+                        print(
+                            f"The final folder in model_path is not merged_files: {final_folder}"
+                        )
+                        sys.exit()
+
+                    # If the final folder is "merged_files"
+                    # We need to merge the files ourselves
+                    # Find the directory containing the files to be merged
+                    files_dir = f"/badc/cmip6/data/CMIP6/DCPP/*/{model}/${experiment}/s{year}-{member}/Amon/{variable}/g?/files/d*/"
+
+                    # Glob the files in this directory ending in .nc
+                    files = glob.glob(files_dir + "*.nc")
+
+                    # Assert that the length of the files is greater than 0
+                    assert (
+                        len(files) > 0
+                    ), "The length of the files is not greater than 0."
+
+                    # Set up the output file dir
+                    output_file_dir = f"{model_path}"
+
+                    # Assert that the output file dir exists
+                    assert os.path.exists(
+                        output_file_dir
+                    ), "The output file dir does not exist."
+
+                    # Set up the output file name
+                    output_file_name = f"{variable}_Amon_{model}_{experiment}_s{year}-{member}_g?_{year}11-{year+11}10.nc"
+
+                    # Set up the output file path
+                    output_file_path = f"{output_file_dir}/{output_file_name}"
+
+                    try:
+                        # Merge the files using cdo
+                        cdo.mergetime(input=files, output=output_file_path)
+                    except:
+                        print(f"The files {files} could not be merged.")
+                        # Exit with an error message
+                        sys.exit()
 
                 # Append the file path to the list
                 file_paths.append(glob.glob(file_path)[0])
@@ -711,15 +758,16 @@ def main():
             start_year=args.start_year,
             end_year=args.end_year,
         )
+
+        # If all of the file exists columns are True, print a message and exit
+        if all(files_df["file exists"] == True):
+            print("All of the output files already exist.")
+            sys.exit()
+
     except:
         print("The check_regrid_files_exist function failed.")
         print("continuing...")
         pass
-
-    # If all of the file exists columns are True, print a message and exit
-    if all(files_df["file exists"] == True):
-        print("All of the output files already exist.")
-        sys.exit()
 
     # Check that the input files exist
     file_paths = load_model_data(
