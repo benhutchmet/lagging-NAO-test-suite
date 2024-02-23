@@ -82,6 +82,18 @@ sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
 # Import dictionaries
 import dictionaries as dicts
 
+# Import the external function
+sys.path.append("/home/users/benhutch/skill-maps/python")
+
+# Import the functions
+import functions as funcs
+
+# Import the NAO matching functions
+sys.path.append("/home/users/benhutch/skill-maps/rose-suite-matching")
+
+# Import the NAO matching functions
+import nao_matching_seasons as nms_funcs
+
 
 # Define a function which loads the data
 def load_data(
@@ -653,6 +665,175 @@ def alternate_lag(
 
     # Return the lagged correlation
     return lagged_correlation
+
+
+# Define a function to calculate the NAO index for the period specified
+# And optionally plot this
+def calculate_NAO_index(
+    season: str,
+    start_year: int,
+    end_year: int,
+    forecast_range: str,
+    variable: str = "psl",
+    models_list: list = dicts.models,
+    plot: bool = False,
+    lag_var_adjust: bool = True,
+    alt_lag: bool = False,
+    winter_n_grid: dict = dicts.iceland_grid_corrected,
+    winter_s_grid: dict = dicts.azores_grid_corrected,
+    summer_n_grid: dict = dicts.snao_north_grid,
+    summer_s_grid: dict = dicts.snao_south_grid,
+    region: str = "global",
+    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
+):
+    """
+    Calculate the NAO index for the period specified and optionally plot this.
+
+    Parameters
+    ----------
+
+    season: str
+        The season to calculate the NAO index for.
+
+    start_year: int
+        The start year of the period to calculate the NAO index for.
+
+    end_year: int
+        The end year of the period to calculate the NAO index for.
+
+    forecast_range: str
+        The forecast range to calculate the NAO index for.
+
+    models_list: list
+        The list of models to calculate the NAO index for.
+
+    plot: bool
+        Whether to plot the NAO index or not.
+
+    winter_n_grid: dict
+        The grid to calculate the NAO index for the winter northern pole.
+
+    winter_s_grid: dict
+        The grid to calculate the NAO index for the winter southern pole.
+
+    summer_n_grid: dict
+        The grid to calculate the NAO index for the summer northern pole.
+
+    summer_s_grid: dict
+        The grid to calculate the NAO index for the summer southern pole.
+
+    region: str
+        The region to calculate the NAO index for.
+        Default is "global".
+
+    base_dir: str
+        The base directory to load the data from.
+        Default is '/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data'.
+
+    Returns
+    -------
+
+    NAO_index: xarray DataArray
+        The NAO index for the period specified.
+
+    """
+
+    # Set up the north and south grid lats to be used
+    if season in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+        # Set up the north and south grid lats
+        n_grid = winter_n_grid
+        s_grid = winter_s_grid
+    else:
+        # Set up the north and south grid lats
+        n_grid = summer_n_grid
+        s_grid = summer_s_grid
+
+    # Extract the lats and lons for the north and south grids
+    n_lat1, n_lat2 = n_grid["lat1"], n_grid["lat2"]
+    s_lat1, s_lat2 = s_grid["lat1"], s_grid["lat2"]
+
+    # Extract the lats and lons for the north and south grids
+    n_lon1, n_lon2 = n_grid["lon1"], n_grid["lon2"]
+    s_lon1, s_lon2 = s_grid["lon1"], s_grid["lon2"]
+
+    # Set up the first and last years according to the forecast range
+    if forecast_range == "2-9":
+        # Set up the raw first and last years
+        first_year = int(start_year) + 5
+        last_year = int(end_year) + 5
+    elif forecast_range == "2-5":
+        # Set up the raw first and last years
+        first_year = int(start_year) + 3
+        last_year = int(end_year) + 3
+    elif forecast_range == "2-3":
+        # Set up the raw first and last years
+        first_year = int(start_year) + 2
+        last_year = int(end_year) + 2
+    elif forecast_range == "2":
+        # Set up the raw first and last years
+        first_year = int(start_year) + 1
+        last_year = int(end_year) + 1
+    elif forecast_range == "1":
+        # Set up the raw first and last years
+        first_year = int(start_year)
+        last_year = int(end_year)
+    else:
+        print("Forecast range not recognised")
+
+    # If the season is not in the winter - i.e. data has not been shifted
+    if season not in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+        # Add 1 to the first and last years
+        first_year = first_year + 1
+        last_year = last_year + 1
+
+    # Set up the common years
+    common_years = np.arange(first_year, last_year + 1)
+
+    # First calculate the observed MSLP anomaly fields
+    obs_psl_anomaly = funcs.read_obs(
+        variable=variable,
+        region=region,
+        forecast_range=forecast_range,
+        season=season,
+        observation_path=nms_funcs.find_obs_path(match_var=variable),
+        start_year=1960,
+        end_year=2023,
+    )
+
+    # Constrain the obs_psl_anomaly to the common years
+    obs_psl_anomaly = obs_psl_anomaly.sel(
+        time=slice(f"{first_year}-01-01", f"{last_year}-12-31")
+    )
+
+    # Extract the data for the south grid
+    obs_psl_anomaly_south = obs_psl_anomaly.sel(
+        lat=slice(s_lat1, s_lat2), lon=slice(s_lon1, s_lon2)
+    ).mean(dim=["lat", "lon"])
+
+    # Extract the data for the north grid
+    obs_psl_anomaly_north = obs_psl_anomaly.sel(
+        lat=slice(n_lat1, n_lat2), lon=slice(n_lon1, n_lon2)
+    ).mean(dim=["lat", "lon"])
+
+    # Calculate the NAO index
+    obs_nao_index = obs_psl_anomaly_south - obs_psl_anomaly_north
+
+    # Loop over the obs_psl_anomaly field and remove any NaNs
+    for year in obs_nao_index.time.dt.year.values:
+        year_psl_anoms = obs_nao_index.sel(time=f"{year}")
+
+        # If there are any NaNs in the data
+        if np.isnan(year_psl_anoms).any():
+            print("NaNs found in the data for year: ", year)
+            if np.isnan(year_psl_anoms).all():
+                print("All NaNs found in the data for year: ", year)
+                print("Removing the year: ", year)
+                obs_nao_index = obs_nao_index.sel(
+                    time=obs_nao_index.time.dt.year != year
+                )
+
+    # Print the shape of the obs_nao_index
+    print("Shape of obs_nao_index: ", obs_nao_index.shape)
 
 
 # Define the main function

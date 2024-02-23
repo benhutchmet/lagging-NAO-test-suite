@@ -182,3 +182,25 @@ iceland_data_path = (
 
 # saved data dir
 saved_data_dir = "/home/users/benhutch/lagging-NAO-test-suite/saved_data/"
+
+snao_south_grid = {
+    "lon1": -25,  # degrees west
+    "lon2": 5,  # degrees east
+    "lat1": 45,
+    "lat2": 55,
+}
+
+# Define the dimensions for the summertime NAO (SNAO) northern pole
+# As defined in Wang and Ting 2022
+snao_north_grid = {
+    "lon1": -52,  # degrees west
+    "lon2": -22,  # degrees west
+    "lat1": 60,
+    "lat2": 70,
+}
+
+# Define the dimensions for the gridbox for the azores
+iceland_grid_corrected = {"lon1": -25, "lon2": -16, "lat1": 63, "lat2": 70}
+
+# Define the dimensions for the gridbox for the azores
+azores_grid_corrected = {"lon1": -28, "lon2": -20, "lat1": 36, "lat2": 40}

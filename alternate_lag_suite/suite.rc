@@ -2,7 +2,7 @@
     UTC mode = True # Ignore DST
     [[parameters]]
         model=BCC-CSM2-MR,MPI-ESM1-2-HR,CMCC-CM2-SR5,CanESM5,HadGEM3-GC31-MM,FGOALS-f3-L,MIROC6,IPSL-CM6A-LR,CESM1-1-CAM5-CMIP5,NorCPM1,EC-Earth3
-        variable=sfcWind
+        variable=rsds
         season=AYULGS,ONDJFM
         region="global"
         start_year="1961"
