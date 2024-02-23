@@ -700,16 +700,21 @@ def main():
     print("The end year is: ", args.end_year)
     print("The initialisation year is: ", args.init_year)
 
-    # First check that the output files do not already exist
-    files_df = check_regrid_files_exist(
-        variable=args.variable,
-        model=args.model,
-        season=args.season,
-        experiment=args.experiment,
-        region=args.region,
-        start_year=args.start_year,
-        end_year=args.end_year,
-    )
+    try:
+        # First check that the output files do not already exist
+        files_df = check_regrid_files_exist(
+            variable=args.variable,
+            model=args.model,
+            season=args.season,
+            experiment=args.experiment,
+            region=args.region,
+            start_year=args.start_year,
+            end_year=args.end_year,
+        )
+    except:
+        print("The check_regrid_files_exist function failed.")
+        print("continuing...")
+        pass
 
     # If all of the file exists columns are True, print a message and exit
     if all(files_df["file exists"] == True):
