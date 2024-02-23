@@ -167,7 +167,7 @@ def load_data(
         no_forecast_years = 9
     else:
         # Set the number of forecast years
-        no_forecast_years = 1
+        no_forecast_years = 9
 
     # extract the forecast range
     if "-" in forecast_range:
@@ -310,7 +310,7 @@ def load_data(
     print(f"Total number of ensemble members: {total_nens}")
 
     # Print the ensemble members for the models
-    print("Ensemble members for EC-Earth3: ", nens_dict["HadGEM3-GC31-MM"])
+    # print("Ensemble members for EC-Earth3: ", nens_dict["HadGEM3-GC31-MM"])
 
     # Extract the lats and lons
     nlats = data.lat.shape[0]
@@ -427,7 +427,7 @@ def load_data(
                     first_year = init_year + 1
 
                     # Set up the last year
-                    last_year = init_year + 1
+                    last_year = init_year + 9
                 elif forecast_range == "2" and season not in [
                     "DJFM",
                     "DJF",
@@ -438,7 +438,7 @@ def load_data(
                     first_year = init_year + 2
 
                     # Set up the last year
-                    last_year = init_year + 2
+                    last_year = init_year + 9
                 elif season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     # Set up the first year
                     first_year = init_year + 2  # e.g. for s1961 would be 1963
@@ -454,21 +454,23 @@ def load_data(
 
                 # Print the period we are constraining the data to
                 print(
-                    f"Constraining the data from {first_year}-01-01 to {last_year}-12-31"
+                    f"Constraining the data from {first_year}-01-01 to {last_year + 1}-01-01"
                 )
 
                 # Constrain the data from init-year-01-01 to init-year+10-12-31
-                data = data.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
+                data = data.sel(
+                    time=slice(f"{first_year}-01-01", f"{last_year + 1}-01-31")
+                )
 
                 # Extract the data for the variable
                 data = data[variable]
 
                 # If the forecast range does not contain a hyphen
-                if "-" not in forecast_range:
-                    # Assert that there is only one forecast year
-                    assert (
-                        len(data.time) == 1
-                    ), f"forecast range does not contain a hyphen, but there is more than one forecast year for model: {model}, year: {year}, ensemble member: {j+1}"
+                # if "-" not in forecast_range:
+                #     # Assert that there is only one forecast year
+                #     assert (
+                #         len(data.time) == 1
+                #     ), f"forecast range does not contain a hyphen, but there is more than one forecast year for model: {model}, year: {year}, ensemble member: {j+1}"
 
                 # Print the year and the ensemble member
                 print("Year: ", year, "ensemble member: ", j + 1)
@@ -596,7 +598,7 @@ def alternate_lag(
                     f"stoppping at index {end_year - start_index + j + 1}"
                 )
 
-                if forecast_range != "2-9":
+                if forecast_range != "2-9" and forecast_range != "2":
                     # Take the mean over the forecast years
                     ensemble_member_data_mean = np.mean(
                         ensemble_member_data[
@@ -612,6 +614,9 @@ def alternate_lag(
                         axis=0,
                     )
                 elif forecast_range == "2":
+                    print("forecast range is 2")
+                    print("Taking the mean over year: ", start_year - start_index + j)
+                    print("For lag index: ", j)
                     # Take the mean over the forecast years
                     ensemble_member_data_mean = np.mean(
                         ensemble_member_data[
@@ -728,7 +733,7 @@ def main():
         raise ValueError("variable not recognised")
 
     # If the forecast range contains a hyphen
-    if "-" in forecast_range:
+    if "-" in forecast_range and "MRI-ESM2-0" in models_list:
         # Remove "MRI-ESM2-0" from the models list
         print(
             "Removing MRI-ESM2-0 from the models list as it only has 5 forecast years"

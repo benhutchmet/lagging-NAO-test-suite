@@ -31,13 +31,13 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "sfcWind",
-                "ULG",
+                "pr",
+                "ONDJFM",
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
-                "1",
-                "0" // lag
+                "2-5",
+                "4" // lag
             ]
         }
     ]

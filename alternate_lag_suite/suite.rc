@@ -1,8 +1,8 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model=BCC-CSM2-MR,MPI-ESM1-2-HR,CanESM5,CMCC-CM2-SR5,HadGEM3-GC31-MM,MPI-ESM1-2-LR,FGOALS-f3-L,MIROC6,IPSL-CM6A-LR,NorCPM1
-        variable=pr
+        model=BCC-CSM2-MR,MPI-ESM1-2-HR,CMCC-CM2-SR5,CanESM5,HadGEM3-GC31-MM,FGOALS-f3-L,MIROC6,IPSL-CM6A-LR,CESM1-1-CAM5-CMIP5
+        variable=sfcWind
         season=AYULGS,ONDJFM
         region="global"
         start_year="1961"
