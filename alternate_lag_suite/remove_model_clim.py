@@ -919,20 +919,37 @@ def remove_model_climatology(
 
         # Assert that the number of files is the same as the number of
         # ensemble members
-        assert year_len == len(
+        assert year_len >= len(
             ens_list
-        ), "The number of files does not match the number of ensemble members."
+        ), "The number of files is not greater than or equal to the number of ensemble members."
 
     # Set up an empty list of files
     files = []
 
+    # Create a list of the unique combinations of "r*i?"
+    ens_list = np.unique(
+        [file.split("_")[6] for file in glob.glob(f"{path}/*s{start_year}*")]
+    )
+
+    # If the model is CanESM5
+    if model == "CanESM5":
+        # Limit the unique members to those from r1-r20 inclusive
+        valid_r_numbers = [re.compile(f"r{i}i.*p.*f.*") for i in range(1, 21)]
+        ens_list = [
+            member
+            for member in ens_list
+            if any(r.match(member) for r in valid_r_numbers)
+        ]
+
     # Loop over the forecast years
     for year in range(start_year, end_year + 1):
-        # Find the files for the year
-        year_pattern = f"{path}/*s{year}*"
+        # Loop over the ensemble members
+        for ens in ens_list:
+            # Find the files for the year
+            year_pattern = f"{path}/*s{year}*{ens}*"
 
-        # Append the files to the list
-        files.extend(glob.glob(year_pattern))
+            # Append the files to the list
+            files.extend(glob.glob(year_pattern))
 
     # Assert that there are len(ens_list) * len(range(start_year, end_year + 1))
     # files
