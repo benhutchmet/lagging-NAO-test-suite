@@ -35,10 +35,10 @@ echo "Task id is: ${SLURM_ARRAY_TASK_ID}"
 # Print the CLI arguments
 echo "CLI arguments are: $@"
 echo "Number of CLI arguments is: $#"
-echo "Desired no. of arguments is: 5"
+echo "Desired no. of arguments is: 7"
 
 # Check if the correct number of arguments were passed
-if [ $# -ne 4 ]; then
+if [ $# -ne 7 ]; then
     echo "Usage: sbatch test-sel-region-array-script.bash <model> <variable> <season> <experiment> <region> <start_year> <end_year>"
     echo "Example: sbatch test-sel-region-array-script.bash HadGEM3-GC31-MM psl DJFM dcppA-hindcast global 1960 2018"
     exit 1

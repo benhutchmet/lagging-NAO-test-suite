@@ -2,9 +2,12 @@
     UTC mode = True # Ignore DST
     [[parameters]]
         model=MRI-ESM2-0
-        variable=sfcWind
+        variable=psl
         season=ONDJFM,AYULGS
         experiment="dcppA-hindcast"
+        region="global"
+        start_year=1960
+        end_year=2018
 
 [scheduling]
     [[dependencies]]
@@ -24,7 +27,7 @@
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        sbatch submit_scripts/test-sel-region-array-script.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_experiment}
+        sbatch submit_scripts/test-sel-region-array-script-py.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_experiment}
         """
         [[[job]]]
             execution time limit=PT60M
