@@ -165,21 +165,19 @@ def load_model_data(
 
                 # Create the file path
                 # psl_Amon_MPI-ESM1-2-LR_dcppA-hindcast_s2021-r9i1p1f1_gn_202111-203112.nc
-                file_path = f"{model_path}/{variable}_?mon_{model}_{experiment}_s{year}-{member}_g?_*-*.nc"
+                file_path = f"{model_path}{variable}_?mon_{model}_{experiment}_s{year}-{member}_g?_*-*.nc"
 
                 # # Print the file path
                 # print("The file path is: ", file_path)
+                files = glob.glob(file_path)
 
                 # if the file path does not exist, or the size of the file path is less than 100000 bytes, continue
-                if (
-                    not os.path.exists(glob.glob(file_path)[0])
-                    or os.path.getsize(glob.glob(file_path)[0]) < 100000
-                ):
+                if not files:
                     print(
                         f"The file path {file_path} does not exist or has a file size less than 100000 bytes."
                     )
                     # Find the final folder in model_path
-                    final_folder = model_path.split("/")[-1]
+                    final_folder = model_path.split("/")[-2]
 
                     # Print the final folder
                     print("The final folder is: ", final_folder)
@@ -195,7 +193,13 @@ def load_model_data(
                     # If the final folder is "merged_files"
                     # We need to merge the files ourselves
                     # Find the directory containing the files to be merged
-                    files_dir = f"/badc/cmip6/data/CMIP6/DCPP/*/{model}/${experiment}/s{year}-{member}/Amon/{variable}/g?/files/d*/"
+                    files_dir = f"/badc/cmip6/data/CMIP6/DCPP/*/{model}/{experiment}/s{year}-{member}/Amon/{variable}/g?/files/d*/"
+
+                    # Print the files dir
+                    print("The files dir is: ", files_dir)
+
+                    # print the glob path
+                    print("The glob path is: ", files_dir + "*.nc")
 
                     # Glob the files in this directory ending in .nc
                     files = glob.glob(files_dir + "*.nc")
@@ -227,8 +231,18 @@ def load_model_data(
                         # Exit with an error message
                         sys.exit()
 
-                # Append the file path to the list
-                file_paths.append(glob.glob(file_path)[0])
+                elif files and os.path.getsize(files[0]) < 100000:
+                    print(
+                        f"The file path {file_path} exists but has a file size less than 100000 bytes."
+                    )
+
+                    # Print that this option has not been implemented yet
+                    print("This option has not been implemented yet.")
+                    print("exiting...")
+                    sys.exit()
+                else:
+                    # Append the file path to the list
+                    file_paths.append(files[0])
 
     elif model_path_root == "badc":
         print("The model path root is badc.")
@@ -238,6 +252,16 @@ def load_model_data(
 
         # Split the folders by the "/" character
         model_folders_split = [folder.split("/")[-1] for folder in model_folders]
+
+        print("The model folders are: ", model_folders_split[:5])
+
+        # Only keep the folders containing a '-' character in the name
+        model_folders_split = [
+            folder for folder in model_folders_split if "-" in folder
+        ]
+
+        # Print the first 5 model folders
+        print("The first 5 model folders are: ", model_folders_split[:5])
 
         # Split the filenames by the "-" character
         model_folders_split = [folder.split("-")[1] for folder in model_folders_split]
@@ -273,7 +297,7 @@ def load_model_data(
                 # Assert that there are files at this location
                 assert (
                     len(glob.glob(file_path)) > 0
-                ), "There are no files at this location."
+                ), f"There are no files at this location: {file_path}"
 
                 # Assrt that the size of the file path is greater than 100000 bytes
                 assert (
@@ -364,6 +388,8 @@ def sel_season_shift(
     elif season == "ONDJFM":
         months = [10, 11, 12, 1, 2, 3]
     elif season == "AMJJAS":
+        months = [4, 5, 6, 7, 8, 9]
+    elif season == "AYULGS":
         months = [4, 5, 6, 7, 8, 9]
     else:
         raise ValueError("Invalid season")

@@ -242,10 +242,17 @@ def load_data(
             len(data.dims) == 3
         ), f"{model} has more than two dimensions. Check the file: {file_path}"
 
-        # Assert that the length of time is equal to the number of forecast years
-        assert (
-            len(data.time) >= full_forecast_years
-        ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
+        # If the model is not MRI-ESM2-0
+        if model != "MRI-ESM2-0":
+            # Assert that the length of time is equal to the number of forecast years
+            assert (
+                len(data.time) >= full_forecast_years
+            ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
+        else:
+            # Assert that the length of time is equal to the number of forecast years
+            assert (
+                len(data.time) == 5
+            ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
 
     # Initialise total nens
     total_nens = 0
@@ -512,28 +519,39 @@ def alternate_lag(
         Array of lagged correlation values with dimensions (num_years, nens, no_lats, no_lons).
     """
 
+    # assert that forecast_range is not 1
+    assert forecast_range != "1", "forecast_range should not be 1"
+
     # Set up the start index
     start_index = 2
 
     # Assert that the forecast range is in the correct format
-    assert (
-        "-" in forecast_range
-    ), "forecast_range should be in the format 'x-y' where x and y are integers"
+    # assert (
+    #     "-" in forecast_range
+    # ), "forecast_range should be in the format 'x-y' where x and y are integers"
 
-    # Extract the forecast range
-    forecast_range_list = forecast_range.split("-")
+    if "-" in forecast_range:
+        # Extract the forecast range
+        forecast_range_list = forecast_range.split("-")
 
-    # Extract the start and end years
-    start_year = int(forecast_range_list[0])
-    end_year = int(forecast_range_list[1])
+        # Extract the start and end years
+        start_year = int(forecast_range_list[0])
+        end_year = int(forecast_range_list[1])
+    else:
+        # Set the start year to the forecast range
+        start_year = int(forecast_range)
+
+        # Set the end year to the forecast range
+        end_year = int(forecast_range)
 
     # Assert that end year is 6 or less than start year
     # assert (
     #     end_year <= 6
     # ), "end_year should be 6 or less to be valid for four year lagged correlation"
 
-    # Assert that end year is greater than start year
-    assert end_year > start_year, "end_year should be greater than start_year"
+    if "-" in forecast_range:
+        # Assert that end year is greater than start year
+        assert end_year > start_year, "end_year should be greater than start_year"
 
     # Set up the number of lagged years
     no_lagged_years = data.shape[0] - lag + 1
@@ -588,6 +606,16 @@ def alternate_lag(
                             - start_index
                             + j
                             + 1,
+                            :,
+                            :,
+                        ],
+                        axis=0,
+                    )
+                elif forecast_range == "2":
+                    # Take the mean over the forecast years
+                    ensemble_member_data_mean = np.mean(
+                        ensemble_member_data[
+                            start_year - start_index + j,
                             :,
                             :,
                         ],
@@ -689,7 +717,7 @@ def main():
         models_list = dicts.sfcWind_models
         # models_list = dicts.nov_init_models_sfcWind
     elif variable == "psl":
-        models_list = dicts.models
+        models_list = dicts.psl_models
         # models_list = dicts.nov_init_models_psl
     elif variable == "rsds":
         models_list = dicts.rsds_models
@@ -698,6 +726,14 @@ def main():
         models_list = dicts.pr_models
     else:
         raise ValueError("variable not recognised")
+
+    # If the forecast range contains a hyphen
+    if "-" in forecast_range:
+        # Remove "MRI-ESM2-0" from the models list
+        print(
+            "Removing MRI-ESM2-0 from the models list as it only has 5 forecast years"
+        )
+        models_list = [model for model in models_list if model != "MRI-ESM2-0"]
 
     # Run the function to load the data
     data = load_data(
@@ -722,15 +758,15 @@ def main():
     # Save the array
     np.save(save_path, data)
 
-    # If the forecas range does not contain a hyphen
-    if "-" not in forecast_range:
-        # Print that we are not calculating the alternate lag
-        print(
-            "Not calculating the alternate lag for single year forecast range. Exiting."
-        )
+    # # If the forecas range does not contain a hyphen
+    # if "-" not in forecast_range:
+    #     # Print that we are not calculating the alternate lag
+    #     print(
+    #         "Not calculating the alternate lag for single year forecast range. Exiting."
+    #     )
 
-        # Exit the function
-        return
+    #     # Exit the function
+    #     return
 
     # TODO: If there is skill in the second year, then we can calculate the alternate lag
     # For year 1

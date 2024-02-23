@@ -67,7 +67,6 @@ pr_models = [
     "CanESM5",
     "CMCC-CM2-SR5",
     "HadGEM3-GC31-MM",
-    "EC-Earth3",
     "MPI-ESM1-2-LR",
     "FGOALS-f3-L",
     "MIROC6",
