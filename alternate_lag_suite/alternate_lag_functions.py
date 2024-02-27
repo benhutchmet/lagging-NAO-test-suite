@@ -185,7 +185,7 @@ def load_data(
         "NDJFM",
     ]:
         # Set the number of forecast years
-        no_forecast_years = 5
+        no_forecast_years = 4
     elif forecast_range in ["1", "2", "3", "4", "5", "6"] and season in [
         "DJFM",
         "DJF",
