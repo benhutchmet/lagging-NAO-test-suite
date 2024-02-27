@@ -276,10 +276,15 @@ def load_data(
             assert (
                 len(data.time) >= full_forecast_years
             ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
-        else:
+        elif season in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
             # Assert that the length of time is equal to the number of forecast years
             assert (
                 len(data.time) == 6
+            ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
+        else:
+            # Assert that the length of time is equal to the number of forecast years
+            assert (
+                len(data.time) == 5
             ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
 
     # Initialise total nens
@@ -455,7 +460,7 @@ def load_data(
                     first_year = init_year + 1
 
                     # Set up the last year
-                    last_year = init_year + 9
+                    last_year = init_year + 5
                 elif forecast_range == "2" and season not in [
                     "DJFM",
                     "DJF",
@@ -466,7 +471,7 @@ def load_data(
                     first_year = init_year + 2
 
                     # Set up the last year
-                    last_year = init_year + 9
+                    last_year = init_year + 5
                 elif season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
                     # Set up the first year
                     first_year = init_year + 2  # e.g. for s1961 would be 1963
