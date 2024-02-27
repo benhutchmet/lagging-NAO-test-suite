@@ -279,7 +279,7 @@ def load_data(
         else:
             # Assert that the length of time is equal to the number of forecast years
             assert (
-                len(data.time) == 5
+                len(data.time) == 6
             ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
 
     # Initialise total nens

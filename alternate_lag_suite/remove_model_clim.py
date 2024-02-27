@@ -376,7 +376,7 @@ def extract_model_years(
         last_year = init_year + end_year - 1
 
         # Extract the years
-        ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year}-12-30"))
+        ds = ds.sel(time=slice(f"{first_year}-01-01", f"{last_year + 1}-01-01"))
 
         # Take the time mean
         ds = ds.mean(dim="time")
