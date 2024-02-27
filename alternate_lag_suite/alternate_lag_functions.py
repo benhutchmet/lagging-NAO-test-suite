@@ -1010,6 +1010,9 @@ def main():
     else:
         raise ValueError("variable not recognised")
 
+    # Print the models
+    print("models_list: ", models_list)
+
     # If the forecast range contains a hyphen
     if "-" in forecast_range and "MRI-ESM2-0" in models_list:
         # Remove "MRI-ESM2-0" from the models list
@@ -1017,6 +1020,9 @@ def main():
             "Removing MRI-ESM2-0 from the models list as it only has 5 forecast years"
         )
         models_list = [model for model in models_list if model != "MRI-ESM2-0"]
+
+    # Print the models
+    print("models_list: ", models_list)
 
     # Run the function to load the data
     data = load_data(

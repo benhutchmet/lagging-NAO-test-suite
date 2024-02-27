@@ -31,12 +31,12 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "pr",
+                "psl",
                 "ONDJFM",
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
-                "2-5",
+                "2",
                 "4" // lag
             ]
         }
