@@ -544,13 +544,13 @@ def extract_model_years(
             # Set up the base name
             base_name = os.path.basename(glob.glob(original_file)[0])
 
-            # If the original file still exists
-            if os.path.exists(glob.glob(original_file)[0]):
-                # Print that we are deleting the file
-                print(f"Deleting original file: {glob.glob(original_file)[0]}")
+            # # If the original file still exists
+            # if os.path.exists(glob.glob(original_file)[0]):
+            #     # Print that we are deleting the file
+            #     print(f"Deleting original file: {glob.glob(original_file)[0]}")
 
-                # Remove the original file
-                os.remove(glob.glob(original_file)[0])
+            #     # Remove the original file
+            #     os.remove(glob.glob(original_file)[0])
 
             # Create the file name
             # cut the final .nc and replace with _years_2-9.nc
