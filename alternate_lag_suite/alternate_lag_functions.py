@@ -77,6 +77,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import xarray as xr
 from tqdm import tqdm
+from scipy.stats import pearsonr
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -861,7 +862,7 @@ def calculate_nao_index(
     variant_labels_models = {}
 
     # Loop over the models
-    for model in models_list:
+    for model in tqdm(models_list, desc="Processing models"):
         # Set up the model path
         model_path = os.path.join(
             base_dir, variable, model, region, forecast_range, season, "outputs"
@@ -876,6 +877,20 @@ def calculate_nao_index(
             for file in os.listdir(model_path)
             if file.endswith(f"_start_{start_year}_end_{end_year}_anoms.nc")
         ]
+
+        # Set up the wildcard path to the anoms files for the first year
+        # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-9/ONDJFM/outputs/all-years-ONDJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1961-r9i1_gn_196111-197203_years_2-9_start_1961_end_2014_anoms.nc
+        # Set up the file stem
+        fstem = (
+            f"{base_dir}/{variable}/{model}/{region}/{forecast_range}/{season}/outputs/"
+        )
+        fname = f"*s{start_year}-*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+
+        # Print the file stem and file name
+        print("Finding files for: ", f"{fstem} + {fname}")
+
+        # Find the files for the first year
+        file_path_list = glob.glob(f"{fstem} + {fname}")
 
         # Extract the final string after th "/"
         file_path_list_split = [file.split("/")[-1] for file in file_path_list]
@@ -931,6 +946,80 @@ def calculate_nao_index(
 
     # Assert that member_files is a list of lists
     assert isinstance(member_files[0], list), "member_files is not a list of lists"
+
+    # Assert that member_files is not empty
+    assert len(member_files) > 0, "member_files is empty"
+
+    # FIXME: limit to the first 10 members for now
+    member_files = member_files[:10]
+
+    # Load the data from the member files
+    # TODO: lag hardcoded as 4 for now
+    model_data = load_data(
+        paths=member_files,
+        forecast_range=forecast_range,
+        lag=4,
+    )
+
+    # Calculate the NAO index
+    # Take the mean for the north grid
+    model_north = model_data.sel(
+        lat=slice(n_lat1, n_lat2), lon=slice(n_lon1, n_lon2)
+    ).mean(dim=["lat", "lon"])
+
+    # Take the mean for the south grid
+    model_south = model_data.sel(
+        lat=slice(s_lat1, s_lat2), lon=slice(s_lon1, s_lon2)
+    ).mean(dim=["lat", "lon"])
+
+    # Calculate the NAO index
+    model_nao_index = model_south - model_north
+
+    # If plotting the NAO index
+    if plot:
+        print("Plotting the NAO index")
+
+        # Calculate the signal adjusted NAO index
+        if lag_var_adjust:
+
+            # Calculate the correlation between the observed and model NAO index
+            corr, _ = pearsonr(obs_nao_index, model_nao_index)
+
+            # Calculate the standard deviation of the ensemble mean
+            sig_f_sig = np.std(model_nao_index.mean(dim="ensemble_member"))
+
+            # Calculat the standard deviation of the ensemble
+            sig_f_tot = np.std(model_nao_index)
+
+            # Calculate the stdnatf deviation of the obs nao index
+            sig_o_tot = np.std(obs_nao_index)
+
+            # Calculate the rpc
+            rpc = corr / (sig_f_sig / sig_f_tot)
+
+            # Calculate the rps
+            rps = rpc * (sig_o_tot / sig_f_tot)
+
+            # Scale the ensemble mean by the rps
+            model_nao_index_ens_mean = model_nao_index.mean(dim="ensemble_member") * rps
+
+            # Set up the figure and axis
+            fig, ax = plt.subplots()
+
+            # Plot the observed NAO index
+            obs_nao_index.plot(ax=ax, label="ERA5")
+
+            # Plot the model NAO index
+            model_nao_index_ens_mean.plot(ax=ax, label="dcppA-hindcast")
+
+            # Set the title
+            ax.set_title(f"NAO index for {season} {forecast_range}")
+
+            # Include a horizontal line at 0
+            ax.axhline(0, color="black", linestyle="--")
+
+            # Include a legend
+            ax.legend()
 
     # Return the member files
     return member_files
