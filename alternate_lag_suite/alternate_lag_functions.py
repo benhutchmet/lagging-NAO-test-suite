@@ -862,7 +862,7 @@ def calculate_nao_index(
     variant_labels_models = {}
 
     # Loop over the models
-    for model in tqdm(models_list, desc="Processing models"):
+    for model in tqdm(models_list, desc="Finding unique members for each model"):
         # Set up the model path
         model_path = os.path.join(
             base_dir, variable, model, region, forecast_range, season, "outputs"
@@ -870,13 +870,6 @@ def calculate_nao_index(
 
         # Assert that the model path exists
         assert os.path.isdir(model_path), f"{model_path} does not exist."
-
-        # Find the anoms files
-        file_path_list = [
-            os.path.join(model_path, file)
-            for file in os.listdir(model_path)
-            if file.endswith(f"_start_{start_year}_end_{end_year}_anoms.nc")
-        ]
 
         # Set up the wildcard path to the anoms files for the first year
         # /gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data/psl/HadGEM3-GC31-MM/global/2-9/ONDJFM/outputs/all-years-ONDJFM-global-psl_Amon_HadGEM3-GC31-MM_dcppA-hindcast_s1961-r9i1_gn_196111-197203_years_2-9_start_1961_end_2014_anoms.nc
@@ -886,11 +879,11 @@ def calculate_nao_index(
         )
         fname = f"*s{start_year}-*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
 
-        # Print the file stem and file name
-        print("Finding files for: ", f"{fstem} + {fname}")
+        # # Print the file stem and file name
+        # print("Finding files for: ", f"{fstem} + {fname}")
 
         # Find the files for the first year
-        file_path_list = glob.glob(f"{fstem} + {fname}")
+        file_path_list = glob.glob(f"{fstem}{fname}")
 
         # Extract the final string after th "/"
         file_path_list_split = [file.split("/")[-1] for file in file_path_list]
@@ -904,8 +897,8 @@ def calculate_nao_index(
         # Find the unique combinations of r and i
         unique_members_model = np.unique(file_path_list_split)
 
-        # Print the length of the unique members
-        print(f"Length of unique members for {model}: ", len(unique_members_model))
+        # # Print the length of the unique members
+        # print(f"Length of unique members for {model}: ", len(unique_members_model))
 
         # Append the unique members to the dictionary
         variant_labels_models[model] = unique_members_model
@@ -914,7 +907,7 @@ def calculate_nao_index(
     member_files = []
 
     # Loop over the models
-    for model in models_list:
+    for model in tqdm(models_list, desc="Finding files for each member"):
         # Loop over the variant label
         for variant_label in variant_labels_models[model]:
             # Set up the variant label files
@@ -950,8 +943,9 @@ def calculate_nao_index(
     # Assert that member_files is not empty
     assert len(member_files) > 0, "member_files is empty"
 
-    # FIXME: limit to the first 10 members for now
-    member_files = member_files[:10]
+    # print("WARNING: Limiting to the first 10 members for now")
+    # # FIXME: limit to the first 10 members for now
+    # member_files = member_files[:10]
 
     # Load the data from the member files
     # TODO: lag hardcoded as 4 for now
@@ -975,54 +969,50 @@ def calculate_nao_index(
     # Calculate the NAO index
     model_nao_index = model_south - model_north
 
-    # If plotting the NAO index
-    if plot:
-        print("Plotting the NAO index")
+    # # Calculate the signal adjusted NAO index
+    # if lag_var_adjust:
 
-        # Calculate the signal adjusted NAO index
-        if lag_var_adjust:
+    #     # # Calculate the correlation between the observed and model NAO index
+    #     # corr, _ = pearsonr(obs_nao_index, model_nao_index)
 
-            # Calculate the correlation between the observed and model NAO index
-            corr, _ = pearsonr(obs_nao_index, model_nao_index)
+    #     # # Calculate the standard deviation of the ensemble mean
+    #     # sig_f_sig = np.std(model_nao_index.mean(dim="ensemble_member"))
 
-            # Calculate the standard deviation of the ensemble mean
-            sig_f_sig = np.std(model_nao_index.mean(dim="ensemble_member"))
+    #     # # Calculat the standard deviation of the ensemble
+    #     # sig_f_tot = np.std(model_nao_index)
 
-            # Calculat the standard deviation of the ensemble
-            sig_f_tot = np.std(model_nao_index)
+    #     # # Calculate the stdnatf deviation of the obs nao index
+    #     # sig_o_tot = np.std(obs_nao_index)
 
-            # Calculate the stdnatf deviation of the obs nao index
-            sig_o_tot = np.std(obs_nao_index)
+    #     # # Calculate the rpc
+    #     # rpc = corr / (sig_f_sig / sig_f_tot)
 
-            # Calculate the rpc
-            rpc = corr / (sig_f_sig / sig_f_tot)
+    #     # # Calculate the rps
+    #     # rps = rpc * (sig_o_tot / sig_f_tot)
 
-            # Calculate the rps
-            rps = rpc * (sig_o_tot / sig_f_tot)
+    #     # Scale the ensemble mean by the rps
+    #     model_nao_index_ens_mean = model_nao_index.mean(dim="ensemble_member") * rps
 
-            # Scale the ensemble mean by the rps
-            model_nao_index_ens_mean = model_nao_index.mean(dim="ensemble_member") * rps
+    #     # # Set up the figure and axis
+    #     # fig, ax = plt.subplots()
 
-            # Set up the figure and axis
-            fig, ax = plt.subplots()
+    #     # # Plot the observed NAO index
+    #     # obs_nao_index.plot(ax=ax, label="ERA5")
 
-            # Plot the observed NAO index
-            obs_nao_index.plot(ax=ax, label="ERA5")
+    #     # # Plot the model NAO index
+    #     # model_nao_index_ens_mean.plot(ax=ax, label="dcppA-hindcast")
 
-            # Plot the model NAO index
-            model_nao_index_ens_mean.plot(ax=ax, label="dcppA-hindcast")
+    #     # # Set the title
+    #     # ax.set_title(f"NAO index for {season} {forecast_range}")
 
-            # Set the title
-            ax.set_title(f"NAO index for {season} {forecast_range}")
+    #     # # Include a horizontal line at 0
+    #     # ax.axhline(0, color="black", linestyle="--")
 
-            # Include a horizontal line at 0
-            ax.axhline(0, color="black", linestyle="--")
-
-            # Include a legend
-            ax.legend()
+    #     # # Include a legend
+    #     # ax.legend()
 
     # Return the member files
-    return member_files
+    return obs_nao_index, model_nao_index
 
 
 # Write a function for preprocessing the data
@@ -1073,17 +1063,36 @@ def preprocess(
         start_year_idx = int(forecast_range)
         end_year_idx = int(forecast_range)
 
+    # If the model name is BCC-CSM2-MR
+    if model_name == "BCC-CSM2-MR":
+        # Set the start year index
+        start_year_idx = start_year_idx
+        # Set the end year index
+        end_year_idx = end_year_idx + 1  # jan of this year
+    elif model_name in ["CanESM5", "IPSL-CM6A-LR"]:
+        # Set the start year index
+        start_year_idx = start_year_idx - 1
+
+        # Set the end year index
+        end_year_idx = end_year_idx - 1 + 1  # jan of this year
+    else:
+        # Set the start year index
+        start_year_idx = start_year_idx - 1
+
+        # Set the end year index
+        end_year_idx = end_year_idx - 1 + 1  # jan of this year
+
     # Extract the first year
-    first_year = int(unique_years[start_year_idx - 2])
+    first_year = int(unique_years[start_year_idx])
 
     # Extract the last year
-    last_year = int(unique_years[end_year_idx - 2])
+    last_year = int(unique_years[end_year_idx])
 
     # If the forecast range is years 2-9
     if forecast_range == "2-9":
         # Form the strings for the start and end dates
         start_date = f"{first_year}-01-01"
-        end_date = f"{last_year + 1}-01-01"
+        end_date = f"{last_year}-01-01"
     elif forecast_range == "2-5":
         # Form the strings for the start and end dates depending on the lag
         if lag == 0:
@@ -1096,11 +1105,19 @@ def preprocess(
         # Assertion error, forecast range not recognised
         assert False, "Forecast range not recognised"
 
+    # print the start and end dates
+    print("start_date: ", start_date)
+    print("end_date: ", end_date)
+
     # Find the centre of the period between start and end date
     mid_date = (
         pd.to_datetime(start_date)
         + (pd.to_datetime(end_date) - pd.to_datetime(start_date)) / 2
     )
+
+    # # Print the start and end dates
+    # print("start_date: ", start_date)
+    # print("end_date: ", end_date)
 
     # Take the mean over the time dimension
     ds = ds.sel(time=slice(start_date, end_date)).mean(dim="time")
