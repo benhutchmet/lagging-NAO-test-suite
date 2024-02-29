@@ -1105,9 +1105,9 @@ def preprocess(
         # Assertion error, forecast range not recognised
         assert False, "Forecast range not recognised"
 
-    # print the start and end dates
-    print("start_date: ", start_date)
-    print("end_date: ", end_date)
+    # # print the start and end dates
+    # print("start_date: ", start_date)
+    # print("end_date: ", end_date)
 
     # Find the centre of the period between start and end date
     mid_date = (
