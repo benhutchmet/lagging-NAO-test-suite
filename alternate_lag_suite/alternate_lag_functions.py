@@ -76,6 +76,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import xarray as xr
+from tqdm import tqdm
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -936,6 +937,167 @@ def calculate_nao_index(
 
 
 # Write a function for preprocessing the data
+## Define a function for preprocessing the model data
+def preprocess(
+    ds: xr.Dataset,
+    forecast_range: str,
+    filenames: list,
+    lag: int,
+):
+    """
+    Preprocess the model data using xarray
+    """
+
+    # Expand the dimensions of the dataset
+    ds = ds.expand_dims("ensemble_member")
+
+    # Set up the params for the ensemble member
+    # Split the filename by the final /
+    filenames_split = [file.split("/")[-1] for file in filenames]
+
+    # Split the filename by the _
+    model_name = [file.split("_")[2] for file in filenames_split]
+
+    # Split the filename by the _
+    variant_label = [file.split("_")[4].split("-")[1] for file in filenames_split]
+
+    # Extract the unique model names
+    model_name = np.unique(model_name)[0]
+
+    # Extract the unique variant labels
+    variant_label = np.unique(variant_label)[0]
+
+    # Set the ensemble member
+    ds["ensemble_member"] = [f"{model_name}_{variant_label}_lag_{lag}"]
+
+    # Extract the years from the data
+    years = ds.time.dt.year.values
+
+    # Find the unique years
+    unique_years = np.unique(years)
+
+    # If forecast range contains a hyphen
+    if "-" in forecast_range:
+        start_year_idx = int(forecast_range.split("-")[0])
+        end_year_idx = int(forecast_range.split("-")[1])
+    else:
+        start_year_idx = int(forecast_range)
+        end_year_idx = int(forecast_range)
+
+    # Extract the first year
+    first_year = int(unique_years[start_year_idx - 2])
+
+    # Extract the last year
+    last_year = int(unique_years[end_year_idx - 2])
+
+    # If the forecast range is years 2-9
+    if forecast_range == "2-9":
+        # Form the strings for the start and end dates
+        start_date = f"{first_year}-01-01"
+        end_date = f"{last_year + 1}-01-01"
+    elif forecast_range == "2-5":
+        # Form the strings for the start and end dates depending on the lag
+        if lag == 0:
+            start_date = f"{first_year}-01-01"
+            end_date = f"{first_year + 1}-01-01"
+        else:
+            start_date = f"{first_year + lag}-01-01"
+            end_date = f"{last_year + lag + 1}-01-01"
+    else:
+        # Assertion error, forecast range not recognised
+        assert False, "Forecast range not recognised"
+
+    # Find the centre of the period between start and end date
+    mid_date = (
+        pd.to_datetime(start_date)
+        + (pd.to_datetime(end_date) - pd.to_datetime(start_date)) / 2
+    )
+
+    # Take the mean over the time dimension
+    ds = ds.sel(time=slice(start_date, end_date)).mean(dim="time")
+
+    # If the lag is 0
+    if lag == 0:
+        # Set the time to the mid date
+        ds["time"] = mid_date
+    else:
+        # Set the time to the mid date
+        ds["time"] = mid_date + pd.DateOffset(years=lag)
+
+    # Return the dataset
+    return ds
+
+
+# Define a function for loading the data from the paths
+def load_data(
+    paths: list,
+    forecast_range: str,
+    lag: int = 4,
+):
+    """
+    Load the data from the paths using xarray_mfdataset
+
+    Parameters
+    ----------
+
+    paths: list
+        List of paths to load the data from.
+        List of lists of the anomaly paths for the ensemble members.
+
+    forecast_range: str
+        The forecast range to load the data for.
+        This should be in the format "x-y" where x and y are integers.
+
+    lag: int
+        The lag to load the data for.
+        The default is 4.
+
+    Returns
+    -------
+
+    ds: xarray Dataset
+        The dataset loaded from the paths.
+
+    """
+
+    # Assert that paths is a list
+    assert isinstance(paths, list), "paths is not a list"
+
+    # assert that path is a list of lists
+    assert isinstance(paths[0], list), "paths is not a list of lists"
+
+    # Assert that the list of paths is not empty
+    assert len(paths) > 0, "paths is empty"
+
+    # Set up the dataset to concatenate to
+    dss = []
+
+    # Loop over the paths
+    for path in tqdm(paths):
+        # Loop over the lags
+        for lag_idx in range(lag):
+            # Load the data from the path
+            ds = xr.open_mfdataset(
+                path,
+                preprocess=lambda ds: preprocess(
+                    ds, forecast_range=forecast_range, filenames=path, lag=lag_idx
+                ),
+                combine="nested",
+                concat_dim="time",
+                join="override",
+                coords="minimal",
+                engine="netcdf4",
+                parallel=True,
+            )
+
+            # Append the dataset to the list
+            dss.append(ds)
+
+    # Concatenate the datasets by the ensemble member
+    dss = xr.concat(dss, dim="ensemble_member")
+
+    # Return the dataset
+    return dss
 
 
 # Define the main function
