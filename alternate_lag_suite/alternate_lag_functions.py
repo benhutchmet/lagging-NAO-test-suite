@@ -1416,6 +1416,85 @@ def calculate_ens_mean_nao(
     return nao_dict
 
 
+# Define a function for calculating the absolute difference
+# between the observed and model NAO index
+def calculate_diff(
+    nao_dict: dict,
+    variable: str = "psl",
+):
+    """
+    For each year, calculate the absolute difference between the NAO of each
+    of the ensemble members and the signal adjusted ensemble mean.
+    Then we want to create an ascending list of the ensemble members and their
+    differences from the signal adjusted ensemble mean, from smallest to largest.
+    Then we want to calculate the rank of each ensemble member in this list.
+
+    Parameters
+    ----------
+
+    nao_dict: dict
+        Dictionary containing the NAO index for the observations and models.
+
+    variable: str
+        The variable to calculate the NAO index for.
+        The default is "psl"."
+
+    Returns
+    -------
+
+    rank: dict[pandas DataFrame]
+        Dictionary containing the rank of the ensemble members for each year.
+        Formatted as a pandas DataFrame.
+        With the"ensemble_member" and "abs_diff" columns.
+    """
+
+    # Extract the model NAO index
+    model_nao_index = nao_dict["model_nao_index"]
+
+    # Extract the signal adjusted ensemble mean NAO index
+    ens_mean_nao_index = nao_dict["sig_adj_ens_mean_nao_index"]
+
+    # Extract the years
+    years = model_nao_index.time.dt.year.values
+
+    # Extract the model NAO index values
+    model_nao_index_values = model_nao_index[variable].values
+
+    # EXtract the ensemble mean NAO index values
+    ens_mean_nao_index_values = ens_mean_nao_index.values
+
+    # Set up the rank dictionary
+    rank = {year: [] for year in years}
+
+    # Loop over the years
+    for i, year in tqdm(
+        enumerate(years), desc="Calculating the rank of the ensemble members"
+    ):
+        # Extract the model NAO index values for the given year
+        model_nao_index_values_year = model_nao_index_values[i, :]
+
+        # Calculate the absolute difference between the model NAO index and the signal adjusted ensemble mean
+        abs_diff = np.abs(model_nao_index_values_year - ens_mean_nao_index_values[i])
+
+        # Set up the rank for the given year
+        df = pd.DataFrame(
+            {
+                "ensemble_member": model_nao_index.ensemble_member.values,
+                "abs_diff": abs_diff,
+                "rank": np.argsort(abs_diff),
+            }
+        )
+
+        # Sort the dataframe by the absolute difference
+        df = df.sort_values(by="abs_diff")
+
+        # Add the dataframe to the rank dictionary
+        rank[year] = df
+
+    # Return the rank dictionary
+    return rank
+
+
 # Define the main function
 def main():
     # Define the hardcoded variables
