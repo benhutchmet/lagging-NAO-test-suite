@@ -1097,10 +1097,10 @@ def preprocess(
         # Form the strings for the start and end dates depending on the lag
         if lag == 0:
             start_date = f"{first_year}-01-01"
-            end_date = f"{first_year + 1}-01-01"
+            end_date = f"{first_year}-01-01"
         else:
             start_date = f"{first_year + lag}-01-01"
-            end_date = f"{last_year + lag + 1}-01-01"
+            end_date = f"{last_year + lag}-01-01"
     else:
         # Assertion error, forecast range not recognised
         assert False, "Forecast range not recognised"
