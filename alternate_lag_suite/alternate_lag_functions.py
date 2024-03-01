@@ -839,6 +839,8 @@ def calculate_nao_index(
         end_year=2023,
     )
 
+    # FIXME: Model years 2-5 not lining up with observations here
+    # Is the problem with the obs or model?
     # Constrain the obs_psl_anomaly to the common years
     obs_psl_anomaly = obs_psl_anomaly.sel(
         time=slice(f"{first_year_align}-01-01", f"{last_year_align}-12-31")
@@ -1320,6 +1322,7 @@ def calculate_ens_mean_nao(
     # Calculate the lagged ensemble mean NAO index
     ens_mean_nao_index = model_nao_index[variable].mean(dim="ensemble_member")
 
+    # FIXME: Years 2-5 not the correct size here
     # Calculate the correlation between the observed and model NAO index
     lag_corr, lag_p = pearsonr(obs_nao_index, ens_mean_nao_index)
 
@@ -1962,9 +1965,7 @@ def main():
             forecast_range=forecast_range,
             start_year=start_year,
             end_year=end_year,
-            models_list=[
-                dicts.models
-            ],  # FIXME: Hardcoded to dicts.models for now (no MRI)
+            models_list=dicts.models,  # FIXME: Hardcoded to dicts.models for now (no MRI)
             plot=False,  # TODO: Hardcoded to False for now
         )
 
