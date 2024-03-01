@@ -2017,7 +2017,9 @@ def main():
             forecast_range=forecast_range,
             start_year=start_year,
             end_year=end_year,
-            models_list=dicts.models,  # TODO: Hardcoded to dicts.models for now (no MRI)
+            models_list=[
+                "CanESM5"
+            ],  # FIXME: Hardcoded to dicts.models for now (no MRI)
             plot=False,  # TODO: Hardcoded to False for now
         )
 
