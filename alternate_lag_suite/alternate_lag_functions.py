@@ -17,9 +17,9 @@ Usage:
 ------
 
     $ python alternate_lag_functions.py <variable> <season> <region>
-        <start_year> <end_year> <forecast_range> <lag>
+        <start_year> <end_year> <forecast_range> <lag> <nao_matching> <plot> <n_matched_members>
 
-    $ python alternate_lag_functions.py tas DJFM global 1961 2014 2-5 4
+    $ python alternate_lag_functions.py tas DJFM global 1961 2014 2-5 4 False False 20
 
 Parameters:
 -----------
@@ -52,6 +52,18 @@ Parameters:
         The lag to take the alternate lag for.
         Default is 4.
 
+    nao_matching: bool
+        Whether to perform the NAO matching for the variable specified.
+        Default is False.
+
+    plot: bool
+        Whether to plot the NAO index or not.
+        Default is False.
+
+    n_matched_members
+        The number of NAO matched members to use.
+        Default is 20.
+
 Outputs:
 --------
 
@@ -60,6 +72,10 @@ Outputs:
 
     A .npy file containing the lagged correlation array with dimensions:
     (years, total nens, lats, lons).
+
+    If nao_matching is True,
+    then a .npy file containing the NAO_matched array with dimensions:
+    (20, years, lats, lons).
 """
 
 # Functions for processing alternate lag data
@@ -68,6 +84,7 @@ import sys
 import os
 import glob
 import argparse
+import pathlib
 from time import time
 import fnmatch
 
@@ -78,6 +95,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 from tqdm import tqdm
 from scipy.stats import pearsonr
+from datetime import datetime
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -526,8 +544,6 @@ def load_data(
     return data_arr
 
 
-# TODO: Fix this function for the alternate lag 1 and 2 year case
-# If the second year has some skill
 # Write a function to calculate the lagged correlation
 def alternate_lag(
     data: np.array, forecast_range: str, years: np.array, lag: int = 4
@@ -943,10 +959,6 @@ def calculate_nao_index(
     # Assert that member_files is not empty
     assert len(member_files) > 0, "member_files is empty"
 
-    # print("WARNING: Limiting to the first 10 members for now")
-    # # FIXME: limit to the first 10 members for now
-    # member_files = member_files[:10]
-
     # Load the data from the member files
     # TODO: lag hardcoded as 4 for now
     model_data = load_data(
@@ -1206,6 +1218,204 @@ def load_data(
     return dss
 
 
+# Define a function to calculate the ens mean NAO
+# and optionally plot this
+def calculate_ens_mean_nao(
+    obs_nao_index: xr.DataArray,
+    model_nao_index: xr.DataArray,
+    season: str,
+    forecast_range: str,
+    start_year: int = 1961,
+    end_year: int = 2014,
+    plot: bool = False,
+    lag: int = 4,
+    variable: str = "psl",
+    plots_dir: str = "/gws/nopw/j04/canari/users/benhutch/nao-index-plots",
+):
+    """
+    Calculate the ensemble mean NAO index and optionally plot this.
+
+    Parameters
+    ----------
+
+    obs_nao_index: xr.DataArray
+        The observed NAO index.
+
+    model_nao_index: xr.DataArray
+        The model NAO index.
+
+    season: str
+        The season to calculate the NAO index for.
+
+    forecast_range: str
+        The forecast range to calculate the NAO index for.
+
+    start_year: int
+        The start year of the period to calculate the NAO index for.
+
+    end_year: int
+        The end year of the period to calculate the NAO index for.
+
+    plot: bool
+        Whether to plot the NAO index or not.
+
+    lag: int
+        The lag to calculate the NAO index for.
+        The default is 4.
+
+    variable: str
+        The variable to calculate the NAO index for.
+        The default is "psl"."
+
+    Returns
+    -------
+
+    ens_mean_nao_index: xr.DataArray
+        signal adjusted ensemble mean NAO index.
+
+    nao_dict: dict
+        Dictionary containing the NAO index for the observations and models.
+
+    """
+
+    # Set up the mdi
+    mdi = -9999.0
+
+    # Set up the NAO dict
+    nao_dict = {
+        "model_nao_index": xr.DataSet(),
+        "sig_adj_ens_mean_nao_index": xr.DataSet(),
+        "obs_nao_index": xr.DataSet(),
+        "lag_corr": mdi,
+        "lag_p": mdi,
+        "sig_f_sig": mdi,
+        "sig_f_tot": mdi,
+        "sig_o_tot": mdi,
+        "rpc": mdi,
+        "rps": mdi,
+        "lag_adj_corr": mdi,
+        "lag_adj_p": mdi,
+    }
+
+    # Remove the first lag - 1 timesteps from the model NAO index
+    # And the last lag - 1 timesteps from the model NAO index
+    model_nao_index = model_nao_index.isel(time=slice(lag - 1, -1 * (lag - 1)))
+
+    # Remove the first lag - 1 timesteps from the obs NAO index
+    obs_nao_index = obs_nao_index.isel(time=slice(lag - 1, None))
+
+    try:
+        # For the time axis of the model NAO index
+        # Just set this to the years
+        model_nao_index["time"] = model_nao_index.time.dt.year
+
+        # For the time axis of the obs NAO index
+        # Just set this to the years
+        obs_nao_index["time"] = obs_nao_index.time.dt.year
+    except e as Exception:
+        print("Error setting the time axis to the years: ", e)
+        print("Exiting")
+        sys.exit()
+
+    # Calculate the lagged ensemble mean NAO index
+    ens_mean_nao_index = model_nao_index[variable].mean(dim="ensemble_member")
+
+    # Calculate the correlation between the observed and model NAO index
+    lag_corr, lag_p = pearsonr(obs_nao_index, ens_mean_nao_index)
+
+    # Calculate the standard deviation of the ensemble mean
+    sig_f_sig = np.std(ens_mean_nao_index)
+
+    # Calculate the standard deviation of the ensemble
+    sig_f_tot = np.std(model_nao_index[variable])
+
+    # Calculate the stdnatf deviation of the obs nao index
+    sig_o_tot = np.std(obs_nao_index)
+
+    # Calculate the rpc
+    rpc = lag_corr / (sig_f_sig / sig_f_tot)
+
+    # Calculate the rps
+    rps = rpc * (sig_o_tot / sig_f_tot)
+
+    # Scale the ensemble mean by the rps
+    ens_mean_nao_index = ens_mean_nao_index * rps
+
+    # Append the lag_corr and lag_p to the nao_dict
+    nao_dict["lag_corr"] = lag_corr
+    nao_dict["lag_p"] = lag_p
+
+    # Append the sig_f_sig, sig_f_tot and sig_o_tot to the nao_dict
+    nao_dict["sig_f_sig"] = sig_f_sig
+    nao_dict["sig_f_tot"] = sig_f_tot
+    nao_dict["sig_o_tot"] = sig_o_tot
+
+    # Append the rpc and rps to the nao_dict
+    nao_dict["rpc"] = rpc
+    nao_dict["rps"] = rps
+
+    # Append the lag_adj_corr and lag_adj_p to the nao_dict
+    nao_dict["lag_adj_corr"] = pearsonr(obs_nao_index, ens_mean_nao_index)[0]
+    nao_dict["lag_adj_p"] = pearsonr(obs_nao_index, ens_mean_nao_index)[1]
+
+    # Append the obs_nao_index, model_nao_index and ens_mean_nao_index to the nao_dict
+    nao_dict["obs_nao_index"] = obs_nao_index
+
+    # Append the model_nao_index to the nao_dict
+    nao_dict["model_nao_index"] = model_nao_index
+
+    # Append the ens_mean_nao_index to the nao_dict
+    nao_dict["sig_adj_ens_mean_nao_index"] = ens_mean_nao_index
+
+    # If plot is True
+    if plot:
+        print("Plotting the signal adjusted NAO index")
+
+        # Set up the figure and axis
+        fig, ax = plt.subplots()
+
+        # Plot the observed NAO index
+        obs_nao_index.plot(ax=ax, label="ERA5")
+
+        # Plot the model NAO index
+        ens_mean_nao_index.plot(ax=ax, label="dcppA-hindcast")
+
+        # Set the title
+        ax.set_title(f"NAO index for {season} {forecast_range}")
+
+        # Include a horizontal line at 0
+        ax.axhline(0, color="black", linestyle="--")
+
+        # Include a legend
+        ax.legend()
+
+        # If the plots directory does not exist
+        if not os.path.isdir(plots_dir):
+            # Create the directory
+            os.mkdir(plots_dir)
+
+        # Set the current time
+        current_time = time()
+
+        # Set up the filename for the plot
+        filename = f"nao-index-{season}-{forecast_range}-{current_time}.png"
+
+        # Set up the full path for the plot
+        plot_path = os.path.join(plots_dir, filename)
+
+        # Save the plot
+        plt.savefig(plot_path, format="png", dpi=300)
+
+        # Print the plot path
+        print("Plot saved to: ", plot_path)
+
+        # Close the plot
+        plt.close()
+
+    # retrun nao_dict
+    return nao_dict
+
+
 # Define the main function
 def main():
     # Define the hardcoded variables
@@ -1242,6 +1452,21 @@ def main():
     parser.add_argument(
         "lag", type=int, help="The lag to take the alternate lag for.", default=4
     )
+    parser.add_argument(
+        "nao_matching",
+        type=bool,
+        help="Whether to calculate the NAO index for the period specified.",
+        default=False,
+    )
+    parser.add_argument(
+        "plot", type=bool, help="Whether to plot the NAO index or not.", default=False
+    )
+    parser.add_argument(
+        "n_matched_members",
+        type=int,
+        help="The number of members to match to the NAO index.",
+        default=20,
+    )
 
     # Extract the CLAs
     args = parser.parse_args()
@@ -1254,6 +1479,9 @@ def main():
     end_year = args.end_year
     forecast_range = args.forecast_range
     lag = args.lag
+    nao_matching = args.nao_matching
+    plot = args.plot
+    n_matched_members = args.n_matched_members
 
     # Print the variables
     print("variable: ", variable)
@@ -1263,6 +1491,9 @@ def main():
     print("end_year: ", end_year)
     print("forecast_range: ", forecast_range)
     print("lag: ", lag)
+    print("nao_matching: ", nao_matching)
+    print("plot: ", plot)
+    print("n_matched_members: ", n_matched_members)
 
     # Extract the models for the given variable
     # Assuming that models initialised in November are the same for all variables
@@ -1351,6 +1582,36 @@ def main():
 
     # Save the array
     np.save(save_path, data_alternate_lag)
+
+    # If nao_matching is True
+    if nao_matching:
+        # Calculate the NAO index for the period specified
+        obs_nao_index, model_nao_index = calculate_nao_index(
+            season=season,
+            forecast_range=forecast_range,
+            start_year=start_year,
+            end_year=end_year,
+            models_list=dicts.models,  # TODO: Hardcoded to dicts.models for now (no MRI)
+            plot=False,  # TODO: Hardcoded to False for now
+        )
+
+        # Set up the filename for saving the array
+        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_nao_index.npy"
+
+        # Set up the full path for saving the array
+        save_path = os.path.join(save_dir, filename)
+
+        # Save the array
+        np.save(save_path, obs_nao_index)
+
+        # Set up the filename for saving the array
+        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_model_nao_index.npy"
+
+        # Set up the full path for saving the array
+        save_path = os.path.join(save_dir, filename)
+
+        # Save the array
+        np.save(save_path, model_nao_index)
 
 
 if __name__ == "__main__":
