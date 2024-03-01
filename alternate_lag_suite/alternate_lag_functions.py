@@ -1954,61 +1954,6 @@ def main():
     # Print the models
     print("models_list: ", models_list)
 
-    # Run the function to load the data
-    data = load_data(
-        variable=variable,
-        models_list=models_list,
-        season=season,
-        start_year=start_year,
-        end_year=end_year,
-        forecast_range=forecast_range,
-        region=region,
-    )
-
-    # Extract the current time
-    current_time = time()
-
-    # Set up the filename for saving the array
-    filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}.npy"
-
-    # Set up the full path for saving the array
-    save_path = os.path.join(save_dir, filename)
-
-    # Save the array
-    np.save(save_path, data)
-
-    # # If the forecas range does not contain a hyphen
-    # if "-" not in forecast_range:
-    #     # Print that we are not calculating the alternate lag
-    #     print(
-    #         "Not calculating the alternate lag for single year forecast range. Exiting."
-    #     )
-
-    #     # Exit the function
-    #     return
-
-    # TODO: If there is skill in the second year, then we can calculate the alternate lag
-    # For year 1
-    # Now process the alternate lag data
-    data_alternate_lag = alternate_lag(
-        data=data,
-        forecast_range=forecast_range,
-        years=np.arange(start_year, end_year + 1),
-        lag=lag,
-    )
-
-    # Set up the lag start year
-    lag_start_year = start_year + lag - 1
-
-    # Set up the filename for saving the array
-    filename = f"{variable}_{season}_{region}_{lag_start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
-
-    # Set up the full path for saving the array
-    save_path = os.path.join(save_dir, filename)
-
-    # Save the array
-    np.save(save_path, data_alternate_lag)
-
     # If nao_matching is True
     if nao_matching:
         # Calculate the NAO index for the period specified
@@ -2084,6 +2029,61 @@ def main():
         # Print the save path
         print("Saved NAO matched members to: ", save_path)
         print("Completed NAO matching")
+
+    # Run the function to load the data
+    data = load_data(
+        variable=variable,
+        models_list=models_list,
+        season=season,
+        start_year=start_year,
+        end_year=end_year,
+        forecast_range=forecast_range,
+        region=region,
+    )
+
+    # Extract the current time
+    current_time = time()
+
+    # Set up the filename for saving the array
+    filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}.npy"
+
+    # Set up the full path for saving the array
+    save_path = os.path.join(save_dir, filename)
+
+    # Save the array
+    np.save(save_path, data)
+
+    # # If the forecas range does not contain a hyphen
+    # if "-" not in forecast_range:
+    #     # Print that we are not calculating the alternate lag
+    #     print(
+    #         "Not calculating the alternate lag for single year forecast range. Exiting."
+    #     )
+
+    #     # Exit the function
+    #     return
+
+    # TODO: If there is skill in the second year, then we can calculate the alternate lag
+    # For year 1
+    # Now process the alternate lag data
+    data_alternate_lag = alternate_lag(
+        data=data,
+        forecast_range=forecast_range,
+        years=np.arange(start_year, end_year + 1),
+        lag=lag,
+    )
+
+    # Set up the lag start year
+    lag_start_year = start_year + lag - 1
+
+    # Set up the filename for saving the array
+    filename = f"{variable}_{season}_{region}_{lag_start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
+
+    # Set up the full path for saving the array
+    save_path = os.path.join(save_dir, filename)
+
+    # Save the array
+    np.save(save_path, data_alternate_lag)
 
     print("Script completed")
 
