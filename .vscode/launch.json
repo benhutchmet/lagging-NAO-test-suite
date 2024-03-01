@@ -31,13 +31,16 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "psl",
+                "sfcWind",
                 "ONDJFM",
                 "global",
                 "1961",
                 "2014", // test case with loading fewer files
-                "2",
-                "4" // lag
+                "2-9",
+                "4", // lag
+                "True", // performing nao matching
+                "True", // plotting nao
+                "20", // no nao subset members
             ]
         }
     ]

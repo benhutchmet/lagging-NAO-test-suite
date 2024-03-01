@@ -961,7 +961,7 @@ def calculate_nao_index(
 
     # Load the data from the member files
     # TODO: lag hardcoded as 4 for now
-    model_data = load_data(
+    model_data = load_data_xr(
         paths=member_files,
         forecast_range=forecast_range,
         lag=4,
@@ -1147,7 +1147,7 @@ def preprocess(
 
 
 # Define a function for loading the data from the paths
-def load_data(
+def load_data_xr(
     paths: list,
     forecast_range: str,
     lag: int = 4,
@@ -1283,9 +1283,9 @@ def calculate_ens_mean_nao(
 
     # Set up the NAO dict
     nao_dict = {
-        "model_nao_index": xr.DataSet(),
-        "sig_adj_ens_mean_nao_index": xr.DataSet(),
-        "obs_nao_index": xr.DataSet(),
+        "model_nao_index": xr.Dataset(),
+        "sig_adj_ens_mean_nao_index": xr.Dataset(),
+        "obs_nao_index": xr.Dataset(),
         "lag_corr": mdi,
         "lag_p": mdi,
         "sig_f_sig": mdi,
@@ -1455,7 +1455,7 @@ def calculate_diff(
     ens_mean_nao_index = nao_dict["sig_adj_ens_mean_nao_index"]
 
     # Extract the years
-    years = model_nao_index.time.dt.year.values
+    years = model_nao_index.time.values
 
     # Extract the model NAO index values
     model_nao_index_values = model_nao_index[variable].values
@@ -1963,7 +1963,7 @@ def main():
             start_year=start_year,
             end_year=end_year,
             models_list=[
-                "CanESM5"
+                dicts.models
             ],  # FIXME: Hardcoded to dicts.models for now (no MRI)
             plot=False,  # TODO: Hardcoded to False for now
         )
@@ -2029,6 +2029,10 @@ def main():
         # Print the save path
         print("Saved NAO matched members to: ", save_path)
         print("Completed NAO matching")
+
+        # Print that we are exiting
+        print("Exiting")
+        sys.exit()
 
     # Run the function to load the data
     data = load_data(
