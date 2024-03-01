@@ -1495,6 +1495,353 @@ def calculate_diff(
     return rank
 
 
+# Define a function for finding the corresponding ensemble members
+# for the matched variable
+def find_ens_members(
+    match_variable: str,
+    models_list: list,
+    season: str,
+    forecast_range: str,
+    start_year: int = 1961,
+    end_year: int = 2014,
+    lag: int = 4,
+    region: str = "global",
+    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
+):
+    """
+    Forms a list of all of the ensemble members for a given variable.
+
+    Args:
+            variable (str): The variable to find the ensemble members for.
+            models_list (list): A list of the models to find the ensemble members for.
+            start_year (int): The start year of the data.
+            end_year (int): The end year of the data.
+            region (str): The region to find the ensemble members for.
+            base_dir (str): The base directory of the data.
+
+    Returns:
+            ens_members (list): A list of the ensemble members for the given variable.
+    """
+
+    # Set up a list to store the ensemble members
+    ens_members = []
+
+    # Loop over the models
+    for model in tqdm(models_list):
+        # Set up the fstem
+        fstem = f"{base_dir}/{match_variable}/{model}/{region}/{forecast_range}/{season}/outputs/"
+
+        # Set up the filename
+        fname = f"*s{start_year}-*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+
+        # Find the files
+        files = glob.glob(f"{fstem}{fname}")
+
+        # Extract the filenames
+        fnames = [file.split("/")[-1] for file in files]
+
+        # Split the fnames by _
+        fnames_split = [fname.split("_")[4] for fname in fnames]
+
+        # Split this list by -
+        members = [fname.split("-")[1] for fname in fnames_split]
+
+        # Find the unique members
+        unique_members = list(set(members))
+
+        # New members list
+        new_members = []
+
+        if lag is not None:
+            for lag_idx in range(lag):
+                # append the model to the members
+                new_members += [
+                    f"{model}_{member}_lag_{lag_idx}" for member in unique_members
+                ]
+        else:
+            # append the model to the members
+            # f"{model}_{member}" for member in members
+            new_members = [f"{model}_{member}" for member in members]
+
+        # Add the members to the list
+        ens_members.extend(new_members)
+
+    return ens_members
+
+
+# Define a function for matching the ensemble members
+def find_overlapping_members(
+    rank_list: dict,
+    ens_mems: list,
+    no_members: int = 20,
+):
+    """
+    Finds the overlapping members between the rank list and the sfcwind ensemble members.
+
+    Args:
+        rank_list (dict): A dictionary containing the ranks of the ensemble members.
+        ens_mems (list): A list of the ensemble members for the variable.
+        no_members (int): The number of members to return.
+
+    Returns:
+        overlapping_members (list): A list of the overlapping members.
+    """
+
+    # Set up a dictionary to store the overlapping members for each year
+    overlapping_members = {year: [] for year in rank_list.keys()}
+
+    # Loop over the years in the rank list
+    for year in rank_list:
+        # Get the ensemble members for the year, sorted in descending order
+        year_df = rank_list[year]
+
+        # Sort this dataframe by the absolute difference
+        year_df = year_df.sort_values(by="abs_diff")
+
+        # Loop over the ensemble members
+        for member in year_df["ensemble_member"]:
+            # Check if the member is in the sfcwind ensemble members
+            if member in ens_mems:
+                # Add the member to the overlapping members for the year
+                overlapping_members[year].append(member)
+                # If we have found 20 members for the year, stop looking
+                if len(overlapping_members[year]) == 20:
+                    break
+
+    return overlapping_members
+
+
+# Function for finding the matching anoms files for each year
+# Define a function for finding the ensemble members for a given variable
+def find_matched_members(
+    overlap_mem: dict,
+    variable: str,
+    forecast_range: str,
+    season: str,
+    n_matched_mems=20,
+    start_year: int = 1961,
+    end_year: int = 2014,
+    lag: int = 4,
+    region: str = "global",
+    alt_lag: bool = False,
+    base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
+):
+    """
+    Finds the ensemble member for a given variable that matches the overlapping members.
+    These overlapping members are the ones that are closest to the signal adjusted ensemble mean
+    for the NAO index, which are also present in the matched variables ensemble members.
+
+    Args:
+            overlap_mem (dict): A dictionary containing the overlapping members for the variable.
+            variable (str): The variable to find the matched member for.
+            forecast_range (str): The forecast range of the data.
+            season (str): The season of the data.
+            n_matched_mems (int): The number of matched members to return.
+            start_year (int): The start year of the data.
+            end_year (int): The end year of the data.
+            region (str): The region of the data.
+            alt_lag (bool): Whether to use the alternate lag suite.
+            base_dir (str): The base directory of the data.
+
+    Returns:
+            matched_member (dict): A dictionary containing the matched member for the variable.
+    """
+
+    # If alt_lag is True, we want to use the alternate lag suite
+    if forecast_range in ["1", "2"]:
+        # Set up the base directory
+        AssertionError("Alternate lag suite not yet implemented")
+
+    # Set up the years
+    years = list(overlap_mem.keys())
+
+    # Extract the first lag 0 file, for the first year
+    # To get the dimensions of the data (lat, lon)
+    # Set up the fstem
+    members = overlap_mem[years[0]]
+
+    # Constrain members to those with lag_0
+    test_member = [member for member in members if "lag_0" in member][0]
+
+    # # Print the member
+    # print("test member: ", test_member)
+
+    # Set up the model
+    model = test_member.split("_")[0]
+    member = test_member.split("_")[1]
+
+    # Set up the fstem
+    fstem = f"{base_dir}/{variable}/{model}/{region}/{forecast_range}/{season}/outputs/"
+
+    # Set up the fname
+    fname = f"all-years*_s{years[0]}-{member}*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+
+    # # Print the path
+    # print(f"{fstem}{fname}")
+
+    # Find the files
+    first_file = glob.glob(f"{fstem}{fname}")[0]
+
+    # # Print the first file
+    # print("first file: ", first_file)
+
+    # Open the file
+    first_ds = xr.open_dataset(
+        first_file,
+        chunks={"time": "auto", "lat": "auto", "lon": "auto"},
+        engine="netcdf4",
+    )
+
+    # Extract the dimensions
+    lats = first_ds["lat"].values
+    lons = first_ds["lon"].values
+
+    # Close the dataset
+    first_ds.close()
+
+    # Set up the array
+    # LIke (20, 54, 72, 144)
+    # After taking the avg. over the time window
+    matched_mem_arr = np.zeros([n_matched_mems, len(years), len(lats), len(lons)])
+
+    # SHift the years lift by the offset
+    if forecast_range == "2-9":
+        years = [year - 5 for year in years]
+        df_offset = 5
+    elif forecast_range == "2-5":
+        # FIXME: Check this
+        years = [year - 3 for year in years]
+        df_offset = 3
+    else:
+        # Assertion error, forecast range not recognised
+        assert False, "Forecast range not recognised"
+
+    # Loop over the years
+    for i, year in enumerate(
+        tqdm(years, desc="Extracting NAO matched members for year: ")
+    ):
+        print("year: ", year)
+        # Get the overlapping members for the year
+        year_df = overlap_mem[year + df_offset]
+
+        # Loop over the members
+        for j, member in enumerate(year_df):
+
+            # Set up the fstem
+            model = member.split("_")[0]
+            member_id = member.split("_")[1]
+            lag_idx = int(member.split("_")[3])
+
+            # Print the components
+            print("model: ", model, "member: ", member_id, "lag_idx: ", lag_idx)
+
+            # Set up the fstem
+            fstem = f"{base_dir}/{variable}/{model}/{region}/{forecast_range}/{season}/outputs/"
+
+            # Set up the s{year}, depending on the lag index
+            # E.g. for 1964, lag 0, we want s1964
+            # E.g. for 1964, lag 1, we want s1963
+            # Asser that the lag index is an integer
+            assert isinstance(lag_idx, int)
+
+            # Set up the year
+            init_year = year - lag_idx
+
+            if season in ["DJF", "DJFM", "ONDJFM"]:
+                # Set up the fname
+                fname = f"all-years*_s{init_year}-{member_id}*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+            else:
+                # Extract the first digit in forecast range
+                first_digit = forecast_range.split("-")[0]
+                last_digit = forecast_range.split("-")[1]
+
+                # Set up the forecast range
+                forecast_range_sum = f"{first_digit + 1}-{last_digit + 1}"
+
+                # Set up the fname
+                fname = f"{variable}_s{init_year}-{member_id}*years_{forecast_range_sum}_start_{start_year}_end_{end_year}_anoms.nc"
+
+            # Set up the start year and end year indices
+            if "-" in forecast_range:
+                start_year_idx = int(forecast_range.split("-")[0])
+                end_year_idx = int(forecast_range.split("-")[1])
+            else:
+                start_year_idx = int(forecast_range)
+                end_year_idx = int(forecast_range)
+
+            # If the model name is BCC-CSM2-MR, we need to set up the indexes differently
+            # If the model name is BCC-CSM2-MR
+            if model == "BCC-CSM2-MR":
+                # Set the start year index
+                start_year_idx = start_year_idx
+                # Set the end year index
+                end_year_idx = end_year_idx + 1  # jan of this year
+            else:
+                # Set the start year index
+                start_year_idx = start_year_idx - 1
+
+                # Set the end year index
+                end_year_idx = end_year_idx - 1 + 1  # jan of this year
+
+            # Find the files
+            file = glob.glob(f"{fstem}{fname}")
+
+            # Assert that the length of the file is 1
+            assert len(file) == 1, f"Length of file is not 1, it is {len(file)}"
+
+            # Print the loading file
+            print(f"Loading file: {file[0].split('/')[-1]}")
+
+            # Open the dataset
+            ds = xr.open_dataset(
+                file[0],
+                chunks={"time": "auto", "lat": "auto", "lon": "auto"},
+                engine="netcdf4",
+            )
+
+            # Extract the years
+            years = ds.time.dt.year.values
+
+            # Find the unique years
+            unique_years = np.unique(years)
+
+            # Extract the first year
+            first_year = int(unique_years[start_year_idx])
+            last_year = int(unique_years[end_year_idx])
+
+            # If the forecast range is years 2-9
+            if forecast_range == "2-9":
+                # Form the strings for the start and end dates
+                start_date = f"{first_year}-01-01"
+                end_date = f"{last_year}-01-01"
+            elif forecast_range == "2-5":
+                # Form the strings for the start and end dates depending on the lag
+                if lag_idx == 0:
+                    start_date = f"{first_year}-01-01"
+                    end_date = f"{first_year}-01-01"
+                else:
+                    start_date = f"{first_year + lag_idx}-01-01"
+                    end_date = f"{last_year + lag_idx}-01-01"
+            else:
+                # Assertion error, forecast range not recognised
+                assert False, "Forecast range not recognised"
+
+            # Take the mean over the time dimension between the start and end dates
+            ds = ds.sel(time=slice(start_date, end_date)).mean("time")
+
+            # Extract the values
+            vals = ds[variable].values
+
+            # Add the values to the array
+            matched_mem_arr[j, i, :, :] = vals
+
+            # Close the dataset
+            ds.close()
+
+    # Return the array
+    return matched_mem_arr
+
+
 # Define the main function
 def main():
     # Define the hardcoded variables
