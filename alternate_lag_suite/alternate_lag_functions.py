@@ -2021,23 +2021,69 @@ def main():
             plot=False,  # TODO: Hardcoded to False for now
         )
 
+        # Calculate the ensemble mean NAO index
+        nao_dict = calculate_ens_mean_nao(
+            obs_nao_index=obs_nao_index,
+            model_nao_index=model_nao_index,
+            season=season,
+            forecast_range=forecast_range,
+            start_year=start_year,
+            end_year=end_year,
+            plot=plot,
+            lag=lag,
+        )
+
+        # Calculate the difference between the observed and model NAO index
+        rank = calculate_diff(nao_dict=nao_dict)
+
+        # Find the ensemble members for the matching variable
+        ens_mems = find_ens_members(
+            match_variable=variable,
+            models_list=models_list,
+            season=season,
+            forecast_range=forecast_range,
+            start_year=start_year,
+            end_year=end_year,
+            lag=lag,
+        )
+
+        # Find the overlapping members between the rank list and the sfcwind ensemble members
+        overlapping_members = find_overlapping_members(
+            rank_list=rank,
+            ens_mems=ens_mems,
+            no_members=n_matched_members,
+        )
+
+        # Find the matched members
+        matched_members = find_matched_members(
+            overlap_mem=overlapping_members,
+            variable=variable,
+            forecast_range=forecast_range,
+            season=season,
+            n_matched_mems=n_matched_members,
+            start_year=start_year,
+            end_year=end_year,
+            lag=lag,
+            region=region,
+        )
+
+        # Extract the current time
+        current_time = time()
+
         # Set up the filename for saving the array
-        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_nao_index.npy"
+        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{n_matched_members}_{current_time}_nao_matched_members.npy"
 
         # Set up the full path for saving the array
         save_path = os.path.join(save_dir, filename)
 
         # Save the array
-        np.save(save_path, obs_nao_index)
+        np.save(save_path, matched_members)
 
-        # Set up the filename for saving the array
-        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_model_nao_index.npy"
+        # Print the save path
+        print("Saved NAO matched members to: ", save_path)
+        print("Completed NAO matching")
 
-        # Set up the full path for saving the array
-        save_path = os.path.join(save_dir, filename)
-
-        # Save the array
-        np.save(save_path, model_nao_index)
+    print("Script completed")
 
 
 if __name__ == "__main__":
