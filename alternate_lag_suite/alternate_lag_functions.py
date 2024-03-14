@@ -1848,7 +1848,11 @@ def find_matched_members(
 # Define the main function
 def main():
     # Define the hardcoded variables
-    save_dir = "/gws/nopw/j04/canari/users/benhutch/alternate-lag-processed-data"
+    # FIXME: Fix this once testing completed
+    # save_dir = "/gws/nopw/j04/canari/users/benhutch/alternate-lag-processed-data"
+    save_dir = (
+        "/gws/nopw/j04/canari/users/benhutch/alternate-lag-processed-data/test-sfcWind"
+    )
 
     # If the save directory does not exist
     if not os.path.isdir(save_dir):

@@ -2,7 +2,7 @@
     UTC mode = True # Ignore DST
     [[parameters]]
         variable=rsds,pr
-        season=ONDJFM
+        season=ONDJFM,DJFM
         region="global"
         start_year="1961"
         end_year="2014"
@@ -31,7 +31,7 @@
         python alternate_lag_functions.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_lag} ${CYLC_TASK_PARAM_nao_matching} ${CYLC_TASK_PARAM_plot} ${CYLC_TASK_PARAM_n_matched_members}
         """
         [[[job]]]
-            execution time limit = PT2000M
+            execution time limit = PT60M
         [[[directives]]]
             --partition=high-mem
             --mem=20000
