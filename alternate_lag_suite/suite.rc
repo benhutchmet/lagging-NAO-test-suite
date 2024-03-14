@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable=rsds,pr
+        variable=sfcWind
         season=ONDJFM,DJFM
         region="global"
         start_year="1961"
