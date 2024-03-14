@@ -666,6 +666,17 @@ sfcWind_models = [
     "CESM1-1-CAM5-CMIP5",
 ]
 
+# Define previous sfcwind models
+sfcWind_models_original = [
+    "BCC-CSM2-MR",
+    "MPI-ESM1-2-HR",
+    "CanESM5",
+    "HadGEM3-GC31-MM",
+    "FGOALS-f3-L",
+    "IPSL-CM6A-LR",
+    "CESM1-1-CAM5-CMIP5",
+]
+
 # Nov init models for sfcWind
 nov_init_models_sfcWind = [
     model for model in sfcWind_models if model not in jan_init_models_psl

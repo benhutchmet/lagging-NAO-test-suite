@@ -1930,7 +1930,8 @@ def main():
         models_list = dicts.models
         # models_list = dicts.nov_init_models_tas
     elif variable == "sfcWind":
-        models_list = dicts.sfcWind_models
+        # models_list = dicts.sfcWind_models
+        models_list = dicts.sfcWind_models_original
         # models_list = dicts.nov_init_models_sfcWind
     elif variable == "psl":
         models_list = dicts.psl_models
