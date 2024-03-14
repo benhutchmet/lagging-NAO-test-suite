@@ -1887,12 +1887,12 @@ def main():
     )
     parser.add_argument(
         "nao_matching",
-        type=bool,
+        type=str,
         help="Whether to calculate the NAO index for the period specified.",
-        default=False,
+        default="False",
     )
     parser.add_argument(
-        "plot", type=bool, help="Whether to plot the NAO index or not.", default=False
+        "plot", type=str, help="Whether to plot the NAO index or not.", default="False"
     )
     parser.add_argument(
         "n_matched_members",
@@ -1915,6 +1915,22 @@ def main():
     nao_matching = args.nao_matching
     plot = args.plot
     n_matched_members = args.n_matched_members
+
+    # if nao_matching is not a boolean
+    if nao_matching not in ["True", "False"]:
+        # Raise an assertion error
+        raise AssertionError("nao_matching is not a boolean")
+
+    # if plot is not a boolean
+    if plot not in ["True", "False"]:
+        # Raise an assertion error
+        raise AssertionError("plot is not a boolean")
+
+    # Convert the strings to booleans
+    nao_matching = True if nao_matching == "True" else False
+
+    # Convert the strings to booleans
+    plot = True if plot == "True" else False
 
     # Print the variables
     print("variable: ", variable)
