@@ -797,3 +797,15 @@ uk_s_box = {"lon1": 153, "lon2": 201, "lat1": 38, "lat2": 51}
 
 # Define this but corrected
 uk_s_box_corrected = {"lon1": -27, "lon2": 21, "lat1": 38, "lat2": 51}
+
+ua_models = [
+    "CanESM5",
+    "IPSL-CM6A-LR",
+    "MIROC6",
+    "MPI-ESM1-2-HR",
+    "CMCC-CM2-SR5",
+    "HadGEM3-GC31-MM",
+    "FGOALS-f3-L",
+    "CESM1-1-CAM5-CMIP5",
+    "EC-Earth3",
+]

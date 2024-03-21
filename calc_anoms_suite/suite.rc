@@ -1,9 +1,9 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        model=EC-Earth3
-        variable=pr
-        season=ONDJFM,AYULGS
+        model=CanESM5,IPSL-CM6A-LR,MIROC6,MPI-ESM1-2-HR,CMCC-CM2-SR5,HadGEM3-GC31-MM,FGOALS-f3-L,CESM1-1-CAM5-CMIP5,EC-Earth3
+        variable=ua
+        season=DJFM, ONDJFM
         experiment="dcppA-hindcast"
         region="global"
         start_year=1960

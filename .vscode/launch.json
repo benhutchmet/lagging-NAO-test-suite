@@ -4,6 +4,26 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        {
+
+            "name":"Debug regrid py",
+            "type":"debugpy",
+            "request":"launch",
+            "program":"/home/users/benhutch/lagging-NAO-test-suite/testing/sel_reg_fcst_seasons_functions.py",
+            "console":"integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "BCC-CSM2-MR",
+                "ua",
+                "DJFM",
+                "dcppA-hindcast",
+                "global",
+                "1961",
+                "1970", // test case with loading fewer files
+                "1961"
+            ]
+    
+        },
 
         {
             "name": "Python: Debug clim script",

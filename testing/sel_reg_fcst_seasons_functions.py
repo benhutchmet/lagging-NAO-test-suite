@@ -129,8 +129,8 @@ def load_model_data(
     if model_path_root == "gws":
         print("The model path root is gws.")
 
-        # List the files at this location
-        model_files = os.listdir(model_path)
+        # List the files at this location that end with .nc
+        model_files = [file for file in os.listdir(model_path) if file.endswith(".nc")]
 
         # Split the files by the "/" character
         model_files_split = [file.split("/")[-1] for file in model_files]
