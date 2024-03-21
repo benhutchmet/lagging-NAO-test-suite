@@ -1381,7 +1381,7 @@ def calculate_ens_mean_nao(
         print("Plotting the signal adjusted NAO index")
 
         # Set up the figure and axis
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(12, 6))
 
         # Plot the observed NAO index
         obs_nao_index.plot(ax=ax, label="ERA5")
