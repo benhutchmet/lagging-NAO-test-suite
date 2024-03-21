@@ -1475,6 +1475,15 @@ def cross_validation_rps(
     # Set up the number of years to cross validate
     n_years = len(obs_nao_index)
 
+    # Extract the values from the obs_nao_index
+    obs_nao_index_values = obs_nao_index.values
+
+    # Extract the values from the ens_mean_nao_index
+    ens_mean_nao_index_values = ens_mean_nao_index.values
+
+    # Extract the values from the model_nao_index
+    model_nao_index_values = model_nao_index[variable].values
+
     # Loop over the years
     for i in tqdm(
         range(n_years), desc="Calculating the RPS for each hindcast start date"
@@ -1483,60 +1492,39 @@ def cross_validation_rps(
         if i == 0:
             # first year case
             # exclude the first two years
-            obs_nao_index_cv = obs_nao_index.isel(time=slice(2, None))
+            obs_nao_index_cv = obs_nao_index_values[2:]
 
             # Same for the ensemble mean nao index
-            ens_mean_nao_index_cv = ens_mean_nao_index.isel(time=slice(2, None))
+            ens_mean_nao_index_cv = ens_mean_nao_index_values[2:]
 
             # Same from the model nao index
-            model_nao_index_cv = model_nao_index.isel(time=slice(2, None))
+            model_nao_index_cv = model_nao_index_values[2:]
         elif i == n_years - 1:
             # final year case
             # exclude the final two years
-            obs_nao_index_cv = obs_nao_index.isel(time=slice(None, -2))
+            obs_nao_index_cv = obs_nao_index_values[:-2]
 
             # Same for the ensemble mean nao index
-            ens_mean_nao_index_cv = ens_mean_nao_index.isel(time=slice(None, -2))
+            ens_mean_nao_index_cv = ens_mean_nao_index_values[:-2]
 
             # Same from the model nao index
-            model_nao_index_cv = model_nao_index.isel(time=slice(None, -2))
+            model_nao_index_cv = model_nao_index_values[:-2]
         else:
             # Central years case
             # Exclude current index year
             # and those before and after
-            obs_nao_index_cv_beforei = obs_nao_index.isel(time=slice(None, i))
-
-            # And after i
-            obs_nao_index_cv_afteri = obs_nao_index.isel(time=slice(i + 2, None))
-
-            # Concatenate the two
-            obs_nao_index_cv = xr.concat(
-                [obs_nao_index_cv_beforei, obs_nao_index_cv_afteri], dim="time"
+            obs_nao_index_cv = np.concatenate(
+                (obs_nao_index_values[:i], obs_nao_index_values[i + 2 :])
             )
 
             # Same for the ensemble mean nao index
-            ens_mean_nao_index_cv_beforei = ens_mean_nao_index.isel(time=slice(None, i))
-
-            # And after i
-            ens_mean_nao_index_cv_afteri = ens_mean_nao_index.isel(
-                time=slice(i + 2, None)
-            )
-
-            # Concatenate the two
-            ens_mean_nao_index_cv = xr.concat(
-                [ens_mean_nao_index_cv_beforei, ens_mean_nao_index_cv_afteri],
-                dim="time",
+            ens_mean_nao_index_cv = np.concatenate(
+                (ens_mean_nao_index_values[:i], ens_mean_nao_index_values[i + 2 :])
             )
 
             # Same from the model nao index
-            model_nao_index_cv_beforei = model_nao_index.isel(time=slice(None, i))
-
-            # And after i
-            model_nao_index_cv_afteri = model_nao_index.isel(time=slice(i + 2, None))
-
-            # Concatenate the two
-            model_nao_index_cv = xr.concat(
-                [model_nao_index_cv_beforei, model_nao_index_cv_afteri], dim="time"
+            model_nao_index_cv = np.concatenate(
+                (model_nao_index_values[:i], model_nao_index_values[i + 2 :])
             )
 
         # Calculate the correlation between the observed and model NAO index
@@ -1546,7 +1534,7 @@ def cross_validation_rps(
         sig_f_sig = np.std(ens_mean_nao_index_cv)
 
         # Calculate the standard deviation of the ensemble
-        sig_f_tot = np.std(model_nao_index_cv[variable])
+        sig_f_tot = np.std(model_nao_index_cv)
 
         # Calculate the stdnatf deviation of the obs nao index
         sig_o_tot = np.std(obs_nao_index_cv)
@@ -2135,7 +2123,7 @@ def main():
             forecast_range=forecast_range,
             start_year=start_year,
             end_year=end_year,
-            models_list=dicts.models,  # FIXME: Hardcoded to dicts.models for now (no MRI)
+            models_list=models_list,
             plot=False,  # TODO: Hardcoded to False for now
         )
 
