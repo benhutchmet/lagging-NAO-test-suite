@@ -2195,7 +2195,7 @@ def main():
             forecast_range=forecast_range,
             start_year=start_year,
             end_year=end_year,
-            models_list=models_list,
+            models_list=dicts.models,  # models for NAO index
             plot=False,  # TODO: Hardcoded to False for now
             winter_n_grid=dicts.uk_n_box_corrected,
             summer_n_grid=dicts.uk_n_box_corrected,
