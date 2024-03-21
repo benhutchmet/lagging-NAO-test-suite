@@ -1294,7 +1294,7 @@ def calculate_ens_mean_nao(
         "sig_f_tot": mdi,
         "sig_o_tot": mdi,
         "rpc": mdi,
-        "rps": mdi,
+        "rps": [],  # RPS is an array of values in this case
         "lag_adj_corr": mdi,
         "lag_adj_p": mdi,
     }
@@ -1340,12 +1340,15 @@ def calculate_ens_mean_nao(
 
     # TODO: Cross-validation for the rps here
     # One value of RPS for each hindcast start date
-
-    # Calculate the rps
-    rps = rpc * (sig_o_tot / sig_f_tot)
+    rps_array = cross_validation_rps(
+        obs_nao_index=obs_nao_index,
+        ens_mean_nao_index=ens_mean_nao_index,
+        model_nao_index=model_nao_index,
+        variable=variable,
+    )
 
     # Scale the ensemble mean by the rps
-    ens_mean_nao_index = ens_mean_nao_index * rps
+    ens_mean_nao_index = ens_mean_nao_index * rps_array
 
     # Append the lag_corr and lag_p to the nao_dict
     nao_dict["lag_corr"] = lag_corr
@@ -1358,7 +1361,7 @@ def calculate_ens_mean_nao(
 
     # Append the rpc and rps to the nao_dict
     nao_dict["rpc"] = rpc
-    nao_dict["rps"] = rps
+    nao_dict["rps"] = rps_array
 
     # Append the lag_adj_corr and lag_adj_p to the nao_dict
     nao_dict["lag_adj_corr"] = pearsonr(obs_nao_index, ens_mean_nao_index)[0]
