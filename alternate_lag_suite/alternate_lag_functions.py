@@ -1644,20 +1644,19 @@ def calculate_diff(
         # Add the dataframe to the rank dictionary
         rank[year] = df
 
-    # Convert the rank dictionary to a pandas DataFrame
-    rank_df = pd.DataFrame(rank)
+        # If i is 5 or less
+        if i <= 5:
+            # Set up the current time
+            current_time = time()
 
-    # Set up the current time
-    current_time = time()
+            # Set up a name for the rank dataframe
+            rank_df_name = f"rank_df_{variable}_{year}_{current_time}.csv"
 
-    # Set up a name for the rank dataframe
-    rank_df_name = f"rank_df_{variable}_{current_time}.csv"
+            # Form the full path for the rank dataframe
+            rank_df_path = os.path.join(save_dir, rank_df_name)
 
-    # Form the full path for the rank dataframe
-    rank_df_path = os.path.join(save_dir, rank_df_name)
-
-    # Save the rank dataframe
-    rank_df.to_csv(rank_df_path)
+            # Save the rank dataframe
+            df.to_csv(rank_df_path)
 
     # Return the rank dictionary
     return rank
@@ -1780,7 +1779,7 @@ def find_overlapping_members(
     overlapping_members = {year: [] for year in rank_list.keys()}
 
     # Loop over the years in the rank list
-    for year in rank_list:
+    for i, year in enumerate(rank_list):
         # Get the ensemble members for the year, sorted in descending order
         year_df = rank_list[year]
 
@@ -1797,24 +1796,22 @@ def find_overlapping_members(
                 if len(overlapping_members[year]) == 20:
                     break
 
-    # print that we have found the overlapping members
-    # for the year
-    print("Found overlapping members for the year")
+        # If within the first 5 years
+        if i <= 5:
+            # Set up the current time
+            current_time = time()
 
-    # Set up the current time
-    current_time = time()
+            # Set up the filename for the overlapping members
+            overlapping_members_name = f"overlapping_members_{year}_{current_time}.csv"
 
-    # Set up the filename for the overlapping members
-    overlapping_members_name = f"overlapping_members_{current_time}.csv"
+            # Set up the full path for the overlapping members
+            overlapping_members_path = os.path.join(save_dir, overlapping_members_name)
 
-    # Set up the full path for the overlapping members
-    overlapping_members_path = os.path.join(save_dir, overlapping_members_name)
+            # Convert the overlapping members to a pandas DataFrame
+            overlapping_members_df = pd.DataFrame(overlapping_members[year])
 
-    # Convert the overlapping members to a pandas DataFrame
-    overlapping_members_df = pd.DataFrame(overlapping_members)
-
-    # Save the overlapping members
-    overlapping_members_df.to_csv(overlapping_members_path)
+            # Save the overlapping members
+            overlapping_members_df.to_csv(overlapping_members_path)
 
     return overlapping_members
 
