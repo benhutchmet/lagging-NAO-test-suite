@@ -1338,7 +1338,6 @@ def calculate_ens_mean_nao(
     # Calculate the rpc
     rpc = lag_corr / (sig_f_sig / sig_f_tot)
 
-    # TODO: Cross-validation for the rps here
     # One value of RPS for each hindcast start date
     rps_array = cross_validation_rps(
         obs_nao_index=obs_nao_index,
@@ -2118,8 +2117,15 @@ def main():
         )
         models_list = [model for model in models_list if model != "MRI-ESM2-0"]
 
+    # FIXME: Limit models to HadGEM3-GC31-MM for testing
+    models_list = ["HadGEM3-GC31-MM"]
+
     # Print the models
     print("models_list: ", models_list)
+
+    # Print a warning
+    print("Warning: Hardcoded to HadGEM3-GC31-MM for testing")
+    print("-------------------------------------------------")
 
     # If nao_matching is True
     if nao_matching:

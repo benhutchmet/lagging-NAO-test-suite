@@ -38,8 +38,8 @@
                 "2014", // test case with loading fewer files
                 "2-9",
                 "4", // lag
-                "False",
-                "False",
+                "True",
+                "True",
                 "20"
             ]
         }
