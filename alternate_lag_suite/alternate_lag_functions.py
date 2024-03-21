@@ -1394,6 +1394,17 @@ def calculate_ens_mean_nao(
         # Include a horizontal line at 0
         ax.axhline(0, color="black", linestyle="--")
 
+        # Include the number of ensemble members in a textbox
+        ax.text(
+            0.05,
+            0.95,
+            f"N: {model_nao_index.ensemble_member.size}",
+            horizontalalignment="left",
+            verticalalignment="top",
+            transform=ax.transAxes,
+            bbox=dict(facecolor="white", alpha=0.5),
+        )
+
         # Include a legend
         ax.legend()
 
@@ -1554,6 +1565,7 @@ def cross_validation_rps(
 def calculate_diff(
     nao_dict: dict,
     variable: str = "psl",
+    save_dir: str = "/gws/nopw/j04/canari/users/benhutch/nao_stats_df/testing_nao_matching/",
 ):
     """
     For each year, calculate the absolute difference between the NAO of each
@@ -1572,6 +1584,9 @@ def calculate_diff(
         The variable to calculate the NAO index for.
         The default is "psl"."
 
+    save_dir: str
+        The directory to save the rank dictionary to.
+
     Returns
     -------
 
@@ -1580,6 +1595,11 @@ def calculate_diff(
         Formatted as a pandas DataFrame.
         With the"ensemble_member" and "abs_diff" columns.
     """
+
+    # If the ave directory does not exist
+    if not os.path.isdir(save_dir):
+        # Create the directory
+        os.mkdir(save_dir)
 
     # Extract the model NAO index
     model_nao_index = nao_dict["model_nao_index"]
@@ -1624,6 +1644,21 @@ def calculate_diff(
         # Add the dataframe to the rank dictionary
         rank[year] = df
 
+    # Convert the rank dictionary to a pandas DataFrame
+    rank_df = pd.DataFrame(rank)
+
+    # Set up the current time
+    current_time = time()
+
+    # Set up a name for the rank dataframe
+    rank_df_name = f"rank_df_{variable}_{current_time}.csv"
+
+    # Form the full path for the rank dataframe
+    rank_df_path = os.path.join(save_dir, rank_df_name)
+
+    # Save the rank dataframe
+    rank_df.to_csv(rank_df_path)
+
     # Return the rank dictionary
     return rank
 
@@ -1640,6 +1675,7 @@ def find_ens_members(
     lag: int = 4,
     region: str = "global",
     base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
+    save_dir: str = "/gws/nopw/j04/canari/users/benhutch/nao_stats_df/testing_nao_matching/",
 ):
     """
     Forms a list of all of the ensemble members for a given variable.
@@ -1651,6 +1687,7 @@ def find_ens_members(
             end_year (int): The end year of the data.
             region (str): The region to find the ensemble members for.
             base_dir (str): The base directory of the data.
+            save_dir (str): The directory to save the ensemble members to.
 
     Returns:
             ens_members (list): A list of the ensemble members for the given variable.
@@ -1699,6 +1736,23 @@ def find_ens_members(
         # Add the members to the list
         ens_members.extend(new_members)
 
+    # Set up the current time
+    current_time = time()
+
+    # Set up the filename for the ensemble members
+    ens_members_name = (
+        f"ens_members_{match_variable}_{season}_{forecast_range}_{current_time}.csv"
+    )
+
+    # Set up the full path for the ensemble members
+    ens_members_path = os.path.join(save_dir, ens_members_name)
+
+    # Convert the list to a pandas DataFrame
+    ens_members_df = pd.DataFrame(ens_members)
+
+    # Save the ensemble members
+    ens_members_df.to_csv(ens_members_path)
+
     return ens_members
 
 
@@ -1707,6 +1761,7 @@ def find_overlapping_members(
     rank_list: dict,
     ens_mems: list,
     no_members: int = 20,
+    save_dir: str = "/gws/nopw/j04/canari/users/benhutch/nao_stats_df/testing_nao_matching/",
 ):
     """
     Finds the overlapping members between the rank list and the sfcwind ensemble members.
@@ -1715,6 +1770,7 @@ def find_overlapping_members(
         rank_list (dict): A dictionary containing the ranks of the ensemble members.
         ens_mems (list): A list of the ensemble members for the variable.
         no_members (int): The number of members to return.
+        save_dir (str): The directory to save the overlapping members to.
 
     Returns:
         overlapping_members (list): A list of the overlapping members.
@@ -1740,6 +1796,25 @@ def find_overlapping_members(
                 # If we have found 20 members for the year, stop looking
                 if len(overlapping_members[year]) == 20:
                     break
+
+    # print that we have found the overlapping members
+    # for the year
+    print("Found overlapping members for the year")
+
+    # Set up the current time
+    current_time = time()
+
+    # Set up the filename for the overlapping members
+    overlapping_members_name = f"overlapping_members_{current_time}.csv"
+
+    # Set up the full path for the overlapping members
+    overlapping_members_path = os.path.join(save_dir, overlapping_members_name)
+
+    # Convert the overlapping members to a pandas DataFrame
+    overlapping_members_df = pd.DataFrame(overlapping_members)
+
+    # Save the overlapping members
+    overlapping_members_df.to_csv(overlapping_members_path)
 
     return overlapping_members
 
@@ -2105,14 +2180,14 @@ def main():
         )
         models_list = [model for model in models_list if model != "MRI-ESM2-0"]
 
-    # FIXME: Limit models to HadGEM3-GC31-MM for testing
-    models_list = ["HadGEM3-GC31-MM"]
+    # FIXME: Limit models to BCC-CSM2-MR for testing
+    models_list = ["BCC-CSM2-MR"]
 
     # Print the models
     print("models_list: ", models_list)
 
     # Print a warning
-    print("Warning: Hardcoded to HadGEM3-GC31-MM for testing")
+    print("Warning: Hardcoded to BCC-CSM2-MR for testing")
     print("-------------------------------------------------")
 
     # If nao_matching is True
