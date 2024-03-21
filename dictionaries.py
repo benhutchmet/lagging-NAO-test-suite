@@ -784,3 +784,16 @@ azores_grid = {"lon1": 152, "lon2": 160, "lat1": 36, "lat2": 40}
 
 # Define the dimensions for the gridbox for iceland
 iceland_grid = {"lon1": 155, "lon2": 164, "lat1": 63, "lat2": 70}
+
+# Define the dimensions for the gridbox for the N-S UK index
+# From thornton et al. 2019
+uk_n_box = {"lon1": 153, "lon2": 201, "lat1": 57, "lat2": 70}
+
+# Define this but corrected
+uk_n_box_corrected = {"lon1": -27, "lon2": 21, "lat1": 57, "lat2": 70}
+
+# And for the southern box
+uk_s_box = {"lon1": 153, "lon2": 201, "lat1": 38, "lat2": 51}
+
+# Define this but corrected
+uk_s_box_corrected = {"lon1": -27, "lon2": 21, "lat1": 38, "lat2": 51}

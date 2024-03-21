@@ -31,7 +31,7 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "sfcWind",
+                "psl",
                 "DJFM",
                 "global",
                 "1961",

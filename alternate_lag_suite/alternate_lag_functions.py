@@ -2177,15 +2177,15 @@ def main():
         )
         models_list = [model for model in models_list if model != "MRI-ESM2-0"]
 
-    # FIXME: Limit models to BCC-CSM2-MR for testing
-    models_list = ["BCC-CSM2-MR"]
+    # # FIXME: Limit models to BCC-CSM2-MR for testing
+    # models_list = ["BCC-CSM2-MR"]
 
     # Print the models
     print("models_list: ", models_list)
 
-    # Print a warning
-    print("Warning: Hardcoded to BCC-CSM2-MR for testing")
-    print("-------------------------------------------------")
+    # # Print a warning
+    # print("Warning: Hardcoded to BCC-CSM2-MR for testing")
+    # print("-------------------------------------------------")
 
     # If nao_matching is True
     if nao_matching:
@@ -2197,6 +2197,8 @@ def main():
             end_year=end_year,
             models_list=models_list,
             plot=False,  # TODO: Hardcoded to False for now
+            winter_n_grid=dicts.uk_n_box_corrected,
+            summer_n_grid=dicts.uk_n_box_corrected,
         )
 
         # Calculate the ensemble mean NAO index
