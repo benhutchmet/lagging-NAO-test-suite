@@ -1338,6 +1338,9 @@ def calculate_ens_mean_nao(
     # Calculate the rpc
     rpc = lag_corr / (sig_f_sig / sig_f_tot)
 
+    # TODO: Cross-validation for the rps here
+    # One value of RPS for each hindcast start date
+
     # Calculate the rps
     rps = rpc * (sig_o_tot / sig_f_tot)
 
@@ -1417,6 +1420,143 @@ def calculate_ens_mean_nao(
 
     # retrun nao_dict
     return nao_dict
+
+
+# Define a function which performs the cross validation for calculating the
+# RPS for the NAO index
+def cross_validation_rps(
+    obs_nao_index: xr.DataArray,
+    ens_mean_nao_index: xr.DataArray,
+    model_nao_index: xr.DataArray,
+    variable: str = "psl",
+):
+    """
+    Calculates the RPS for the NAO index using cross validation.
+    Where, to avoid overfitting to observations, the RPS is calculated for
+    each hindcast start date seperately using a cross-validation approach in
+    which the required hindcast and those on either side are omitted. E.g. for
+    the first start date, say 1961, the RPS is calculated using the obs NAO
+    index and the ensemble mean NAO index for 1963-2014. For the second start
+    date, 1962, the RPS is calculated using the obs NAO index and the ensemble
+    mean NAO index for 1964-2014. For the third start date, 1963, the RPS is
+    calculated using the obs NAO index and the ensemble mean NAO index for
+    1961, 1965-2014 and so on.
+
+    Parameters
+    ----------
+
+    obs_nao_index: xr.DataArray
+        The observed NAO index.
+
+    ens_mean_nao_index: xr.DataArray
+        The ensemble mean NAO index.
+
+    model_nao_index: xr.DataArray
+        The model NAO index. Contains all members.
+
+    variable: str
+        The variable to calculate the NAO index for.
+        The default is "psl"."
+
+    Returns
+    -------
+
+    rps: np.ndarray
+        An array of values, one for each hindcast start date, containing the
+        RPS for the NAO index.
+
+    """
+
+    # Create an empty array with the same length as the obs_nao_index
+    rps = np.zeros([len(obs_nao_index)])
+
+    # Set up the number of years to cross validate
+    n_years = len(obs_nao_index)
+
+    # Loop over the years
+    for i in tqdm(
+        range(n_years), desc="Calculating the RPS for each hindcast start date"
+    ):
+        # If i = 0, or i = n_years - 1
+        if i == 0:
+            # first year case
+            # exclude the first two years
+            obs_nao_index_cv = obs_nao_index.isel(time=slice(2, None))
+
+            # Same for the ensemble mean nao index
+            ens_mean_nao_index_cv = ens_mean_nao_index.isel(time=slice(2, None))
+
+            # Same from the model nao index
+            model_nao_index_cv = model_nao_index.isel(time=slice(2, None))
+        elif i == n_years - 1:
+            # final year case
+            # exclude the final two years
+            obs_nao_index_cv = obs_nao_index.isel(time=slice(None, -2))
+
+            # Same for the ensemble mean nao index
+            ens_mean_nao_index_cv = ens_mean_nao_index.isel(time=slice(None, -2))
+
+            # Same from the model nao index
+            model_nao_index_cv = model_nao_index.isel(time=slice(None, -2))
+        else:
+            # Central years case
+            # Exclude current index year
+            # and those before and after
+            obs_nao_index_cv_beforei = obs_nao_index.isel(time=slice(None, i))
+
+            # And after i
+            obs_nao_index_cv_afteri = obs_nao_index.isel(time=slice(i + 2, None))
+
+            # Concatenate the two
+            obs_nao_index_cv = xr.concat(
+                [obs_nao_index_cv_beforei, obs_nao_index_cv_afteri], dim="time"
+            )
+
+            # Same for the ensemble mean nao index
+            ens_mean_nao_index_cv_beforei = ens_mean_nao_index.isel(time=slice(None, i))
+
+            # And after i
+            ens_mean_nao_index_cv_afteri = ens_mean_nao_index.isel(
+                time=slice(i + 2, None)
+            )
+
+            # Concatenate the two
+            ens_mean_nao_index_cv = xr.concat(
+                [ens_mean_nao_index_cv_beforei, ens_mean_nao_index_cv_afteri],
+                dim="time",
+            )
+
+            # Same from the model nao index
+            model_nao_index_cv_beforei = model_nao_index.isel(time=slice(None, i))
+
+            # And after i
+            model_nao_index_cv_afteri = model_nao_index.isel(time=slice(i + 2, None))
+
+            # Concatenate the two
+            model_nao_index_cv = xr.concat(
+                [model_nao_index_cv_beforei, model_nao_index_cv_afteri], dim="time"
+            )
+
+        # Calculate the correlation between the observed and model NAO index
+        corr, _ = pearsonr(obs_nao_index_cv, ens_mean_nao_index_cv)
+
+        # Calculate the standard deviation of the ensemble mean
+        sig_f_sig = np.std(ens_mean_nao_index_cv)
+
+        # Calculate the standard deviation of the ensemble
+        sig_f_tot = np.std(model_nao_index_cv[variable])
+
+        # Calculate the stdnatf deviation of the obs nao index
+        sig_o_tot = np.std(obs_nao_index_cv)
+
+        # Calculate the rpc
+        rpc = corr / (sig_f_sig / sig_f_tot)
+
+        # Calculate the rps
+        rps[i] = rpc * (sig_o_tot / sig_f_tot)
+
+    # Return the rps
+    return rps
 
 
 # Define a function for calculating the absolute difference

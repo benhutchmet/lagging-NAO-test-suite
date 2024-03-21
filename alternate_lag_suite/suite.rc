@@ -1,15 +1,15 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable=sfcWind
+        variable=pr
         season=ONDJFM,DJFM
         region="global"
         start_year="1961"
         end_year="2014"
         forecast_range=2-9
         lag="4"
-        nao_matching="False"
-        plot="False"
+        nao_matching="True"
+        plot="True"
         n_matched_members=20
 
 [scheduling]
