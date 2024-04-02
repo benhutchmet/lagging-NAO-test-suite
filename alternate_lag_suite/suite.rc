@@ -12,12 +12,12 @@
         nao_matching="True"
         plot="True"
         n_matched_members=20
-        level=85000
+        level="85000"
 
 [scheduling]
     [[dependencies]]
         graph = """
-        remove_clim<model><variable><season><start_year><end_year><region><forecast_range> => alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag><nao_matching><plot><n_matched_members><level>
+        alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag><nao_matching><plot><n_matched_members><level>
         """
 
 [runtime]
@@ -26,22 +26,11 @@
         pre-script="""set -eu"""
         [[[job]]]
             batch system = slurm
-    [[remove_clim<model><variable><season><start_year><end_year><region><forecast_range>]]
-        script = """
-        module load jaspy
-        cd ${CYLC_SUITE_RUN_DIR}/
-        python remove_model_clim.py ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_forecast_range}
-        """
-        [[[job]]]
-            execution time limit = PT500M
-        [[[directives]]]
-            --partition=high-mem
-            --mem=20000
     [[alternate_lag<variable><season><region><start_year><end_year><forecast_range><lag><nao_matching><plot><n_matched_members><level>]]
         script = """
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        python alternate_lag_functions.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_lag} ${CYLC_TASK_PARAM_nao_matching} ${CYLC_TASK_PARAM_plot} ${CYLC_TASK_PARAM_n_matched_members} {CYLC_TASK_PARAM_level}
+        python alternate_lag_functions.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} ${CYLC_TASK_PARAM_forecast_range} ${CYLC_TASK_PARAM_lag} ${CYLC_TASK_PARAM_nao_matching} ${CYLC_TASK_PARAM_plot} ${CYLC_TASK_PARAM_n_matched_members} ${CYLC_TASK_PARAM_level}
         """
         [[[job]]]
             execution time limit = PT1000M

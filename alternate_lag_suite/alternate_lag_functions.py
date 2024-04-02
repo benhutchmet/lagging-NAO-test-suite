@@ -2142,9 +2142,9 @@ def main():
     # add the levels argument
     parser.add_argument(
         "level",
-        type=int,
+        type=str,
         help="The levels to load.",
-        default=None,
+        default="None",
     )
 
 
@@ -2230,9 +2230,6 @@ def main():
             "Removing MRI-ESM2-0 from the models list as it only has 5 forecast years"
         )
         models_list = [model for model in models_list if model != "MRI-ESM2-0"]
-
-    # # FIXME: Limit models to BCC-CSM2-MR for testing
-    models_list = ["BCC-CSM2-MR"]
 
     # Print the models
     print("models_list: ", models_list)
