@@ -6,8 +6,8 @@
         season=DJFM,ONDJFM
         experiment="dcppA-hindcast"
         region="global"
-        start_year=1960
-        end_year=2018
+        start_year=1961
+        end_year=2014
 
 [scheduling]
     [[dependencies]]

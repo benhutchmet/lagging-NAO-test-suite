@@ -184,7 +184,7 @@ def load_data(
         With shape (years, total nens, forecast_years, lats, lons).
     """
 
-    if season in ["DJFM", "DJF"]:
+    if season == "DJF":
         # Hard code full forecast range
         full_forecast_years = 11
     else:
@@ -2162,7 +2162,7 @@ def main():
     nao_matching = args.nao_matching
     plot = args.plot
     n_matched_members = args.n_matched_members
-    level = args.levels
+    level = args.level
 
     # if nao_matching is not a boolean
     if nao_matching not in ["True", "False"]:
@@ -2173,6 +2173,11 @@ def main():
     if plot not in ["True", "False"]:
         # Raise an assertion error
         raise AssertionError("plot is not a boolean")
+    
+    # if level is ["none", "None"]
+    if level in ["none", "None"]:
+        # Set level to None
+        level = None
 
     # Convert the strings to booleans
     nao_matching = True if nao_matching == "True" else False

@@ -58,9 +58,10 @@
                 "1961", // test case with loading fewer files
                 "2-9",
                 "4", // lag
-                "True",
-                "True",
-                "20"
+                "False",
+                "False",
+                "20",
+                "85000",
             ]
         }
     ]
