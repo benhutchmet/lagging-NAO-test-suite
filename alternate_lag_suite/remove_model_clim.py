@@ -71,10 +71,8 @@ import iris
 import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
-# FIXME: Testing for
 # Import CDO
 from cdo import *
-
 cdo = Cdo()
 
 # Import local modules
@@ -1119,6 +1117,8 @@ def main():
         models_list = dicts.rsds_models
     elif variable == "pr":
         models_list = dicts.pr_models
+    elif variable == "ua":
+        models_list = dicts.ua_models
     else:
         raise ValueError("variable not recognised")
 

@@ -808,4 +808,5 @@ ua_models = [
     "FGOALS-f3-L",
     "CESM1-1-CAM5-CMIP5",
     "EC-Earth3",
+    "BCC-CSM2-MR",
 ]

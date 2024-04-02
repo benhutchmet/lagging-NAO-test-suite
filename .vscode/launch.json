@@ -33,13 +33,13 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "CESM1-1-CAM5-CMIP6",
-                "sfcWind",
+                "BCC-CSM2-MR",
+                "ua",
                 "DJFM",
                 "1961",
-                "2014", // test case with loading fewer files
+                "1961", // test case with loading fewer files
                 "global",
-                "1"
+                "2-9" // the forecast range
             ]
         }
 

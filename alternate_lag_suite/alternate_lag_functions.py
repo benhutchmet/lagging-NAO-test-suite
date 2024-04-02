@@ -126,6 +126,7 @@ def load_data(
     forecast_range: str = "all_forecast_years",
     region: str = "global",
     base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
+    level: int = None,
 ):
     """
     Functions which loads the processed full period data into an array of shape
@@ -166,6 +167,10 @@ def load_data(
     no_forecast_years: int
         The number of forecast years to load.
         Default is 10.
+
+    level: int
+        The level to load the data for.
+        Default is None.
 
     Output:
     -------
@@ -284,6 +289,14 @@ def load_data(
 
         # Load in the file
         data = xr.open_dataset(file_path, chunks={"time": 10, "lat": 10, "lon": 10})
+
+        # If level is not None
+        if level is not None:
+            try:
+                # Select the plev
+                data = data.sel(plev=level)
+            except KeyError:
+                print("plev not found in the data")
 
         # Assert that the model only has lon and lat dimensions
         assert (
@@ -437,7 +450,15 @@ def load_data(
                 init_year = int(init_year_pattern.split("-")[0][1:])
 
                 # Load the file using xarray
-                data = xr.open_dataset(file, chunks={"time": 10, "lat": 10, "lon": 10})
+                data = xr.open_dataset(file, chunks={"time": "auto", "lat": "auto", "lon": "auto"})
+
+                # If level is not None
+                if level is not None:
+                    try:
+                        # Select the plev
+                        data = data.sel(plev=level)
+                    except KeyError:
+                        print("plev not found in the data")
 
                 # If lagging necessary, then will have to modify
                 # If forecast range does not contain a hyphen
