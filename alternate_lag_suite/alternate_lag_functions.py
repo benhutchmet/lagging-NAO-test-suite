@@ -2008,7 +2008,7 @@ def find_matched_members(
 
             # If the model name is BCC-CSM2-MR, we need to set up the indexes differently
             # If the model name is BCC-CSM2-MR
-            if model == "BCC-CSM2-MR":
+            if model == "BCC-CSM2-MR" and variable != "ua":
                 # Set the start year index
                 start_year_idx = start_year_idx
                 # Set the end year index
