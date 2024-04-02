@@ -17,9 +17,9 @@ Usage:
 ------
 
     $ python alternate_lag_functions.py <variable> <season> <region>
-        <start_year> <end_year> <forecast_range> <lag> <nao_matching> <plot> <n_matched_members>
+        <start_year> <end_year> <forecast_range> <lag> <nao_matching> <plot> <n_matched_members> <level>
 
-    $ python alternate_lag_functions.py tas DJFM global 1961 2014 2-5 4 False False 20
+    $ python alternate_lag_functions.py tas DJFM global 1961 2014 2-5 4 False False 20 100000
 
 Parameters:
 -----------
@@ -63,6 +63,10 @@ Parameters:
     n_matched_members
         The number of NAO matched members to use.
         Default is 20.
+
+    level: int
+        The level to load the data for.
+        Default is None.
 
 Outputs:
 --------
@@ -1851,6 +1855,7 @@ def find_matched_members(
     region: str = "global",
     alt_lag: bool = False,
     base_dir: str = "/gws/nopw/j04/canari/users/benhutch/skill-maps-processed-data",
+    level: int = None,
 ):
     """
     Finds the ensemble member for a given variable that matches the overlapping members.
@@ -1868,6 +1873,7 @@ def find_matched_members(
             region (str): The region of the data.
             alt_lag (bool): Whether to use the alternate lag suite.
             base_dir (str): The base directory of the data.
+            level (int): The level of the data.
 
     Returns:
             matched_member (dict): A dictionary containing the matched member for the variable.
@@ -1917,6 +1923,11 @@ def find_matched_members(
         chunks={"time": "auto", "lat": "auto", "lon": "auto"},
         engine="netcdf4",
     )
+
+    # if the level is not None
+    if level is not None:
+        # Extract the first level
+        first_ds = first_ds.sel(plev=level)
 
     # Extract the dimensions
     lats = first_ds["lat"].values
@@ -2025,6 +2036,11 @@ def find_matched_members(
                 engine="netcdf4",
             )
 
+            # if the level is not None
+            if level is not None:
+                # Extract the first level
+                ds = ds.sel(plev=level)
+
             # Extract the years
             years = ds.time.dt.year.values
 
@@ -2123,6 +2139,14 @@ def main():
         help="The number of members to match to the NAO index.",
         default=20,
     )
+    # add the levels argument
+    parser.add_argument(
+        "level",
+        type=int,
+        help="The levels to load.",
+        default=None,
+    )
+
 
     # Extract the CLAs
     args = parser.parse_args()
@@ -2138,6 +2162,7 @@ def main():
     nao_matching = args.nao_matching
     plot = args.plot
     n_matched_members = args.n_matched_members
+    level = args.levels
 
     # if nao_matching is not a boolean
     if nao_matching not in ["True", "False"]:
@@ -2166,6 +2191,7 @@ def main():
     print("nao_matching: ", nao_matching)
     print("plot: ", plot)
     print("n_matched_members: ", n_matched_members)
+    print("level: ", level)
 
     # Extract the models for the given variable
     # Assuming that models initialised in November are the same for all variables
@@ -2184,6 +2210,8 @@ def main():
         # models_list = dicts.nov_init_models_rsds
     elif variable == "pr":
         models_list = dicts.pr_models
+    elif variable == "ua":
+        models_list = dicts.ua_models
     else:
         raise ValueError("variable not recognised")
 
@@ -2199,7 +2227,7 @@ def main():
         models_list = [model for model in models_list if model != "MRI-ESM2-0"]
 
     # # FIXME: Limit models to BCC-CSM2-MR for testing
-    # models_list = ["BCC-CSM2-MR"]
+    models_list = ["BCC-CSM2-MR"]
 
     # Print the models
     print("models_list: ", models_list)
@@ -2266,6 +2294,7 @@ def main():
             end_year=end_year,
             lag=lag,
             region=region,
+            level=level,
         )
 
         # Extract the current time
@@ -2297,13 +2326,18 @@ def main():
         end_year=end_year,
         forecast_range=forecast_range,
         region=region,
+        level=level,
     )
 
     # Extract the current time
     current_time = time()
 
-    # Set up the filename for saving the array
-    filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}.npy"
+    if level is not None:
+        # Set up the filename for saving the array
+        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{level}_{current_time}.npy"
+    else:
+        # Set up the filename for saving the array
+        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{current_time}.npy"
 
     # Set up the full path for saving the array
     save_path = os.path.join(save_dir, filename)
@@ -2334,8 +2368,13 @@ def main():
     # Set up the lag start year
     lag_start_year = start_year + lag - 1
 
-    # Set up the filename for saving the array
-    filename = f"{variable}_{season}_{region}_{lag_start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
+    # if level is not none
+    if level is not None:
+        # Set up the filename for saving the array
+        filename = f"{variable}_{season}_{region}_{lag_start_year}_{end_year}_{forecast_range}_{lag}_{level}_{current_time}_alternate_lag.npy"
+    else:
+        # Set up the filename for saving the array
+        filename = f"{variable}_{season}_{region}_{lag_start_year}_{end_year}_{forecast_range}_{lag}_{current_time}_alternate_lag.npy"
 
     # Set up the full path for saving the array
     save_path = os.path.join(save_dir, filename)

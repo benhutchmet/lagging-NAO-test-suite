@@ -51,11 +51,11 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "psl",
+                "ua",
                 "DJFM",
                 "global",
                 "1961",
-                "2014", // test case with loading fewer files
+                "1961", // test case with loading fewer files
                 "2-9",
                 "4", // lag
                 "True",
