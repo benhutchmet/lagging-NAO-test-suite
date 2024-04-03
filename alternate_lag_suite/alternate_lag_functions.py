@@ -2248,8 +2248,6 @@ def main():
             end_year=end_year,
             models_list=dicts.models,  # models for NAO index
             plot=False,  # TODO: Hardcoded to False for now
-            winter_n_grid=dicts.uk_n_box_corrected,
-            summer_n_grid=dicts.uk_n_box_corrected,
         )
 
         # Calculate the ensemble mean NAO index
