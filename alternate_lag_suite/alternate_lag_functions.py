@@ -2302,8 +2302,13 @@ def main():
         # Extract the current time
         current_time = time()
 
-        # Set up the filename for saving the array
-        filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{n_matched_members}_{current_time}_nao_matched_members.npy"
+        # if level is not none
+        if level is not None:
+            # Set up the filename for saving the array
+            filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{n_matched_members}_{current_time}_nao_matched_members.npy"
+        else:
+            # Set up the filename for saving the array
+            filename = f"{variable}_{season}_{region}_{start_year}_{end_year}_{forecast_range}_{lag}_{n_matched_members}_{level}_{current_time}_nao_matched_members.npy"
 
         # Set up the full path for saving the array
         save_path = os.path.join(save_dir, filename)
