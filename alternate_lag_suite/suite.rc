@@ -9,8 +9,8 @@
         end_year="2014"
         forecast_range=2-9
         lag="4"
-        nao_matching="True"
-        plot="True"
+        nao_matching="False"
+        plot="False"
         n_matched_members=20
         level="85000"
 
