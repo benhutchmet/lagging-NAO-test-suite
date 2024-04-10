@@ -93,8 +93,8 @@ def load_model_data(
     Returns
     -------
 
-        model_data : xarray DataArray
-            The model data for the given variable, model, experiment and time period.
+    model_data : xarray DataArray
+        The model data for the given variable, model, experiment and time period.
     """
 
     # Load the csv file
