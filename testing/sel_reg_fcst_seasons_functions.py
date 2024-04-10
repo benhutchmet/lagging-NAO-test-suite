@@ -370,6 +370,12 @@ def sel_season_shift(
     # Depending on the season, select the months
     if season == "DJF":
         months = [12, 1, 2]
+    elif season == "ON":
+        months = [10, 11]
+    elif season == "OND":
+        months = [10, 11, 12]
+    elif season == "JFM":
+        months = [1, 2, 3]
     elif season == "MAM":
         months = [3, 4, 5]
     elif season == "JJA":
