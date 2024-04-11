@@ -2,9 +2,9 @@
 #SBATCH --job-name=ben-array-sel-season-test-years
 #SBATCH --partition=short-serial
 #SBATCH --mem=10000
-#SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.out
-#SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-%A_%a.err
-#SBATCH --time=1200:00
+#SBATCH -o /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-april.out
+#SBATCH -e /gws/nopw/j04/canari/users/benhutch/batch_logs/ben-array-sel-season-test-years/sel-season-test-years-april.err
+#SBATCH --time=1800:00
 #SBATCH --array=1960-2018
 
 # Form the path for the logs folder and make sure it exists
