@@ -30,4 +30,4 @@
         sbatch submit_scripts/test-sel-region-array-script-py.bash ${CYLC_TASK_PARAM_model} ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_season} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_region} ${CYLC_TASK_PARAM_start_year} ${CYLC_TASK_PARAM_end_year} 
         """
         [[[job]]]
-            execution time limit=PT200M
+            execution time limit=PT300M
