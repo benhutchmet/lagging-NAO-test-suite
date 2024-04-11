@@ -665,7 +665,7 @@ def calculate_model_climatology(
         last_year = int(forecast_range)
 
     # if the season is not DJFM, DJF, NDJFM, or ONDJFM
-    if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+    if season not in ["DJFM", "DJF", "NDJFM", "ONDJFM","NDJ"]:
         # Print the season
         print(f"The season is {season}.")
         print(f"Adding 1 to the start and end years.")

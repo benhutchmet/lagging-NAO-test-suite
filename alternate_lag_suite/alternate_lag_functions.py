@@ -196,6 +196,7 @@ def load_data(
         "DJF",
         "ONDJFM",
         "NDJFM",
+        "NDJ"
     ]:
         # Set the number of forecast years
         no_forecast_years = 8
@@ -204,6 +205,7 @@ def load_data(
         "DJF",
         "ONDJFM",
         "NDJFM",
+        "NDJ"
     ]:
         # Set the number of forecast years
         no_forecast_years = 9
@@ -212,6 +214,7 @@ def load_data(
         "DJF",
         "ONDJFM",
         "NDJFM",
+        "NDJ"
     ]:
         # Set the number of forecast years
         no_forecast_years = 4
@@ -220,6 +223,7 @@ def load_data(
         "DJF",
         "ONDJFM",
         "NDJFM",
+        "NDJ"
     ]:
         # Set the number of forecast years
         no_forecast_years = 5
@@ -242,7 +246,7 @@ def load_data(
         last_year = int(forecast_range)
 
     # If the season is not NDJFM, DJF, DJFM, ONDJFM
-    if season not in ["NDJFM", "DJF", "DJFM", "ONDJFM"]:
+    if season not in ["NDJFM", "DJF", "DJFM", "ONDJFM", "NDJ"]:
         # Modify the start year
         first_year = first_year + 1
 
@@ -313,7 +317,7 @@ def load_data(
             assert (
                 len(data.time) >= full_forecast_years
             ), f"{model} does not have the correct number of forecast years. Check the file: {file_path}"
-        elif season in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+        elif season in ["DJFM", "DJF", "ONDJFM", "NDJFM", "NDJ"]:
             # Assert that the length of time is equal to the number of forecast years
             assert (
                 len(data.time) == 6
@@ -471,6 +475,7 @@ def load_data(
                     "DJF",
                     "NDJFM",
                     "ONDJFM",
+                    "NDJ"
                 ]:
                     print("forecast range does not contain a hyphen")
                     print("Extracting first season: ", season)
@@ -485,6 +490,7 @@ def load_data(
                     "DJF",
                     "NDJFM",
                     "ONDJFM",
+                    "NDJ"
                 ]:
 
                     # Set up the first year
@@ -497,6 +503,7 @@ def load_data(
                     "DJF",
                     "NDJFM",
                     "ONDJFM",
+                    "NDJ"
                 ]:
                     print("forecast range does not contain a hyphen")
                     print("Extracting second season: ", season)
@@ -511,13 +518,14 @@ def load_data(
                     "DJF",
                     "NDJFM",
                     "ONDJFM",
+                    "NDJ"
                 ]:
                     # Set up the first year
                     first_year = init_year + 2
 
                     # Set up the last year
                     last_year = init_year + 5
-                elif season not in ["DJFM", "DJF", "NDJFM", "ONDJFM"]:
+                elif season not in ["DJFM", "DJF", "NDJFM", "ONDJFM", "NDJ"]:
                     # Set up the first year
                     first_year = init_year + 2  # e.g. for s1961 would be 1963
 
@@ -803,7 +811,7 @@ def calculate_nao_index(
     """
 
     # Set up the north and south grid lats to be used
-    if season in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+    if season in ["DJFM", "DJF", "ONDJFM", "NDJFM", "NDJ"]:
         # Set up the north and south grid lats
         n_grid = winter_n_grid
         s_grid = winter_s_grid
@@ -845,7 +853,7 @@ def calculate_nao_index(
         print("Forecast range not recognised")
 
     # If the season is not in the winter - i.e. data has not been shifted
-    if season not in ["DJFM", "DJF", "ONDJFM", "NDJFM"]:
+    if season not in ["DJFM", "DJF", "ONDJFM", "NDJFM", "NDJ"]:
         # Add 1 to the first and last years
         first_year_align = first_year_align + 1
         last_year_align = last_year_align + 1
@@ -1984,7 +1992,7 @@ def find_matched_members(
             # Set up the year
             init_year = year - lag_idx
 
-            if season in ["DJF", "DJFM", "ONDJFM"]:
+            if season in ["DJF", "DJFM", "ONDJFM", "NDJ"]:
                 # Set up the fname
                 fname = f"all-years*_s{init_year}-{member_id}*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
             else:
