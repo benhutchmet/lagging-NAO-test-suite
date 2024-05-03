@@ -278,17 +278,17 @@ uk_n_box = {"lon1": 153, "lon2": 201, "lat1": 57, "lat2": 70}
 uk_s_box = {"lon1": 153, "lon2": 201, "lat1": 38, "lat2": 51}
 
 sfcWind_models_numbers = [1, 2, 3, 5, 8, 9, 10, 11]
-no_sfcWind_models = 8
-sfcWind_models = [
-    "BCC-CSM2-MR",
-    "MPI-ESM1-2-HR",
-    "CanESM5",
-    "HadGEM3-GC31-MM",
-    "FGOALS-f3-L",
-    "MIROC6",
-    "IPSL-CM6A-LR",
-    "CESM1-1-CAM5-CMIP5",
-]
+# no_sfcWind_models = 8
+# sfcWind_models = [
+#     "BCC-CSM2-MR",
+#     "MPI-ESM1-2-HR",
+#     "CanESM5",
+#     "HadGEM3-GC31-MM",
+#     "FGOALS-f3-L",
+#     "MIROC6",
+#     "IPSL-CM6A-LR",
+#     "CESM1-1-CAM5-CMIP5",
+# ]
 sfcWind_models_noMIROC = [
     "BCC-CSM2-MR",
     "MPI-ESM1-2-HR",
@@ -517,7 +517,7 @@ obs_var_names_no_tos = ["psl", "sfcWind", "tas"]
 obs_var_names_no_psl = ["tos", "sfcWind", "tas"]
 
 
-models_list = [psl_models, tos_models, sfcWind_models, tas_models]
+# models_list = [psl_models, tos_models, sfcWind_models, tas_models]
 
 # Common models list
 # for updated variables
@@ -608,21 +608,21 @@ nov_init_models_tas = [
 # Models initilialized in January for psl
 jan_init_models_psl = ["BCC-CSM2-MR", "CanESM5", "IPSL-CM6A-LR"]
 
-psl_models = [
-    "BCC-CSM2-MR",
-    "MPI-ESM1-2-HR",
-    "CanESM5",
-    "CMCC-CM2-SR5",
-    "HadGEM3-GC31-MM",
-    "EC-Earth3",
-    "MPI-ESM1-2-LR",
-    "FGOALS-f3-L",
-    "MIROC6",
-    "IPSL-CM6A-LR",
-    "CESM1-1-CAM5-CMIP5",
-    "NorCPM1",
-    "MRI-ESM2-0",
-]
+# psl_models = [
+#     "BCC-CSM2-MR",
+#     "MPI-ESM1-2-HR",
+#     "CanESM5",
+#     "CMCC-CM2-SR5",
+#     "HadGEM3-GC31-MM",
+#     "EC-Earth3",
+#     "MPI-ESM1-2-LR",
+#     "FGOALS-f3-L",
+#     "MIROC6",
+#     "IPSL-CM6A-LR",
+#     "CESM1-1-CAM5-CMIP5",
+#     "NorCPM1",
+#     "MRI-ESM2-0",
+# ]
 
 pr_models = [
     "BCC-CSM2-MR",
@@ -667,15 +667,15 @@ sfcWind_models = [
 ]
 
 # Define previous sfcwind models
-sfcWind_models_original = [
-    "BCC-CSM2-MR",
-    "MPI-ESM1-2-HR",
-    "CanESM5",
-    "HadGEM3-GC31-MM",
-    "FGOALS-f3-L",
-    "IPSL-CM6A-LR",
-    "CESM1-1-CAM5-CMIP5",
-]
+# sfcWind_models_original = [
+#     "BCC-CSM2-MR",
+#     "MPI-ESM1-2-HR",
+#     "CanESM5",
+#     "HadGEM3-GC31-MM",
+#     "FGOALS-f3-L",
+#     "IPSL-CM6A-LR",
+#     "CESM1-1-CAM5-CMIP5",
+# ]
 
 # Nov init models for sfcWind
 nov_init_models_sfcWind = [
