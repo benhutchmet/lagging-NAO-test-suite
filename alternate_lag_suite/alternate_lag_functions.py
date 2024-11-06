@@ -2187,6 +2187,12 @@ def main():
         # Set level to None
         level = None
 
+    # Set level to None
+    # if level is not none
+    if level is not None:
+        # Set level to none
+        level = None
+
     # Convert the strings to booleans
     nao_matching = True if nao_matching == "True" else False
 

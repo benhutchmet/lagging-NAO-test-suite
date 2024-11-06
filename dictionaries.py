@@ -522,12 +522,12 @@ obs_var_names_no_psl = ["tos", "sfcWind", "tas"]
 # Common models list
 # for updated variables
 # which is psl, tas, sfcwind and rsds
-updated_models_list = [
-    common_models,
-    common_models,
-    sfcWind_models,
-    common_models_noCMCC,
-]
+# updated_models_list = [
+#     common_models,
+#     common_models,
+#     sfcWind_models,
+#     common_models_noCMCC,
+# ]
 
 # Substituting 850U in the place of sfcWind
 updated_models_list_850u = [
@@ -554,12 +554,12 @@ models_list_updated = [
 obs_var_names_updated = ["psl", "tas", "wind", "rsds"]
 
 variables_list_ws_compare = ["psl", "rsds", "wind", "sfcWind"]
-models_list_ws_compare = [
-    common_models,
-    common_models_noCMCC,
-    common_models,
-    sfcWind_models,
-]
+# models_list_ws_compare = [
+#     common_models,
+#     common_models_noCMCC,
+#     common_models,
+#     sfcWind_models,
+# ]
 
 # Dictionaries used for the python stage of the processing
 
