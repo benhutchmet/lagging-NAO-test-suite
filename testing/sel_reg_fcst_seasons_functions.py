@@ -54,9 +54,10 @@ import xarray as xr
 import pandas as pd
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import iris
 
 # Import cdo
-from cdo import *
+from cdo import Cdo
 cdo = Cdo()
 
 
@@ -479,6 +480,7 @@ def regrid_int_files(
     region: str,
     gridspec_file: str = "/home/users/benhutch/gridspec/gridspec-global.txt",
     output_dir: str = "/work/scratch-nopw2/benhutch",
+    regridded_file_path = "/work/scratch-nopw2/benhutch/ua/BCC-CSM2-MR/global/all_forecast_years/ONDJFM/outputs/all-years-ONDJFM-global-ua_Amon_BCC-CSM2-MR_dcppA-hindcast_s2014-r8i1p1f1_gn_201401-202312.nc",
 ):
     """
     Regrid the intermediate files and save them to /work/scratch-nopw2/benhutch.
@@ -507,6 +509,9 @@ def regrid_int_files(
     output_dir : str
         The output directory.
 
+    regridded_file_path
+        A sample regridded file path.
+
     Returns
     -------
 
@@ -519,6 +524,9 @@ def regrid_int_files(
 
     # Set up an empty list for the regridded file paths
     regrid_file_paths = []
+
+    # load the sample cube in iris
+    regridded_cube = iris.load_cube(regridded_file_path)
 
     # Loop over the intermediate file paths
     for file in tqdm(int_file_paths):
@@ -566,8 +574,14 @@ def regrid_int_files(
 
             # Try regriding the file
             try:
+                # load the cube
+                cube_this = iris.load_cube(file)
+
                 # Regrid the file
-                cdo.remapbil(gridspec_file, input=file, output=output_file_path)
+                regrid_cube_this = cube_this.regrid(regridded_cube, iris.analysis.Linear())
+
+                # Save the regridded cube
+                iris.save(regrid_cube_this, output_file_path)
             except:
                 print(f"The file {file} could not be regridded.")
                 continue
@@ -585,6 +599,18 @@ def regrid_int_files(
 
         # Append the output file path to the list
         regrid_file_paths.append(output_file_path)
+
+    # print the length of the regridded file paths
+    print("The length of the regridded file paths is: ", len(regrid_file_paths))
+
+    # print the len of int_file_paths
+    print("The length of the intermediate file paths is: ", len(int_file_paths))
+
+    # print the regriided file paths
+    print("The regridded file paths are: ", regrid_file_paths)
+
+    # print the intermediate file paths
+    print("The intermediate file paths are: ", int_file_paths)
 
     # Assert that the length of the regridded file paths is the same as the length of the intermediate file paths
     assert len(regrid_file_paths) == len(

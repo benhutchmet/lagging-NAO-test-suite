@@ -1934,6 +1934,11 @@ def find_matched_members(
 
     # if the level is not None
     if level is not None:
+        # if level is not an integer
+        if not isinstance(level, int):
+            # Set the level to as integer
+            level = int(level)
+            
         # Extract the first level
         first_ds = first_ds.sel(plev=level)
 
@@ -2187,11 +2192,11 @@ def main():
         # Set level to None
         level = None
 
-    # Set level to None
-    # if level is not none
-    if level is not None:
-        # Set level to none
-        level = None
+    # # Set level to None
+    # # if level is not none
+    # if level is not None:
+    #     # Set level to none
+    #     level = None
 
     # Convert the strings to booleans
     nao_matching = True if nao_matching == "True" else False
@@ -2254,6 +2259,19 @@ def main():
 
     # If nao_matching is True
     if nao_matching:
+        # print the variables
+        print(f"level: {level}")
+        print(f"variable: {variable}")
+        print(f"season: {season}")
+        print(f"forecast_range: {forecast_range}")
+        print(f"start_year: {start_year}")
+        print(f"end_year: {end_year}")
+        print(f"lag: {lag}")
+        print(f"plot: {plot}")
+        print(f"n_matched_members: {n_matched_members}")
+        print(f"region: {region}")
+
+
         # Calculate the NAO index for the period specified
         obs_nao_index, model_nao_index = calculate_nao_index(
             season=season,
