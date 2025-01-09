@@ -994,13 +994,28 @@ def calculate_nao_index(
     # Assert that member_files is not empty
     assert len(member_files) > 0, "member_files is empty"
 
-    # Load the data from the member files
-    # TODO: lag hardcoded as 4 for now
-    model_data = load_data_xr(
-        paths=member_files,
-        forecast_range=forecast_range,
-        lag=4,
-    )
+    # set up a fname
+    model_data_fname = f"{base_dir}/{variable}/all-models/{region}/{forecast_range}/{season}/outputs/*s{start_year}-*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+
+    # if this file exists
+    if glob.glob(model_data_fname):
+        print("Model data file exists")
+        print("Loading the model data from: ", model_data_fname)
+    else:
+        print("Model data file does not exist")
+        print("Calculating the model data")
+
+
+        # Load the data from the member files
+        # TODO: lag hardcoded as 4 for now
+        model_data = load_data_xr(
+            paths=member_files,
+            forecast_range=forecast_range,
+            lag=4,
+        )
+
+        # Save the model data to a file
+        model_data.to_netcdf(model_data_fname)
 
     # Calculate the NAO index
     # Take the mean for the north grid
@@ -1922,8 +1937,8 @@ def find_matched_members(
     # Find the files
     first_file = glob.glob(f"{fstem}{fname}")[0]
 
-    # # Print the first file
-    # print("first file: ", first_file)
+    # Print the first file
+    print("first file: ", first_file)
 
     # Open the file
     first_ds = xr.open_dataset(
