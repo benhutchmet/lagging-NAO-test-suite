@@ -57,9 +57,8 @@ from tqdm import tqdm
 import iris
 
 # Import cdo
-from cdo import Cdo
-cdo = Cdo()
-
+# from cdo import Cdo
+# cdo = Cdo()
 
 # Define a function for loading the model data
 def load_model_data(
@@ -366,7 +365,7 @@ def sel_season_shift(
     file_paths = [file for file in file_paths if f"s{year}" in file]
 
     # Print the length of the file paths
-    print("The length of the year file paths is: ", len(file_paths))
+    # print("The length of the year file paths is: ", len(file_paths))
 
     # Depending on the season, select the months
     if season == "DJF":
@@ -399,12 +398,15 @@ def sel_season_shift(
         months = [4, 5, 6, 7, 8, 9]
     else:
         raise ValueError("Invalid season")
+    
+    # print the months we are extracting
+    # print("The months we are extracting are: ", months)
 
     # Set up an empty list for the intermediate file paths
     int_file_paths = []
 
     # Loop over the file paths
-    for file in tqdm(file_paths):
+    for file in file_paths:
 
         # Load the data
         data = xr.open_dataset(file)
@@ -414,6 +416,11 @@ def sel_season_shift(
 
         # Select the months
         data = data.sel(time=data["time.month"].isin(months))
+
+        # print the data
+        # print("The data is: ", data)
+
+        # sys.exit()
 
         # Shift the dataset if necessary
         # Shift the dataset if necessary
@@ -426,8 +433,18 @@ def sel_season_shift(
         else:
             data = data
 
+
+        # sys.exit()
+
+        # print("The time values are: ", data["time"].values)
+
         # Take the year mean
         data = data.resample(time="Y").mean("time")
+
+        # print the time values
+        # print("The time values are: ", data["time"].values)
+
+        # sys.exit()
 
         # Set up the output file dir
         output_file_dir = f"{output_dir}/{variable}/{model}/{season}/{year}/tmp"
@@ -529,7 +546,7 @@ def regrid_int_files(
     regridded_cube = iris.load_cube(regridded_file_path)
 
     # Loop over the intermediate file paths
-    for file in tqdm(int_file_paths):
+    for file in int_file_paths:
 
         # Set up the output file dir
         output_file_dir = f"{output_dir}/{variable}/{model}/{region}/all_forecast_years/{season}/outputs"
@@ -587,30 +604,37 @@ def regrid_int_files(
                 continue
 
         elif not os.path.exists(output_file_path):
-            print(f"The file {output_file_path} does not exist.")
+            # print(f"The file {output_file_path} does not exist.")
 
-            # Try regriding the file
-            try:
-                # Regrid the file
-                cdo.remapbil(gridspec_file, input=file, output=output_file_path)
-            except:
-                print(f"The file {file} could not be regridded.")
-                continue
+            # # print the shape of the regridded cube
+            # print("The shape of the regridded cube is: ", regridded_cube.shape)
+            
+            # load the cube
+            cube_this = iris.load_cube(file, variable)
+
+            # # print the shape of the cube this
+            # print("The shape of the cube this is: ", cube_this.shape)
+
+            # Regrid the file
+            regrid_cube_this = cube_this.regrid(regridded_cube, iris.analysis.Linear())
+
+            # Save the regridded cube
+            iris.save(regrid_cube_this, output_file_path)
 
         # Append the output file path to the list
         regrid_file_paths.append(output_file_path)
 
-    # print the length of the regridded file paths
-    print("The length of the regridded file paths is: ", len(regrid_file_paths))
+    # # print the length of the regridded file paths
+    # print("The length of the regridded file paths is: ", len(regrid_file_paths))
 
-    # print the len of int_file_paths
-    print("The length of the intermediate file paths is: ", len(int_file_paths))
+    # # print the len of int_file_paths
+    # print("The length of the intermediate file paths is: ", len(int_file_paths))
 
-    # print the regriided file paths
-    print("The regridded file paths are: ", regrid_file_paths)
+    # # print the regriided file paths
+    # print("The regridded file paths are: ", regrid_file_paths)
 
-    # print the intermediate file paths
-    print("The intermediate file paths are: ", int_file_paths)
+    # # print the intermediate file paths
+    # print("The intermediate file paths are: ", int_file_paths)
 
     # Assert that the length of the regridded file paths is the same as the length of the intermediate file paths
     assert len(regrid_file_paths) == len(
@@ -804,11 +828,25 @@ def main():
     print("The end year is: ", args.end_year)
     print("The initialisation year is: ", args.init_year)
 
-    try:
+    # Set up the models
+    ua_models = [
+        "IPSL-CM6A-LR",
+        "MIROC6",
+        "MPI-ESM1-2-HR",
+        "CMCC-CM2-SR5",
+        "HadGEM3-GC31-MM",
+        "FGOALS-f3-L",
+        "EC-Earth3",
+        "BCC-CSM2-MR",
+    ]
+
+
+    # loop over the models
+    for model_this in tqdm(ua_models, desc="Processing models"):
         # First check that the output files do not already exist
         files_df = check_regrid_files_exist(
             variable=args.variable,
-            model=args.model,
+            model=model_this,
             season=args.season,
             experiment=args.experiment,
             region=args.region,
@@ -821,43 +859,40 @@ def main():
             print("All of the output files already exist.")
             sys.exit()
 
-    except:
-        print("The check_regrid_files_exist function failed.")
-        print("continuing...")
-        pass
+        # Check that the input files exist
+        file_paths = load_model_data(
+            variable=args.variable,
+            model=model_this,
+            experiment=args.experiment,
+            start_year=args.start_year,
+            end_year=args.end_year,
+        )
 
-    # Check that the input files exist
-    file_paths = load_model_data(
-        variable=args.variable,
-        model=args.model,
-        experiment=args.experiment,
-        start_year=args.start_year,
-        end_year=args.end_year,
-    )
+        # Loop over the years
+        for year_this in range(args.start_year, args.end_year + 1):
+            # DO the intermediate file processing
+            int_file_paths = sel_season_shift(
+                file_paths=file_paths,
+                year=year_this,
+                season=args.season,
+                variable=args.variable,
+                model=args.model,
+            )
 
-    # DO the intermediate file processing
-    int_file_paths = sel_season_shift(
-        file_paths=file_paths,
-        year=args.init_year,
-        season=args.season,
-        variable=args.variable,
-        model=args.model,
-    )
+            # Do the regridding
+            regrid_file_paths = regrid_int_files(
+                int_file_paths=int_file_paths,
+                variable=args.variable,
+                model=args.model,
+                season=args.season,
+                region=args.region,
+            )
 
-    # Do the regridding
-    regrid_file_paths = regrid_int_files(
-        int_file_paths=int_file_paths,
-        variable=args.variable,
-        model=args.model,
-        season=args.season,
-        region=args.region,
-    )
+    # # Print the length of the regridded file paths
+    # print("The length of the regridded file paths is: ", len(regrid_file_paths))
 
-    # Print the length of the regridded file paths
-    print("The length of the regridded file paths is: ", len(regrid_file_paths))
-
-    # Print the first 5 regridded file paths
-    print("The first 5 regridded file paths are: ", regrid_file_paths[:5])
+    # # Print the first 5 regridded file paths
+    # print("The first 5 regridded file paths are: ", regrid_file_paths[:5])
 
     # Do some logging of the year, season, model, variable, experiment and region, that has been processed
     print(

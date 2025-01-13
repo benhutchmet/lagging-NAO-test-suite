@@ -72,8 +72,8 @@ import iris.coord_categorisation as icc
 from iris.time import PartialDateTime
 
 # Import CDO
-from cdo import *
-cdo = Cdo()
+# from cdo import *
+# cdo = Cdo()
 
 # Import local modules
 sys.path.append("/home/users/benhutch/lagging-NAO-test-suite/")
@@ -182,12 +182,15 @@ def check_files_exist(
     # If the model is CanESM5
     if model == "CanESM5":
         # Limit the unique members to those from r1-r20 inclusive
-        valid_r_numbers = [re.compile(f"r{i}i.*p.*f.*") for i in range(1, 21)]
+        valid_r_numbers = [re.compile(f"r{i}i.*p2f.*") for i in range(1, 21)]
         ens_list = [
             member
             for member in ens_list
             if any(r.match(member) for r in valid_r_numbers)
         ]
+
+        # extract the unique values in ensemble list
+        ens_list = np.unique(ens_list)
 
     # Print the length of the ens_list
     print(f"Length of ens_list: {len(ens_list)}")
@@ -195,7 +198,7 @@ def check_files_exist(
     # Loop over the forecast years
     for year in range(start_year, end_year + 1):
         # Find the files for the year
-        year_pattern = f"{path}/*s{year}*"
+        year_pattern = f"{path}/*{model}*s{year}*"
 
         # Find the len of the files which match the pattern
         year_len = len(glob.glob(year_pattern))
@@ -1164,6 +1167,8 @@ def main():
 
     # Print the files
     print(files)
+
+    sys.exit()
 
     # Test the function
     ens_list = extract_model_years(

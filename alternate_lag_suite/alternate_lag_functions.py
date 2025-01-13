@@ -995,12 +995,24 @@ def calculate_nao_index(
     assert len(member_files) > 0, "member_files is empty"
 
     # set up a fname
-    model_data_fname = f"{base_dir}/{variable}/all-models/{region}/{forecast_range}/{season}/outputs/*s{start_year}-*years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+    model_data_dir = f"{base_dir}/{variable}/all-models/{region}/{forecast_range}/{season}/outputs/"
+
+    # if the model data directory does not exist
+    if not os.path.isdir(model_data_dir):
+        # Make the directory
+        os.makedirs(model_data_dir)
+    
+    # Set up the model data file name
+    model_data_fname_branch = f"all_years_{forecast_range}_start_{start_year}_end_{end_year}_anoms.nc"
+    model_data_fname = os.path.join(model_data_dir, model_data_fname_branch)
 
     # if this file exists
     if glob.glob(model_data_fname):
         print("Model data file exists")
         print("Loading the model data from: ", model_data_fname)
+
+        # Load the model data from the file
+        model_data = xr.open_dataset(model_data_fname)
     else:
         print("Model data file does not exist")
         print("Calculating the model data")
@@ -1014,8 +1026,14 @@ def calculate_nao_index(
             lag=4,
         )
 
+        print("Model data loaded")
+        print("Saving the model data to: ", model_data_fname)
         # Save the model data to a file
-        model_data.to_netcdf(model_data_fname)
+        try:
+            model_data.to_netcdf(model_data_fname)
+        except Exception as e:
+            print("Error saving the model data")
+            print(e)
 
     # Calculate the NAO index
     # Take the mean for the north grid

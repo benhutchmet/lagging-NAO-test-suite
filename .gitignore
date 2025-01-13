@@ -23,5 +23,8 @@ saved_arrays/*.npy
 logs/*.out
 logs/*.err
 
+alternate_lag_suite/logs/*.out
+alternate_lag_suite/logs/*.err
+
 # Ignore the launch files
 .vscode/launch.json

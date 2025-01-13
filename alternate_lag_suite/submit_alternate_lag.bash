@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=sub-alt-lag
 #SBATCH --partition=high-mem
-#SBATCH --mem=300000
-#SBATCH --time=1500:00
+#SBATCH --mem=200000
+#SBATCH --time=1400:00
 #SBATCH -o /home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/logs/sub-alt-lag-%A_%a.out
 #SBATCH -e /home/users/benhutch/lagging-NAO-test-suite/alternate_lag_suite/logs/sub-alt-lag-%A_%a.err
 # sbatch ~/alternate_lag_suite/alternate_lag_functions.py tas DJFM global 1961 2014 2-5 4 False False 20 100000
